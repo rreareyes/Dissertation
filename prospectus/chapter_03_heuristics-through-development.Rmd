@@ -1,0 +1,150 @@
+---
+title : ""
+  
+---
+
+```{r, include = FALSE}
+library(papaja)
+library(kableExtra)
+library(tidyverse)
+library(gt)
+library(english)
+
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
+```
+
+```{r ch3-base-paths}
+folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
+
+folder_root <- file.path(folder_studies, "MCP", "online")
+
+folder_references <- file.path(folder_root, "references")
+folder_documents  <- file.path(folder_root, "documents")
+folder_analysis   <- file.path(folder_root, "bin", "analysis")
+folder_fits       <- file.path(folder_root, "results", "fits")
+folder_summaries  <- file.path(folder_root, "results", "summaries")
+folder_keys       <- file.path(folder_root, "results", "keys")
+folder_figures    <- file.path(folder_root, "figures")
+
+```
+
+
+# Study 2: Effects of development on heuristic strategies use under uncertainty
+## Introduction
+
+\begin{flushright}
+
+\hspace{\parindent}\emph{She'll outgrow it, dear. It's just the age... the age where nothing fits.} \\ 
+--- Judy's Mother, Rebel Without a Cause (1955)
+ 
+\end{flushright}
+
+Picture a large wooden ship that has been kept in a museum for centuries.
+The custodians of this ancient relic have worked tirelessly throughout the years, making sure of preserving its condition as much as possible.
+As time passes by, some parts of the ship inevitably start to decay, and they are quickly restored or replaced with new pieces to maintain its integrity.
+Eventually however, this constant upkeep will lead to a point where none of the original pieces from the ship remain.
+Then the question arises, can we say it is the same ship or that we are now in front of a completely different one?
+This is merely a retelling of a famous thought experiment known as the Ship of Theseus or Theseus' Paradox, and it has been reinvented in multiple other stories in popular culture.
+Besides dealing with the continuity of identity, these stories prompt us to think about the difficulties and nuances when trying to study and understand the continuous change between states.
+
+As the bridging period between childhood and adulthood, adolescence is a stage where humans and other animals experience a myriad of physiological changes before reaching maturity.
+This developmental stage cannot be strictly defined based on the persons' age, considering the multiple biological and cultural milestones that can be used to define its onset and finished state.
+However, it has been mostly studied based on the start as early as age 10 and go as far as 24 years old \citep{sawyer_etal_2018_age_adolescence}.
+These changes, the same as the constant replacement in Theseus' paradox, lead to a gradual transformation of the individual's appearance and behavior.
+Moreover, we can see that traditionally, adolescence is represented as a period of reckless behavior and continuous challenge of the status quo, which has permeated into the scientific literature \citep{crone_dahl_2012_understanding_adolescence, steinberg_etal_2008_age_differences}.
+This conceptualization is supported by different behavioral studies that have shown that adolescents display a lack of risk aversion relative to adults \citep{harbaugh_etal_2002_risk_attitudes, defoe_etal_2019_heightened_adolescent, rosenbaum_etal_2018_influences_described, van_leijenhorst_etal_2008_developmental_study}, as well as increased reward sensitivity \citep{cauffman_etal_2010_age_differences, peeters_etal_2017_behavioral_control}, and enhanced impulsive decisions \citep{luna_etal_2004_maturation_cognitive, rosenbaum_hartley_2018_developmental_perspectives}.
+
+On the other hand, studies into brain development have revealed interesting patterns of maturation, which are not homogeneous across all brain regions.
+Mainly, there is a consistent trend of early maturation in regions in the reward system, while networks that are associated to inhibitory control and executive functions tend to lag behind (e.g., \citealt{brown_etal_2015_fmri_investigation, ernst_etal_2005_amygdala_nucleus, galvan_etal_2007_risktaking_adolescent, galvan_etal_2006_earlier_development, zimmermann_etal_2019_maturational_changes, burnett_etal_2011_social_brain, urosevic_etal_2012_longitudinal_changes, caballero_etal_2016_mechanisms_contributing, bloom_etal_2022_agerelated_change}; for a recent review see \citet{galvan_2021_adolescent_brain}).
+
+From these results, there have emerged several dual-system frameworks that aim to explain the behavior observed in adolescents.
+For example, both \citet{steinberg_2008_social_neuroscience} and \citet{casey_etal_2008_adolescent_brain} proposed models that link the risk-seeking tendencies and reckless behavior to the delayed development of the brain networks controlling imprudent behavior, relative to the networks involved in reward appraisal.
+Therefore, these models attribute the behavioral patterns displayed during adolescence to a slowly development of the cognitive control system.
+However, \citet{steinberg_2008_social_neuroscience} model propose a reward response that displays an inverted-U shape, with a peak during adolescence, whereas \citet{casey_etal_2008_adolescent_brain} model predicts a slowly increasing sensitivity to rewards that peaks mid-adolescence, reaching a plateau into adulthood.
+We can boil down the differences between these (and other dual-system models) into those arguing that adolescent behavior can be explained by heightened reward sensitivity or by immature cognitive control processes.
+Regardless, this subset of models argue that this imbalance leads adolescents to underestimate the consequences and frequency of bad outcomes when engaging in risky behaviors, due to an enhanced sensitivity to rewards.
+
+However, all these results are far from consistent, and these dual system models still struggle to explain certain risk behaviors (or absence of them) in adolescents under different contexts \citep{ackerman_etal_2015_risksensitive_decisionmaking, rosenbaum_hartley_2018_developmental_perspectives, sherman_etal_2018_connecting_brain}.
+\citet{reyna_2004_how_people} proposes a slightly different dual-process model called Fuzzy-trace theory, to account for these differences in behavior. 
+This model incorporates the concept of parallel encoding of stimulus in two different levels: verbatim and gist.
+Verbatim representations contain great detail and precision, whereas gist representations are qualitative in nature, capturing the overall meaning of the decision information \citep{broniatowski_reyna_2018_formal_model}.
+It predicts an increment in the occurrence of gist-based decisions during adolescence, in detriment of those using exact details from the scenario.
+Therefore, the prevalence of biases and heuristic decisions is expected to increase rather than decrease with age.
+As such, reaching a stage where decisions are made intuitively rather than based on analytical processes is considered the apex of development under this theory.
+This transition from analytic strategies, which put heavy demands on working memory to a more rule-based approach, which generalizes across decision problems, until reaching an automatic stage, where the application of such rules is done in a habitual way was outlined earlier by \citet{yates_patalano_1999_decision_making}, without accounting for the dual systems.
+Some studies have shown favorable results supporting this model, displaying differences in the prevalence of framing effects between adolescents and adults \citep{reyna_etal_2014_developmental_reversals}, use of compensatory strategies and enhanced information sampling \citep{kwak_etal_2015_rational_adolescent}, and development of categorical thinking in theory of mind tasks \citep{kogut_slovic_2016_development_scope}.
+
+However, most of these studies, as a large portion of the neuroeconomic research, have focused on risky scenarios, where participants have full access to the explicit payouts and validities of the alternatives, or can easily be calculated from the information displayed to them.
+These scenarios do not match most of the problems and decisions we need to make in our daily life, which involve uncertainty or ambiguity about the validities of the stimuli used to make a choice.
+This is a crucial aspect that needs to be studied, since there is evidence that shows that uncertainty and risk are understood differently in adolescents and adults \citep{blankenstein_etal_2021_resolving_ambiguity, blankenstein_etal_2016_dealing_uncertainty, van_den_bos_hertwig_2017_adolescents_display}.
+
+Furthermore, as shown in adult studies, there are multiple strategies that participants can deploy under uncertain environments (e.g., \citealt{oh_etal_2016_satisficing_splitsecond, binz_etal_2022_heuristics_bounded, broder_2002_take_best}).
+To this date, there are no studies looking into what strategies adolescents may use under uncertain conditions, and if there are differences in their prevalence or their implementation compared to adults.
+
+Therefore, it is important that we take a step back and we first define the baseline strategies and behavioral responses implemented under these conditions before making claims about the differences in behavior between adolescents and adults.
+The purpose of this study is to provide some insight into the decision-making strategies used by participants in different developmental stages under conditions of uncertainty. 
+To do this, we will focus on three main questions: What are the strategies implemented in adolescents to solve complex uncertain decision-making scenarios? Are there strategies more prevalent in certain time of development into adulthood? Are there any age-related patterns in the implementation of these strategies that lead to differences in performance?
+
+## Methods
+### Participants
+Since the focus of this study is to capture developmental effects on strategy use, we aim to collect participants between the ages 11-30. 
+Given the diverse age range required for this study, we will use different methods to recruit participants.
+For underage participants, we will recruit families in the local community and through the Lookit platform, compensating them with \$12 of base pay for their participation.
+We will collect young adults from student population of the University of Massachusetts, Amherst, offering class credit or a \$12 payment.
+Finally, for the upper end of the age range, we will recruit participants using the Prolific platform, targeting adults between 25-30 years old, offering \$12 of base compensation.
+To encourage accurate responses, we will offer a \$3 bonus based on task performance to all participants, regardless of the recruitment platform.
+All the data collection will be performed online, via scheduled sessions with a researcher.
+The whole session will be monitored by a researcher to ensure participants understand the task and note if the participants are in an environment without distractions, and with a stable internet connection.
+Given pilot results from adult populations, we aim to collect around 200 participants in order to account for problems with data quality (lack of attention and technical problems) as well as to capture the possible variability in decision=making strategies implemented.
+
+### Two-Alternative Multi-Attribute Probabilistic Classification Task
+We will use the same experimental paradigm described in Study 1, this time focusing only in the setup from E1.
+As a summary, it consists on a forced-choice task, where the participants chooses between two alternatives. 
+The options are presented as two 2-by-2 grids, with four features each, which vary in terms of how well they predict the winning option. 
+These features are binary, meaning they can have in a given cue, one of two different states, presented as brands of equipment.
+Participants first go over a full set of the possible combinations of features and cues (240 trials) which serves as a practice stage (P1).
+Then, they face 120 trials, where the feature validities remain unchanged (T1), followed for another set of 120 trials where we equalize the feature validities to 0.8/0.2 (T2). An overview of the task is shown in Fig. \ref{ch3-task-overview}. 
+
+### Data Analysis
+The focus of this study will be to identify the decision strategies spontaneously implemented in an uncertain environment, focusing on the changes these strategies may express through development.
+Similar to study 1, we will use the participant's choices to classify them as users of different decision strategies, implementing the same method of model classification described before. 
+We will take a more detailed look at the strategies with the best expected performance (1st Only, Tallying, and TTB), focusing on three performance metrics: accuracy on choosing the best cue, response time, and score. 
+This time, we will include age in our analysis, in order to see if it may have any influence over the performance within the different strategies.
+Finally, we will also entertain the possibility that age may have some influence in the decision strategy implemented by participants during the task, incorporating it in a model as predictor of the decision model from each participant.
+
+#### Model Classification
+We will implement the same model classification approach described previously, using variational Bayesian inference \citep{drugowitsch_2019_variational_bayesian, oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
+We will use the same number and configuration of decision models from before (see Fig. \ref{ch3-decision-models}), as well as the decision criteria to classify participants into the different models (BF > 3), with the WADD model as reference (see Appendix A for the detailed list of decision models).
+
+#### Statistical Models
+As with Study 1, we have similar expectations on the overall behavior from different strategies (see Table 1 in the previous chapter).
+We will utilize the same set of hierarchical models described in Study 1 for the accuracy, response time, and score analysis, incorporating age as a predictor.
+To investigate the possible developmental effects over the particular decision strategy used during the task, we will implement a multinomial model, using age as the only predictor, to estimate the probability of using a particular strategy depending on the age of the participant. 
+In all these models, we will treat age as an ordinal predictor.
+The reasoning behind this is that although age in years can be considered a continuous variable if we only take it as a measurement of time, for the purposes of this study, it is a proxy for the developmental stage of the participants, and as such, we will remove any assumption of uniform effect between units.
+The full details about these models can be found in Appendix B.
+
+#### Statistical Comparisons
+All comparisons will be done using a similar procedure as described in Study 1. 
+Briefly, we will use the 89% HDIs from this distribution of differences \citep{mcelreath_2020_statistical_rethinking} to make inferences about any possible effects. 
+We will use PD above 0.9 as markers for effects of interest, and a ROPE set to a negligible effect size (Cohen's $\delta$ of 0.1). 
+Differences with no overlap with this ROPE will be interpreted as meaningful effects, overlaps below 25% as trends and overlaps beyond 25% as not meaningful.
+
+\newpage
+
+## Figures and Tables
+```{r ch3-task-overview, fig.cap = "\\label{ch3-task-overview}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."}
+knitr::include_graphics(file.path(folder_figures, "Z1_task_setup.png"))
+
+```
+
+\newpage
+
+```{r ch3-decision-models, fig.cap = "\\label{ch3-decision-models}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."}
+knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png"))
+
+```
+

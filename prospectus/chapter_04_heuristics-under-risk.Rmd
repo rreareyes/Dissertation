@@ -1,0 +1,181 @@
+---
+title : ""
+
+---
+
+```{r, include = FALSE}
+library(papaja)
+library(kableExtra)
+library(tidyverse)
+library(gt)
+library(english)
+
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
+```
+
+```{r ch4-base-paths}
+folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
+
+folder_root <- file.path(folder_studies, "GMC", "mouse-eyetracker")
+
+folder_references <- file.path(folder_root, "references")
+folder_documents  <- file.path(folder_root, "documents")
+folder_analysis   <- file.path(folder_root, "bin", "analysis")
+folder_fits       <- file.path(folder_root, "results", "fits")
+folder_summaries  <- file.path(folder_root, "results", "summaries")
+folder_keys       <- file.path(folder_root, "results", "keys")
+folder_figures    <- file.path(folder_root, "figures")
+
+```
+
+# Study 3: Disentangling information processing during motor decisions under risk
+## Introduction
+
+\begin{flushright}
+
+\hspace{\parindent}\emph{In practical life we are compelled to follow what is most probable; in speculative thought we are compelled to follow truth.} \\ 
+--- Baruch Spinoza, Letter 56 to Hugo Boxel (1674)
+ 
+\end{flushright}
+
+Choices that depend on the subjective preference of the agent making the decision have been the center of the neuroeconomic research since its early stages \citep{tversky_kahneman_1974_judgment_uncertainty}.
+
+In this type of economic decisions, it is assumed that the brain has the ability to encode and evaluate the associated value with the different alternatives being considered \citep{kable_glimcher_2009_neurobiology_decision, levy_glimcher_2012_root_all, padoa-schioppa_2011_neurobiology_economic}.
+There is a myriad of studies that have pursued and demonstrated encoding of value in different brain regions \citep{fehr_camerer_2007_social_neuroeconomics, glimcher_rustichini_2004_neuroeconomics_consilience, juechems_summerfield_2019_where_does, levy_etal_2010_neural_representation, oreilly_2013_making_predictions}.
+We can broadly divide the study of value-based decisions in two major contexts: those that study preference influenced by external reinforcement based on experience, and those that explore preference changes without it. 
+The reinforcement learning literature has thoroughly explored the former decision scenarios, and the neural mechanisms underlying them (see \citealt{niv_2009_reinforcement_learning} and \citealt{rangel_etal_2008_framework_studying} for reviews on the topic).
+In this context, choices leading to positive outcomes are reinforced, and those leading to negative outcomes are avoided.
+Hence, if a particular stimulus-response pair is repeatedly associated with a positive outcome, it enhances the preference to said stimulus.
+
+On the other hand, there are multiple frameworks used to explain the development of preferences in scenarios that lack reinforcement from experience.
+The most commonly used in neuroeconomic research postulates that agents implement some utility maximization algorithm to make their choices. 
+The first of these proposed models is the expected utility theory \citep{von_neumann_etal_1944_theory_games, savage_1954_foundations_statistics}, in which the expected value (EV) of the different alternatives is calculated, and then the agent chooses the option with the highest EV.
+However, there is a plethora of studies showing the systematic deviations from this normative framework, and over the years multiple refinements of this model have appeared \citep{birnbaum_2008_new_paradoxes, kahneman_tversky_1979_prospect_theory, tversky_kahneman_1992_advances_prospect}.
+Regardless of these variations, all these models rely in the assumption that choices are based exclusively in the attributes from the different alternatives, without considering the effects of the information sampling \citep{luce_2000_utility_gains}.
+Furthermore, these models also assume that agents combine the information from payouts and probability to make their choices.
+
+On the other hand, since the early stages in the development of this framework, an opposing view has postulated that human cognition is too constrained in most cases to be able to deploy such complex models \citep{simon_1955_behavioral_model}.
+This leads them to rely in heuristics to use resources more frugally while attaining sufficiently good performance \citep{gigerenzer_gaissmaier_2011_heuristic_decision}.
+This approach takes into consideration the fact that, although the payout and probability information is readily available, some of the information may be simplified or even ignored altogether, depending on the decision strategy implemented \citep{brandstatter_etal_2006_priority_heuristic}.
+
+Using both the heuristic and utility-based frameworks authors have made detailed studies that evaluate the predictions made by each model against each other, in order to determine which is the most suitable candidate (e.g., \citealt{brandstatter_etal_2006_priority_heuristic, glockner_betsch_2008_multiplereason_decision, glockner_pachur_2012_cognitive_models, pachur_etal_2013_testing_process}).
+However, one problem with these designs is the fact that in several gambles, the models make overlapping predictions with alternative strategies, making them impossible to disentangle them.
+
+For this reason, other researchers have proposed approaches that consider the effects of information sampling and evaluation \citep{johnson_etal_2008_process_models, payne_etal_1988_adaptive_strategy, schulte-mecklenbeck_etal_2011_role_process}.
+Following this, there have been multiple studies implementing process tracing methods to characterize in detail the information processing displayed in these decision scenarios (e.g. \citealt{callaway_etal_2021_fixation_patterns, aimone_etal_2016_it_not, van_ravenzwaaij_etal_2014_hierarchical_bayesian, rieskamp_otto_2006_ssl_theory})
+Furthermore, the field of perceptual decision making has successfully developed models for evidence accumulation models that describe sensory perception as stochastic processes \citep{brown_heathcote_2008_simplest_complete, ratcliff_2002_diffusion_model}.
+In these models, the valuation process is considered to occur through an evidence accumulation process between competing alternatives.
+Each alternative has an evidence threshold, which once it is reached triggers the choice in the direction of the corresponding stimuli.
+As more and more evidence accumulates in favor of one of the options, it pushes the signal towards the decision boundary associated with that option \citep{ratcliff_etal_2016_diffusion_decision}.
+Some studies in value-based decision making have implemented this evidence accumulation process incorporating attention components \citep{colas_2017_valuebased_decision, krajbich_etal_2010_visual_fixations, krajbich_etal_2012_attentional_driftdiffusion, mormann_russo_2021_does_attention}.
+
+Considering all this, we propose that the study of value-based decisions under risk requires a two-pronged approach.
+There can be an underlying evidence accumulation process that integrates the information sampled from the stimulus, while at the same time, a heuristic strategy allocates a priori the attention dedicated to the different attributes, and determines the decision boundaries to stop the sampling and make a choice.
+To this end, we propose a forced-choice task between two non-complementary gambles.
+During this task, we will monitor participant's decision-making process using eye tracking to record the visual information sampling.
+Furthermore, we will use a choice reaching design, which implements an analog choice mechanism, where participants need to drag the mouse towards their preferred alternative.
+This will be done with the purpose of mapping the dynamic choice process and link the changes in the mouse trajectory to the discrete visual samples extracted by the agent in each fixation.
+The goals from this study are twofold: first, we will identify and characterize the different decision strategies deployed by agents under scenarios of risk, as well as the information sampling patterns used in each of them. 
+Second, we will explore how the visual information may inform and affect the evidence accumulation process by analyzing the impact fixations have over the vectors of movement from the reaching actions.
+
+## Methods
+### Participants
+Based on previous pilot data, we aim to collect approximately 100 right-handed participants from the student population of the University of Massachusetts, Amherst.
+This number will allow us to capture the most common decision strategies among participants, and have some leeway for ensuring data quality.
+All the sessions will be monitored by a researcher, and we will discard only participants that fail to follow instructions during the task, or present any neuropsychological conditions that may interfere with the results (e.g., ADHD, dyslexia).
+The participants will be compensated with class credit.
+
+### Forced choice reaching gambling task
+An overview of the task can be seen in Fig. \ref{ch4-stimulus-organization}.
+We adopted a reaching design similar to \citep{sullivan_etal_2015_dietary_selfcontrol, yamauchi_xiao_2018_reading_emotion, stillman_etal_2020_using_dynamic}.
+In our setup, each trial will display a pair of gambles on a two-by-two grid in the top center of the screen, with the information of each gamble displayed in the left or right column of this stimuli.
+To choose either gamble, participants will drag the mouse cursor to the top left or top right corner of the screen, while we monitor their eye-movements using an eye tracker, and we record the mouse position throughout the trial.
+The cells from the stimuli grid will be squares with $4.25^\circ$ sides.
+Each gamble will show its value and the probability of obtaining the payout, occupying either the left or right cells in this cue.
+To avoid any position biases, at the start of the session we will randomly assign the probability or the reward to either the top or bottom position for each participant, remaining constant throughout the experiment.
+For the purpose of making the visual display of the probability and reward values as uniform as possible, both pieces of information will always be two-digit integers (11-99) in monospaced font, with a size of $0.7^\circ$ of visual angle.
+Considering the large number of possible combinations of values, we will reduce this space by sampling all the differences between information pieces to be multiples of 13 (arbitrary value to diminish the possibility of automatic calculations).
+Since we know that both human and non-human animals are more sensitive to relative differences rather than absolute differences in perceptual decisions, we will construct our stimuli such that it represents eight different conflict levels, increasing in the magnitude of relative difference from completely in favor of the left information to completely against the left information (corresponding to ratios of 5 to 0.2).
+We will sample 40 trials per bin, to have uniform representation of these relative difference levels.
+Additionally, to avoid order effects, we will create 10 sequences of 320 trials, randomly arranged, avoiding consecutive presentation of the same value in any of the stimulus cells.
+Participants will be randomly assigned one of these sequences.
+We will divide the task into five blocks, with 64 trials each, and participants will be allowed to take a break between blocks.
+To facilitate the distinction between the probability and reward information, we will assign them complementary colors (see Fig. \ref{ch4-stimulus-organization}) that are similarly contrasting with the background. 
+Additionally, we will surround each piece of information with hashes, in order to mask their information unless the participant fixates directly in the numbers.
+The color information will be explained to each participant during the instructions, and researchers will corroborate their understanding before beginning the task.
+The response boxes, located in the top left and top right corners will have a size of $4^\circ$ x $8^\circ$.
+In order to ensure all movement paths start in the same position, and to maintain the mouse in a similar starting place in the desk, a button on the bottom center of the screen will appear between each trial, and participants will have to click on it to initiate the trial, resetting the initial cursor coordinates.
+Furthermore, there is work showing that starting and stopping triggers in mouse tracking designs can significantly influence the movement paths expressed in mouse tracking designs \citep{kieslich_etal_2020_design_factors}.
+For this reason, we will use dynamic starting and stopping triggers in this paradigm, in order to obtain smooth trajectories with curvatures towards the alternatives.
+What this entails is that the gamble information will only be displayed after the participant initiates the mouse movement, and it will stop as soon as the cursor reaches the boundaries of any of the response boxes.
+Participants will be aware of this behavior and will be additionally instructed to make continuous and upward movements in each trial.
+If the participant stops for more than 500 ms, the trial will end, displaying an error message reminding participants to make continuous movements.
+Before the start of the trial, we will show participants 15 trials to familiarize themselves with the task and the mouse movement, while researchers monitor their responses to ensure they engage in continuous motions.
+
+The task will be designed and presented using PsychoPy \citep{peirce_etal_2019_psychopy2_experiments}.
+The cursor position will be recorded at a sampling rate of 60Hz (screen refresh rate) using the built-in tools in PsychoPy.
+We will record eye movements during all this time, using a SMI RED250mobile eye tracker (SensoMotoric Instruments) using the SMITE toolbox \citep{niehorster_nystrom_2020_smite_toolbox} to link the task with the eye tracker.
+Participants will be seated in front of a laptop, adjusting their position such that their head is located at approximately 65 cm from the screen. 
+We will use a wireless mouse with acceleration removed, and the sensitivity set to 500 DPI as input device during the task.
+The mouse will be placed on the right-hand side, at the bottom center of a 46cm by 40cm mousepad.
+This area will be enough to allow movements that reach all the edges of the screen with the sensitivity settings described above.
+
+### Data Analysis
+The focus of this study will be to identify and characterize the decision strategies implemented during risky decision-making environments, as well as exploring the information integration process during the task.
+Similar to study 1 and 2, we will use the participant's choices to classify them as users of different decision strategies, implementing the same method of model classification described before, but with a different set of decision models. 
+Additionally, we will test if and how much the information sample during each fixation may influence the mouse movement that follows.
+All the details from these analyses can be found in Appendix C.
+
+#### Model Classification
+We will implement the same model classification approach described previously, using variational Bayesian inference \citep{drugowitsch_2019_variational_bayesian, oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
+We will use a different set of decision models (see Appendix C), with the same decision criteria (BF > 3) to classify participants into the different models, using a model with two independent predictors (reward and probability difference between the gambles) as the reference (see the Appendix C for the whole set of model equations).
+
+#### Performance
+We will explore the different strategies' performance in this task by estimating the participants' likelihood of choosing the best gamble. 
+To define the best gamble, we will be using the EUT model as a benchmark for ideal decision making in this task (i.e., selecting the gamble with the highest expected value).
+Similar to the accuracy models from study 1 and 2, we will use a hierarchical binary model to do this.
+We will estimate the probability of choosing the gamble with the highest EV, using the decision strategy as predictor.
+
+#### Fixation Patterns
+We will define four 140px square AOIs, each centered in one of the four information pieces displayed, which represent the gambles' attributes.
+We will identify fixations using the I2CM algorithm from \citet{hessels_etal_2017_noiserobust_fixation}. 
+To properly describe each strategy and facilitate the analysis, we will remap the position of the gambles, such that the winning alternative is always in the left side, and the losing alternative is located in the right side.
+Therefore, to determine the probability of each strategy directing their fixations to the different information pieces, we will use a hierarchical multinomial model, which takes as possible outcomes these four AOIs, using the decision strategy as predictor.
+
+#### Mouse movements
+We will calculate the area under the curve for each path, as a measure of conflict between the two alternatives, and peak velocity as a measurement of choice vigor.
+Considering that these metrics will have distributions that are positively bounded with long tails, we will model them with a lognormal hierarchical model, where we will use the difficulty level and decision strategy as predictors.
+We will use five conflict levels that will be customized for each strategy, based on the information that should be considered by them.
+This will be done with the purpose of checking if the users of different strategies are sensitive to the magnitude of conflict between the gambles.
+
+#### Integration of process tracing data
+To link the information sampling to the continuous mouse movement, we will map each fixation event within the sequence of cursor position samples. 
+Then, we will extract the speed of the mouse movement between fixation events, which we will use as the dependent variable, which will account for the effect of the sampled information on mouse vigor (see Fig. \ref{ch4-mouse-metrics}.
+Furthermore, we will also determine the deviation angle from the most direct path between fixations, by calculating the angle difference of the movement vector following a fixation, and the most direct path from the starting coordinate of this vector towards the chosen alternative (see Fig. \ref{ch4-mouse-metrics}).
+For both models we will use a lognormal hierarchical model, using the feature type (probability/reward), feature value (11-99), decision strategy, and order of the fixation (from last to first) as predictors.
+This will allow us to detect any effects of the fixation information, as well as if these are different depending on how close they occur before reaching a choice.
+
+#### Statistical Comparisons
+All comparisons will be done using a similar procedure as described in Study 1 and 2. 
+We will make inferences about possible effects using the 89% HDIs from the distribution of differences \citep{mcelreath_2020_statistical_rethinking}. 
+We then will use PD above 0.9 as markers for effects of interest, and a ROPE set to a negligible effect size (Cohen's $\delta$ of 0.1). 
+Differences with no overlap with this ROPE will be interpreted as meaningful effects, overlaps below 25% as trends and overlaps beyond 25% as not meaningful.
+
+\newpage
+
+## Figures and Tables
+
+```{r ch4-stimulus-organization, fig.cap = "\\label{ch4-stimulus-organization}Task design. (A) Stimulus organization: We will present two gambles side by side in a grid. Each gamble will be made of a cell showing the probability and another showing the reward, shown in different colors. The position (top or bottom) and colors (blue or yellow) of this information will be randomized between participants. (B) Task sequence: Each trail will start with a reset stage, where participants click on a button to reset the mouse and pointer position. After a brief ITI, the trial will start, but the information from the gambles will only show up once the participants initiate a movement. Then, participants will move the cursor towards the corresponding response box from the side of the gamble they prefer. Once they reach the boundaries of any of the response boxes, the trial will end and after a short ITI, the sequence will repeat."}
+knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png"))
+
+```
+
+\newpage
+
+```{r ch4-mouse-metrics, fig.cap = "\\label{ch4-mouse-metrics}Mapping process tracing data. (A) We will track the position of the cursor in the screen, obtaining a sample every 1/60th of a second. (B) With these we will obtain the overall trajectory followed by the participant in a given trial. (C) We will then map the fixation information into the sequence of samples from the mouse tracking, such that we divide the overal trajectory in discrete vectors that encompass the travel done from one fixation event to the next. (D) From these discrete paths, we will calculate the vigor (speed) and the angle deviation (angle from the most direct path, represented as dashed lines here)."}
+knitr::include_graphics(file.path(folder_figures, "Z2_mouse_metrics.png"))
+
+```

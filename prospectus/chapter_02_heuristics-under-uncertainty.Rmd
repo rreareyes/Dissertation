@@ -1,0 +1,406 @@
+---
+title : ""
+
+---
+
+```{r, include = FALSE}
+library(papaja)
+library(kableExtra)
+library(tidyverse)
+library(gt)
+library(english)
+
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
+```
+
+```{r ch2-base-paths}
+folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
+
+folder_root <- file.path(folder_studies, "MCP", "eyetracker")
+
+folder_references <- file.path(folder_root, "references")
+folder_documents  <- file.path(folder_root, "documents")
+folder_analysis   <- file.path(folder_root, "bin", "analysis")
+folder_fits       <- file.path(folder_root, "results", "fits")
+folder_summaries  <- file.path(folder_root, "results", "summaries")
+folder_keys       <- file.path(folder_root, "results", "keys")
+folder_figures    <- file.path(folder_root, "figures")
+
+#r_refs(file = file.path(folder_references, "software.bib"))
+
+# software_citations <- papaja::cite_r("software.bib",
+#                                      pkgs     = c("rstan", "brms"),
+#                                      withhold = F)
+# 
+# data_wrangling_citation <- papaja::cite_r("software.bib",
+#                                           pkgs     = c("tidyverse"),
+#                                           withhold = F)
+# 
+# data_wrangling_citation <- str_remove_all(data_wrangling_citation, "R \\[Version 4.2.0\\\\; @R-base] and the R-package ")
+
+## Load reporting functions
+source(file = file.path(folder_analysis, "helpers", "h11_report.R"))
+
+```
+
+```{r ch2-stats-and-summaries}
+load(file.path(folder_summaries, "summary_demographics.RData"))
+load(file.path(folder_summaries, "bayes_rope.RData"))
+load(file.path(folder_summaries, "reported_anovas.RData"))
+load(file.path(folder_keys, "accepted_performance_key.RData"))
+load(file.path(folder_keys, "discarded_performance_key.RData"))
+load(file.path(folder_keys, "collected_participants_key.RData"))
+```
+
+# Study 1: Eye-Tracking Analysis of Heuristic-Driven Information Search in Uncertain Decision Environments
+## Introduction
+
+\begin{flushright}
+
+\hspace{\parindent}\emph{Maturity, one discovers, has everything to do with the acceptance of not knowing.} \\ 
+--- Mark Z. Danielewski, House of Leaves (2000)
+ 
+\end{flushright}
+
+Choosing between two options (e.g., ice cream or cake for dessert, wearing a white or blue shirt to a job interview, getting a cat or a dog as a pet, etc.), is arguably one of the most common decision scenarios we face in our daily lives. 
+At first, decisions for such binary choices seem fairly easy. 
+However, we can also imagine scenarios where these decisions become difficult as you keep adding on more attributes to consider: the location, number of rooms, flooring type, and cost when buying a house; weighing the coverage, premiums and deductibles when selecting a health plan; reviewing genre, ratings and synopsis while scrolling through your favorite streaming app. 
+These situations show how real-life decision environments require processing multiple attributes comprehensively prior to making a choice.
+
+One of the most widely studied decision scenarios in the literature on decision strategies and heuristics use is the binary choice paradigm \citep{broder_2000_assessing_empirical, broder_2003_decision_making, dieckmann_rieskamp_2007_influence_information, lee_cummins_2004_evidence_accumulation, rieskamp_hoffrage_1999_when_people}. 
+In these tasks, decision makers are presented with two options which have a certain number of attributes to be evaluated upon. 
+Each attribute tends to be binary, i.e., having two possible states, but only one state can be present at a time. 
+These binary features vary in terms of validity, i.e., the relative importance in predicting the best option.
+Depending on the combination of attributes and their states, one option becomes more desirable than the other.
+
+The decision strategies identified from binary choice paradigms can be broadly categorized into compensatory strategies, where all information is processed exhaustively with trade-offs being made between them, and non-compensatory strategies, where not all available information is used and trade-offs between them are often ignored  \citep{martignon_hoffrage_1999_why_does, rieskamp_hoffrage_1999_when_people}. 
+
+A good example of a compensatory strategy is the linear integration of all pieces of information, which is also referred to as the Weighted Additive (WADD) model, \citep{payne_etal_1988_adaptive_strategy}, or the Franklin rule \citep{gigerenzer_goldstein_1999_betting_one}. 
+This strategy integrates all pieces of information by first determining the winning state within each attribute. 
+Then it multiplies each attribute's state by their validity to finally add them up within an option. 
+The option with higher weighted sum across attributes is selected. 
+Despite this strategy being a highly successful way to approach even the most complex decision scenarios, its correct implementation involves an extensively complicated procedure, which taxes the agent's cognitive resources.
+
+Another well studied compensatory strategy is the Dawes rule  \citep{dawes_corrigan_1974_linear_models}. 
+This method also considers all pieces of information, but instead of assigning different subjective validities, it equally weighs all the attributes. 
+In the end, the agent sums the number of positive states within each alternative (i.e., tallying the "good" attributes) and chooses the option with a higher tally score. This strategy is also fairly successful across all decision environments since it removes the requirement to rank the different features.
+
+Among non-compensatory strategies, the heuristic known as Take-The-Best (TTB) \citep{gigerenzer_goldstein_1996_reasoning_fast} stands out for its information sampling efficiency. 
+Similar to WADD, TTB assumes that decision attributes vary in terms of validity. 
+Critically, TTB ranks the attributes based on their validity and begins searching for information from most to least important, until a discriminating feature (i.e., presence of a winning state) allows the agent to distinguish between the options. In the end, TTB relies on this single discerning feature to make a choice. 
+This strategy is very robust and surpasses or matches the accuracy of analytic compensatory strategies, such as WADD in many decision scenarios \citep{czerlinski_etal_1999_how_good}. 
+
+While the above described decision strategies and heuristics provide reasonable explanations on how the information can be obtained, processed, and implemented to make choices, the underlying assumptions for each strategy have not been verified. 
+This is partly due to the fact the pre-decisional processes are non-observable cognitive constructs that can only be inferred by modeling of the observed choices or indirect measures that reflect processing of information \citep{harte_koele_2001_modelling_describing}.
+In recent years, several different approaches of process-tracing have been used to study the pattern of pre-decisional information search. Process tracing can be implemented, for example, by asking the participant to flip cards \citep{verplanken_weenig_1993_graphical_energy}, click with a mouse \citep{payne_etal_1988_adaptive_strategy, rieskamp_otto_2006_ssl_theory,  van_ravenzwaaij_etal_2014_hierarchical_bayesian} or pay fees to acquire information (e.g., \citealt{broder_2000_assessing_empirical, newell_shanks_2003_take_best, rieskamp_otto_2006_ssl_theory}). 
+These methods have the disadvantage of constraining the frequency of comparisons and limiting information search \citep{glockner_betsch_2008_multiplereason_decision} due to the additional costs for acquiring information. 
+More recently, eye-tracking has been widely adopted in decision making research, which provides account on pre-decisional information processing based on the analysis of fixation patterns (e.g., \citealt{ashby_etal_2016_applications_innovations,  callaway_etal_2021_fixation_patterns, orquin_mueller_loose_2013_attention_choice}). 
+This method allows to display simultaneously all the relevant visual information from the decision alternatives and record the fixation patterns while the participant freely searches for information, thus providing a more naturalistic measure of information processing.
+
+In this study we will investigate the decision strategies used by participants under uncertain scenarios. 
+We will also examine the patterns of pre-decisional information processing within these strategies with the aim of verifying their underlying assumptions. 
+To this end, we will present naive participants with a two alternative multi-attribute probabilistic classification task while we record their eye movements with an eye-tracker. 
+Our task design emulates the uncertainty in real-life decision-making scenarios, where a choice is made based on multiple attributes that collectively predict the preferable option. 
+In environments like this, participants rely on their own subjective estimates for the validities of each attribute \citep{oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
+We will create decision models that predict choice at the trial level, based on the combination of states from the multiple attributes. 
+We will then fit these models to each participant's choices to classify them according to the decision strategies they use via model comparison. 
+Then, we will analyze the fixation patterns of the participants classified under each strategy to test if they followed the expected pattern of fixations across the cue attributes for that particular strategy. 
+Finally, we will compare the choice outcomes (i.e., classification accuracy) and fixation patterns across decision strategies to characterize their differences.
+
+## Methods
+### Participants
+We aim to collect 120 participants from the student population of the University of Massachusetts, Amherst.
+Based on pilot data, this will allow us to capture the most representative strategies used in this task, as well as account for any technical problems or data quality issues.
+We will run two similar experiments (E1 and E2), where we will introduce changes to the last set of trials (see details in the next section), in order to better dissociate decision strategies, allocation approximately 60 participants per setup.
+We will compensate participants with a flat rate of class credit or \$12, as well as a monetary bonus of \$5 based on task performance. 
+
+### Two-Alternative Multi-Attribute Probabilistic Classification Task
+An overview of the task is shown in Fig. \ref{ch2-task-setup}. 
+We will adapt the probabilistic classification paradigm used in \citet{oh_etal_2016_satisficing_splitsecond} for eye-tracking purposes. 
+This paradigm carries many common features of the widely used binary choice paradigms (e.g., \citealt{broder_2000_assessing_empirical, broder_2003_decision_making, dieckmann_rieskamp_2007_influence_information, lee_cummins_2004_evidence_accumulation, rieskamp_otto_2006_ssl_theory}). 
+On each trial, participants will choose between two alternatives, based on the information provided by four features that vary in terms of how well they predict the winning option. 
+We will use the same general design for both E1 and E2, except for the second testing phase (T2) which we will describe in detail below. 
+
+We will frame this task as a race between two pilots who carry four different pieces of equipment, each with two possible brands. 
+We will present the combination of these equipment brands from each pilot as a 2 by 2 grid on the left and right side of the screen. 
+Each cell on the grid represents a different equipment item, which has binary states in the form of two possible brands: "JU" or "JO" for the helmet; "NE" or "NI" for the fin; "BE" or "BA" for the skates; and "WO" or "WI" for the wheels. 
+The brands will be displayed on the center of each cell, with a faded visual image of the corresponding equipment in the background. 
+To make the task more suitable for eye tracking, we will take measures to ensure that the participants fixate directly on the brand to extract information from it. 
+First, the two brand names for each equipment will only vary in terms of a vowel, which makes them hard for visual identification unless they make a proper fixation. 
+Secondly, we will surround the brand names with hashes to limit the possibility of using peripheral vision instead of fixating on them.   
+
+We will create a set of stimuli using all combinations of cue states (i.e., the brands), giving us a total of sixteen unique grids ($4^2 = 16$). 
+Additionally, we will assign complementary probabilistic weights to the two states of each item (see Fig. \ref{ch2-task-setup} for weights assigned). 
+These weights predict each pilot's probability of winning. 
+The absolute difference between the two complementary weights assigned to each equipment is an objective measure of its validity, i.e., how good a piece of equipment is at predicting the winning pilot. 
+The larger this difference, the higher their relative importance compared to the other items. 
+The location of the four items on the grid will remain consistent across participants, however we will randomly assign the complementary pairs of weights to different equipment for each individual, covering the 24 ($4!=24$) possible permutations of weights across all participants.
+
+On each trial, we will present the grids in pairs. 
+We will create these pairs by combining the complete set of sixteen grids with each other. 
+This yields a total of 120 unique pairs of grid cues ($\frac{16^{2}}{2} - \frac{16}{2}=120$) and 240 trials in total by mirroring the left and right position of the cues on the screen. 
+We will ask participants to compare the displayed cues, using the information from the equipment brands to predict which pilot is more likely to win the trial. 
+
+We will calculate the probability that the left ($P(L|C_L, C_R)$) or the right ($P(R|C_L, C_R)$) pilot wins, by comparing the weights of the equipment states in the left cue ($W_L = \{w_{C_{L,1}}, ... w_{C_{L,4}}\}$) against the ones in the right cue ($W_R = \{w_{C_{R,1}}, ... w_{C_{R,4}}\}$) using the following equations: 
+
+$$P(L|C_L, C_R) = \frac {10^{\sum_{i=1}^ {4} (w_{c_{L,i}} - w_{c_{R,i}})}} {1+10^{\sum_{i=1}^ {4} (w_{c_{L,i}} - w_{c_{R,i}})}}$$
+
+$$P(R|C_L, C_R) = 1 - P(L|C_L,C_R)$$
+
+Where *i* represents the *i*th item inside each cue *c* ($C_L:$ left cue, $C_R:$ right cue). 
+
+Participants will have up to 15 seconds to choose by pressing the left and right arrow key on the keyboard, using their right hand (Fig. \ref{ch2-task-setup}B). 
+Upon making their choice or after the 15 seconds expire, the cues will disappear from the screen. 
+After this, we will display a feedback message for 500 ms, informing them about the outcome of their choice (i.e., "win" or "lose" indicating whether the chosen pilot won or lost) or a "miss" message in case of no response. 
+The "win" or "lose" outcomes were determined based on the probability of winning for each side. 
+That is, to determine the outcome, we will compare the probability of winning for the chosen side (i.e., *P(L)* or *P(R)*) to a random number drawn from a uniform distribution between 0 and 1. 
+If the probability of the cue selected by the participant is larger or smaller than this random number, they received a "win" or "lose" outcome, respectively. 
+Under these circumstances, participants could receive a "lose" message, despite choosing the cue with higher winning probability.
+
+As part of the feedback, participants will also receive reward points based on response time. 
+The purpose of these rewards is to incentivize heuristics use by encouraging participants to make faster responses. 
+We will impose an adaptive time pressure based on the moving average ($\mu$RT) reaction time up until the previous trial within each participant. 
+Winning trials with RT within the range of ±1SD from the ($\mu$RT) will grant 1 point, while faster (RT < $\mu$RT - 1$\sigma$RT) or slower (RT > $\mu$RT + 1$\sigma$RT) responses will accrue 2 points or 0 points respectively (Fig. \ref{ch2-task-setup}C). 
+We will assign an ITI of 1 second between the feedback screen and the presentation of the next trial during which participants fixate to a target on the center of the screen.
+
+Before the start of the experiment, we will present the task instructions as a slide show, after which we will ask participants to provide us with a brief explanation of the task. 
+Regardless of their answer we will always explain the following:
+
+>*In this task, you have to choose between two pilots presented on the left and right side of the screen. Each pilot will be represented by a grid with the equipment they are using, and you will choose the one you think has a higher chance of winning by pressing the corresponding arrow key with your right hand. You will have up to 15 seconds to make your choice. At the beginning you don't know anything about what brands of equipment are the best, but you will learn as the task advances by trial and error. Just try to pay attention to what combination of brands are making you win more often. As you read before, if you win the race and you answer fast you will get an extra point. This fast threshold is determined by your performance, that means the computer will adapt to your speed. There are a total of eight blocks, and you will have breaks in between each of them. Finally, I am going to ask you to please keep your right hand on the keyboard during the whole time you are doing the task.*
+
+In both E1 and E2, participants will complete a total of 480 trials, organized into 8 blocks of 60 trials across 3 phases: a practice phase (P1) and two testing phases (T1 and T2). 
+During P1 we participants will experience two full sets of unique cue pairs (240 trials in total) across 4 blocks, allowing them to develop a decision strategy. 
+During both T1 and T2, we will present 120 unique pairs divided into two blocks. 
+For T1, the contingencies of probabilistic weights to the cue states will remain the same as P1. 
+During T2 however, we will introduce changes to these contingencies, unbeknownst to the participants (see Fig. \ref{ch2-task-setup}A for the shift in probabilistic weights in T2). 
+For E1, we will set the complementary weights for the two states to 0.80/0.20 across all items. 
+For E2, we will invert the ranking of the features, making the most informative item (i.e., weights 0.95/0.05) become the least informative (i.e., weights 0.5001/0.4999) and so on.
+In both E1 and E2, we will keep the winning states from P1 and T1 the same in T2.
+We will introduce these new contingencies in T2 as a way of dissociating the decision strategies developed and used during P1 and T1 by looking at the performance (i.e., choice accuracy) change from T1 to T2. 
+For example, in E1, if the strategy developed and used during P1 and T1 would persist in T2, the performance in T2 would be better for participants who adopted a compensatory strategy of equally considering all attributes, compared to those who have been using frugal strategies relying on fewer number of attributes, since all four equipment items had the same probabilistic weights. 
+In E2, the new contingencies in T2 would particularly hurt the participants who used strategies relying on ranking of different attributes (e.g., TTB), whereas those using a strategy based on counting positive attributes without assigning an explicit ranking (e.g., Tallying) should be resilient to the change. 
+At the end of the task, the participants could obtain a monetary bonus of $5 based on the total amount of points they earned throughout the session. 
+We will set an arbitrary threshold at 400 points, which was calculated based on winning 70% of the trials with 30% of them being fast responses. 
+
+We will build and present the task using the Psychophysics Toolbox extension \citep{brainard_1997_psychophysics_toolbox} in MATLAB. 
+Throughout the task, we will use a SMI RED250mobile eye tracker (SensoMotoric Instruments) and the SMITE toolbox \citep{niehorster_nystrom_2020_smite_toolbox} to record participant's fixation patterns.
+
+### Data Analysis
+The focus of our analysis is to identify the naturally developing decision strategies under a complex decision-making scenario and determine whether their pre-decisional information search patterns align with the assumptions for each decision strategy. 
+To achieve this goal, we will first classify our participants as users of different decision strategies based on their choices using model classifications. 
+We will then compare the proportion of correct responses during T1 and T2 to confirm the dissociation between decision strategies. 
+Finally, we will investigate the fixation patterns in each decision strategy based on the eye-tracking data.
+
+#### Model Classification
+We will implement model classification using variational Bayesian inference \citep{drugowitsch_2019_variational_bayesian, oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
+This approach allows us to compare the support that different decision models have for each participant, given the choices made in each trial. 
+For this we will use only the trials from T1, since we consider that by this time point the participants should have established a consistent decision strategy. 
+
+Given the binary nature of the decisions made during the task, we will define logistic models to fit the responses from the participants. 
+These models estimate the likelihood of a participant choosing the left cue, given the support from the different brands presented in the grid:
+
+$$choice_{i} \sim \beta_{0} + \beta_{n} \text{F}_{n}$$
+
+
+where $choice_{i}$ represents the side selected by the participant in the *i*th trial, which we code as 1 (left) or 0 (right). 
+$F_n$ represents the state (i.e., equipment brand) from the *n*th feature (i.e., equipment) considered by the decision model. 
+$F_n$ can take the value of 1 if the winning state was located in the left cue, 0 if both cues had the same state, and -1 if the winning state appeared in the right cue. 
+The decision models have different number of predictors, depending on the number of features being considered. 
+Similar to \citet{oh_etal_2016_satisficing_splitsecond}, we define an optimal model with four predictors:
+
+$$choice_{i} \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4}$$
+
+This model represents the integration of the four features from the cue allowing each to have their own weight in the decision process (model 15 in Fig. \ref{ch2-model-selection}, which is equivalent to WADD). 
+We use this as the reference to contrast all the other decision models, considering that it is the most flexible model to fit. 
+We will also create 14 models that represent different integration of features: four single parameter models, which represent the use of a single feature to make a choice (Fig. \ref{ch2-model-selection}, models 1-4); six models that integrate two features (Fig. \ref{ch2-model-selection}, models 5-10) and four models that integrate three features (Fig. \ref{ch2-model-selection}, models 11-14).
+
+Additionally, we consider the possibility that the participants could use a compensatory strategy like Tallying to solve this task. 
+This strategy merely counts the number of positive attributes present in each cue (i.e., winning states/brands in the context of this task), adds them up, and chooses the option with the larger number. 
+To represent this strategy, we will create a model with a single predictor that could take any integer from -4 to 4, where negative values indicate number of features favoring the right side, while positive values represent the number of features in favor of the left cue (Fig. \ref{ch2-model-selection}, model 16). 
+This way, the model uses information from all the features, but they are merged in a single predictor.
+
+Next, we want to represent the choice patterns expected from users of the TTB strategy. 
+To do this, we will create a model with 4 different predictors that compares the two states from the same feature in each cue, starting from the most important one, and going down in descending order of importance, until a choice is made when it identifies a difference in the two states (Fig. \ref{ch2-model-selection}, model 19). 
+A trial where the most important feature favors the left side would have $[1, 0, 0, 0]$ as the vector of predictors, whereas a trial where the discerning feature favoring the right cue is located in the third most important item would take the form $[0, 0, -1, 0]$. 
+This decision model would technically rely on a single feature in each trial to make a choice, but it would vary in how many features it would have to review before choosing, depending on the particular set of cues being compared. 
+
+Finally, to account for models implemented in an incomplete fashion, we will create the models representing partial Tallying (Fig. \ref{ch2-model-selection}, model 17-18) and incomplete TTB (Fig. \ref{ch2-model-selection}, model 20-21). 
+The specific formulas from each model listed in Fig. \ref{ch2-model-selection} are included in Appendix A.
+
+To classify participant's choice patterns into one of the decision models, we calculate the Bayes factors ($BF_m$) of each individual model by comparing the probability that the choice data was generated by the decision model ($P(Data|Model_{m})$) in comparison to the reference model ($P(Data|Model_{ref})$):
+
+$$BF_{m} = \frac{P(Data|Model_{m})}{P(Data|Model_{ref})}$$
+
+We will consider models with a $BF_m > 3$ as having more evidence in their favor compared to the reference model \citep{kass_raftery_1995_bayes_factors}. 
+If more than one model surpasses this level of support, we will consider the decision strategy with the highest $BF_m$ as the best fit to describe the participant's choices. 
+Based on these results, we will group participants according to the decision strategy that best described their behavior.
+
+#### Performance
+The first performance metric we will look at in this task will be choice accuracy.
+A choice will be considered as correct when the participant selects the cue ($C_L$ or $C_R$) with higher probability of winning (i.e., the higher sum of probabilistic weights), regardless of whether they receive a "win" or "lose" feedback. 
+We will compare choice accuracy across T1 and T2, to determine the impact induced by the new contingencies on the accuracy from participants. 
+More specifically, we expect to find different patterns of T1-T2 performance change based on the underlying assumptions for each decision strategy as shown in Table \ref{tab:ch2-expectations}. 
+We will also compare choice accuracy across decision strategies using only the data from T1, considering that the particular decision strategy used would be stabilized by then. 
+Additionally, we will analyze the total reward points scored and response time in T1 and compare them across decision strategies.
+
+#### Fixation Patterns
+To determine the information processing patterns, we will quantify the fixations falling inside each cell of the grid cues during T1. 
+To this end, we will create four areas of interest (AOIs) within each cue, one for each of the four cells. 
+These AOIs will be squares with sides measuring two hundred pixels, centered on each of the equipment within a cell.
+We will identify fixations using the I2CM algorithm from \citet{hessels_etal_2017_noiserobust_fixation}. 
+Since our study focuses on investigating the processing of attributes, we prioritize our analysis on the dissociation between the four features rather than across the two states within them. 
+Therefore, we will merge the AOIs from both cues, to reduce the number of AOIs to four, one per each feature. 
+In other words, we consider a fixation as a hit for a particular AOI if it landed within the boundaries surrounding a feature (e.g., the helmet) regardless of whether it occurs on the left or right cue. 
+This will give us as an outcome a categorical variable with four levels corresponding to each of the AOIs centered on the features composing the cues. 
+
+We will then analyze the fixation patterns first by comparing the total number of fixations per trial across decision strategies, to determine if the overall amount of information search varied across decision strategies. 
+Next, we will look into the fixation patterns of each decision strategy to characterize the information processing for each of them. 
+For this purpose, we will investigate the starting and stopping location of information search as well as the distribution of gaze across the difference features.
+Therefore, we will focus on three metrics: 1) the location of first fixation, 2) the location of last fixation, 3) the allocation of fixations across the four features.
+We will then contrast these metrics with the expected patterns from each strategy, outlined in Table \ref{tab:ch2-expectations}. 
+We selected these measures to capture the search rule representing the sampling sequence in the information space and the stopping rule that defines when the search stops \citep{gigerenzer_todd_1999_simple_heuristics}. 
+
+With regards to the TTB strategy, we will also consider the following four different decision scenarios (Fig. \ref{ch2-scenarios}), considering that TTB should show a dynamic stopping point depending on when the user finds a discriminating feature between cues:
+
+* When the cue states in the most informative feature (F1) are different (A).
+* When cue states are the same in first feature, but different in the second (F2) (B).
+* When cue states in both first and second feature are the same, but the third (F3) shows different states (C).
+* All the features but the least important (F4) have the same state (D). 
+
+We will then compare the total number of fixations and the location of last fixation across the four decision scenarios within the TTB users. 
+We hypothesize that there will a progressive increase in the total number of fixations from scenario A to D, considering the search pattern this strategy should follow. 
+We will also expect that last fixations will be made mostly in F1 for scenario A; in F2 for scenario B; in F3 for scenario C, and in F4 for scenario D.
+
+#### Statistical Models
+As listed in Table \ref{tab:ch2-expectations}, some of the underlying assumptions predict no difference between comparisons made (e.g., see the predictions for Tallying). 
+Furthermore, based on pilot data, we predict that we will see major differences in the number of users of each decision strategy. 
+For these reasons, we will use Bayesian parameter estimation on hierarchical linear models for statistical inference since they give us the possibility to find support for null differences and are also resilient to sample size problems \citep{rupp_etal_2004_bayes_not}. 
+We will use \citet{R-base} for this purpose. 
+The full details on the statistical models are included in Appendix A. 
+
+For the performance data, since we have a binary outcome (i.e., correct/incorrect), propose a binomial model to estimate the probability of choosing the best cue, using decision strategy and decision phase (T1 vs. T2) as predictors. 
+Additionally, we decided to look at the total points scored by participants during T1 as another performance measure. 
+This metric is a count with high dispersion, which we decided to model using a hierarchical negative binomial model, which can properly fit this type of data \citep{cameron_trivedi_1998_regression_analysis}. 
+In this model, we estimate the mean number of points obtained by each strategy, using the different decision strategies as predictors. 
+Furthermore, we will also review the response time during T1. 
+For this metric, we consider the time between stimulus presentation and participant's choice as the response time within a trial. 
+We will fit these response times using a shifted log-normal model, which is suitable for response time data for which the earliest response is larger than 0 \citep{ranger_etal_2020_modeling_responses}. 
+We will estimate the mean response time for each strategy by incorporating them into the model as a predictor. 
+
+For the total number of fixations per trial, which are also counts with high dispersion, we will use a hierarchical negative binomial model. 
+Similar to the score analysis, we will estimate the mean total number of fixations per trial, using strategy as a predictor. 
+
+For the analysis of fixation patterns (i.e., starting location, stopping location, gaze distribution), a fixation could land on any of the four AOIs we defined, which corresponds to the four different features in the cue. 
+This gives us a categorical outcome with four levels, which we will analyze using a hierarchical multinomial model with decision strategy as a fixed effect. 
+We will create separate multinomial models for the starting location, stopping location, and gaze distribution analysis. 
+For the starting (and stopping) location, we will estimate the probability that the initial (or final) fixation within a trial landed on each of the four AOIs.
+In the case of the gaze distribution, we will estimate the overall probability that a fixation would fall in each of the four AOIs within a trial.
+
+For the analysis of performance and fixation patterns in the TTB strategy, we will additionally test for the effect of decision scenarios (A, B, C, D). 
+TTB is characterized by the dynamic stopping rule that assumes continued information search in descending order of feature importance, until the user finds a discriminating feature between cues. 
+To test this behavior, we will include a scenario predictor with four different levels (A, B, C, D) in the statistical models for both the total number of fixations and stopping location. 
+All hierarchical models we described include random intercepts and/or slopes for all participants.
+
+#### Statistical Comparisons
+We will use the posterior samples from the models to perform the comparisons between stages, decision groups and decision scenarios. In these comparisons, we want to assess if:
+
+$${\theta_1} - {\theta_2} \neq 0$$
+where $\theta_1$ and $\theta_2$ are the parameters of interest. 
+For example, in the case of comparison across decision groups, we will take the posterior distributions from one group of interest and subtract it from another, giving us a distribution of differences between the two groups. 
+We will transform these differences to a standardized scale (i.e., Cohen's $\delta$).
+Then, we will extract the 89% highest density intervals (HDIs) from this distribution of differences \citep{mcelreath_2020_statistical_rethinking} to make inferences about any possible effects.
+To do this, we will use the probability of direction (PD, i.e., the proportion of the HDI that matches the sign of the median difference (MD)) \citep{makowski_etal_2019_indices_effect} as a benchmark to determine the presence of an effect. 
+We will interpret any PD higher than 90% as an effect of interest. 
+Finally, to assess whether the identified effects of interest are large enough to be meaningful, we defined a region of practical equivalence (ROPE) to a negligible effect size (Cohen's $\delta$ of 0.1).
+This ROPE represents the threshold that the differences must surpass in either direction in order to determine a meaningful effect. 
+Therefore, we measure the proportion of overlap between the HDI from our differences and the ROPE \citep{kruschke_2018_rejecting_accepting} to determine the significance of the effect. 
+Differences with no overlap will be interpreted as meaningful effects, overlaps below 25% as trends and overlaps beyond 25% as not meaningful.
+
+\newpage
+
+## Figures and Tables
+
+<!-- Basic information -->
+```{r ch2-task-setup, fig.cap = "\\label{ch2-task-setup}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."}
+knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png"))
+
+```
+
+\newpage
+
+<!-- Model Classification -->
+```{r ch2-model-selection, fig.cap = "\\label{ch2-model-selection}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."}
+knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png"))
+
+```
+
+\newpage
+
+<!-- Scenarios -->
+```{r ch2-scenarios, fig.cap = "\\label{ch2-scenarios}Decision scenarios according to the best discriminating feature between cues."}
+knitr::include_graphics(file.path(folder_figures, "Z2_scenarios.png"))
+
+```
+
+\begin{landscape}
+\thispagestyle{empty}
+```{r ch2-expectations}
+comparison_table <- tibble(
+  "Strategy" = c("First\nonly", "Second\nonly", "Serial\nSearch", "Tallying", "Partial\nTallying"),
+  
+  "E1" = c(
+    "Decrease in\nperformance with\nrespect to T1", 
+    "-", 
+    "Decrease in\nperformance with\nrespect to T1", 
+    "No meaningful\nchange in performance\nwith respect to T1", 
+    "-"),
+  
+  "E2" = c(
+    "Decrease in\nperformance with respect to T1", 
+    "-",
+    "Decrease in\nperformance with respect to T1",
+    "No meaningful change in performance with respect to T1",
+    "-"),
+  
+  "Starting point" = c(
+    "More fixations directed to F1 compared to other features", 
+    "More fixations directed to F2 compared to other features", 
+    "More fixations directed to F1 compared to other features",
+    "No meaningful difference between fixations across features", 
+    "More fixations directed toward F1-F2, but no meaningful difference between them"),
+  
+  "Gaze distribution" = c(
+    "More fixations directed to F1 compared to other features", 
+    "More fixations directed to F1 compared to other features", 
+    "Linear trend in the allocation of fixations across features in descending order of importance",
+    "No meaningful difference between fixations across features", 
+    "More fixations directed toward F1-F2, but no meaningful difference between them"),
+  
+  "Stopping point" = c(
+    "More fixations directed to F1 compared to other features", 
+    "More fixations directed to F1 compared to other features", 
+    "Linear trend in the allocation of fixations across features in descending order of importance",
+    "No meaningful difference between fixations across features", 
+    "More fixations directed toward F1-F2, but no meaningful difference between them"),
+  
+  "Decision scenarios" = c(
+    "-", 
+    "-",
+    "A: more last fixations to F1 vs other features; B: more last fixations to F2 vs other features; C: more last fixations to F3 vs other features; D: more last fixations to F4 vs other features", 
+    "-",
+    "-")
+  )
+
+
+apa_table(comparison_table, 
+          caption = "Expected performance and fixation patterns for each decision strategy.",
+          align = c("m{2cm}", "m{2.5cm}", "m{2.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
+# comparison_table |> 
+# kable("latex", booktabs = T, escape = F,
+#       align = c("m{2cm}", "m{2.5cm}", "m{2.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
+```
+\end{landscape}
+\newpage
