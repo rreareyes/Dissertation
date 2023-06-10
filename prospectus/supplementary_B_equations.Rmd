@@ -15,11 +15,11 @@ header-includes:
 \setcounter{equation}{0}
 \singlespacing
 
-# Appendix B
+# B. STATISTICAL MODELS FOR STUDY 2
 
-## Bayesian parameter estimation
+## Bayesian parameter estimation {.unlisted .unnumbered}
 
-### General settings
+### General settings {.unlisted .unnumbered}
 To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
 Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
 
@@ -30,7 +30,7 @@ For the rest of our priors, we used normal distributions ($\text{Normal}$) for t
 
 \newpage
 
-### Probability of choosing the correct cue
+### Probability of choosing the correct cue {.unlisted .unnumbered}
 We assumed that the correct responses (correct) follows a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the winning pilot (*p*). 
 We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group, the phase (T1 and T2), and age as predictors, with random slopes and intercepts for each participant. 
 
@@ -50,7 +50,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Total score
+### Total score {.unlisted .unnumbered}
 For this model, we assumed the number points obtained during T1 comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
 We estimate $\mu$ using a hierarchical linear model with strategy group and age as predictors, allowing random intercepts and slopes for each participant. 
 On the other hand, we estimate $phi$ using only strategy as a fixed effect.
@@ -73,7 +73,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Response time
+### Response time {.unlisted .unnumbered}
 For this model, we assumed the response time comes from a shifted lognormal distribution ($\operatorname{Shifted-Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$), and a shift parameter (the earliest possible response $\phi$). 
 We will estimated $\mu$ using a hierarchical linear model with strategy group and age as predictors, as well as random intercepts and slopes for each participant. 
 On the other hand, we will estimate $\tau$ and $\phi$ using strategy as fixed effects. 
@@ -99,94 +99,47 @@ $$\begin{aligned}
 \newpage
 
 
-### Number of fixations per trial
-For this model, we assumed the number of fixations per trial comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
-We estimated $\mu$ using a hierarchical linear model using the decision group, and age as predictors, with random intercepts and slopes for each participant. 
-On the other hand, we estimated $\phi$ using strategy as a fixed effect.
+### Strategies distribution {.unlisted .unnumbered}
+For this analysis, we review the overall distribution of decision strategies among participants. 
+This can be modeled using a softmax regression ($softmax$), which is a generalization of the logistic regression for more than two categorical outcomes.
+We will build this using participant's age as an ordinal predictor and the decision strategy as the categorical outcome.
+From this we will estimate the probability of participants at different age levels would use the different decision strategies.
 
 $$\begin{aligned} 
-  \text{number of fixations} & \sim \operatorname{Negbinomial}(\mu, \phi)  \\
-  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times age + \beta_{3_{j}} \times str:age \\
-  \phi & = \gamma_0 + \gamma_1 \times strategy \\
-  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3} \end{bmatrix}, \mathbf{S_{j}} \right) \\
-  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
-  \beta_{0} & \sim \operatorname{Normal}(5,2) \\
-  \beta_{1}, \beta_{2}, \beta_{3} & \sim \operatorname{Normal}(0,2) \\
-  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
-  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
-  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \text{decision strategy} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
   \text{where:}& \\
-  j & = \text{participant} \\
-  str & = strategy
-\end{aligned}$$
-
-\newpage
-
-#### Number of fixations per trial across decision scenarios
-$$\begin{aligned} 
-  \text{number of fixations} & \sim \operatorname{Negbinomial}(\mu, \phi)  \\
-  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times scn + \beta_{3_{j}} \times age + \beta_{4_{j}} \times str:scn:age \\
-  \phi & = \gamma_0 + \gamma_1 \times strategy \\
-  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \vdots \\ \beta_{4_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1_{j}} \\ \vdots \\ \beta_{4} \end{bmatrix}, \mathbf{S_{j}} \right)  \\
-  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 &	\cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_{\beta_{4}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 &	\cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_{\beta_{4}} \end{bmatrix} \\ 
-  \beta_{n} & \sim \operatorname{Normal}(0,2) \\
-  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
-  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
-  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
-  \text{where:}& \\
-  j & = \text{participant} \\
-  str & = strategy \\
-  scn & = scenario
-\end{aligned}$$
-
-\newpage
-
-### Feature fixation analyses
-For all the fixation pattern analyses, we assume that the number of feature fixations during T1 came from a multinomial distribution, with four different possible outcomes, one per feature (i.e., F1, F2, F3, F4). 
-We focused on three analyses, creating a separate multinomial model for each: starting location, stopping location, and gaze distribution.
-For the starting and stopping point analyses, we use only the first and last feature fixation of each trial as the outcome variable, respectively.
-On the other hand, to analyze the gaze distribution, we consider all feature fixations performed during each trial as the target outcome.
-All these multinomial models use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
-Using the softmax link, we will build hierarchical linear models to estimate the probability that the participants would fixate in each feature ($p^{F_i}$), with the decision strategy and age as predictors. 
-We will only estimate three models, since multinomial GLMs need only $K-3$ linear models for *K* types of events (in this case, fixation to the different features), using one of the events (fixations to F1) as a reference or pivot. 
-
-$$\begin{aligned} 
-  \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
-  \text{where:}& \\
-  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \theta^{F_3}, \theta^{F_4} \rangle \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \ldots, \theta^{F_{18}} \rangle \\
   \theta^{F_i} & = \operatorname{Softmax}(p^{F_i}) \\
   \text{where:}& \\
-  p^{F_i} & = (0, p^{F_2}, p^{F_3}, p^{F_4}) \\
-  p^{F_i} & = \beta_{0_{j}}^{b} + \beta_{1_{j}}^{b} \times str + \beta_{2_{j}}^{b} \times age + \beta_{3_{j}}^{b} \times str:age \\
-  \begin{bmatrix} \beta_{0_{j}}^{b} \\ \beta_{1_{j}}^{b} \\ \beta_{2_{j}}^{b} \\ \beta_{3_{j}}^{b}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}^{b} \\ \beta_{1}^{b} \\ \beta_{2}^{b} \\ \beta_{3}^{b} \end{bmatrix}, \mathbf{S_{j}} \right) \\
-  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
-  \beta_{n} & \sim \operatorname{Normal}(0,2) \\
-  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
-  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
-  \text{where:}& \\
-  j & = \text{participant} \\
-  str & = strategy
+  p^{F_i} & = (0, p^{F_2}, ..., p^{F_{18}}) \\
+  p^{F_i} & = \beta_{0}^{F_i} + \beta_{1}^{F_i} \times age  \\
+  \beta_{0}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+  \beta_{1}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
 \end{aligned}$$
 
 \newpage
 
-#### Fixation patterns across decision scenarios 
+Additionally, we will repeat this analysis but now grouping the decision strategies according to common features:
+
+* Single feature: strategies 1-4
+* Double feature: strategies 5-10
+* Triple feature: strategies 5-10
+* WADD
+* Tallying
+* Serial Search
+
+This will be don with the purpose of exploring if any set of strategies are more frequently used at a specific age.
+
 $$\begin{aligned} 
-  \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{strategy group} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
   \text{where:}& \\
-  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \theta^{F_3}, \theta^{F_4} \rangle \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \ldots, \theta^{F_{6}} \rangle \\
   \theta^{F_i} & = \operatorname{Softmax}(p^{F_i}) \\
   \text{where:}& \\
-  p^{F_i} & = (0, p^{F_2}, p^{F_3}, p^{F_4}) \\
-  p^{F_i} & = \beta_{0_{j}}^{b} + \beta_{1_{j}}^{b} \times str + \beta_{2_{j}}^{b} \times scn + \beta_{3_{j}}^{b} \times age + \beta_{4_{j}}^{b} \times str:scn:age \\
-  \begin{bmatrix} \beta_{0_{j}}^{b} \\ \beta_{1_{j}}^{b} \\ \vdots \\ \beta_{4_{j}}^{b} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}^{b} \\ \beta_{1}^{b} \\ \vdots \\ \beta_{4}^{b} \end{bmatrix}, \mathbf{S_{j}} \right) \\
-  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{4}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{4}} \end{bmatrix} \\
-  \beta_{n} & \sim \operatorname{Normal}(0,2) \\
-  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
-  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
-  \text{where:}& \\
-  j & = \text{participant} \\
-  str & = strategy \\
-  scn & = scenario
+  p^{F_i} & = (0, p^{F_2}, ..., p^{F_{6}}) \\
+  p^{F_i} & = \beta_{0}^{F_i} + \beta_{1}^{F_i} \times age  \\
+  \beta_{0}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+  \beta_{1}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
 \end{aligned}$$
 
+\newpage

@@ -15,14 +15,14 @@ header-includes:
 \setcounter{equation}{0}
 \singlespacing
 
-# Appendix C
-## Logistic decision models for model comparisons
+# C. STATISTICAL MODELS FOR STUDY 3
+## Logistic decision models for model comparisons {.unlisted .unnumbered}
 
 We constructed a total of 19 decision models (Model 1-19 as listed below). 
 These models vary in terms of the number pieces of information used (i.e., reward and/or probability) and in the ways these features are integrated (e.g., difference, ratio, ratio levels, etc).   
 We include two special single predictor models based in the utility modeling tradition: difference in expected value, and difference in subjective value.
 
-### Feature difference
+### Feature difference {.unlisted .unnumbered}
 These models simply consider the actual numeric difference between gamble features (probability and reward).
 $$\begin{aligned} 
     \text{Model 1:}& \\
@@ -33,7 +33,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Reward} \\
 \end{aligned}$$
 
-### Relative difference
+### Relative difference {.unlisted .unnumbered}
 These models use the ration of gamble features as decision criterion.
 Values lower than 1 would indicate support for the right feature, and values higher than 1 will indicate support for the left feature
 $$\begin{aligned} 
@@ -45,7 +45,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Reward} \\
 \end{aligned}$$
 
-### Discrete difference levels
+### Discrete difference levels {.unlisted .unnumbered}
 The differences between features could be perceived as mere levels of distance between features, as such, we will bin differences in nine levels, from -5 (indicating the highest support for the right gamble) to 5 (indicating the highest support for the left gamble).
 $$\begin{aligned} 
     \text{Model 7:}& \\
@@ -56,7 +56,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Reward Level} \\
 \end{aligned}$$
 
-### Discrete ratio levels
+### Discrete ratio levels {.unlisted .unnumbered}
 Similarly, the relative differences between features could also be perceived as mere levels of distance between features.
 We will also bin these relative differences in nine levels, from -5 (indicating the highest support for the right gamble) to 5 (indicating the highest support for the left gamble).
 $$\begin{aligned} 
@@ -68,7 +68,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Reward Level} \\
 \end{aligned}$$
 
-### Tallying models
+### Tallying models {.unlisted .unnumbered}
 Under these models, the numeric values in each feature are ignored, and participants merely use the sign of the difference as criterion for making their choice.
 Model 16 represents a strategy that combines the tally of both probability and reward to determine support for a given gamble.
 $$\begin{aligned} 
@@ -84,7 +84,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Utility models
+### Utility models {.unlisted .unnumbered}
 These models integrate the information of each gamble into a measure of utility.
 The $\Delta$EV model, uses the difference in the expected value between gambles as the criterion to make a choice.
 The Ratio EV model on the other hand, uses the relative difference in expected value as choice criterion.
@@ -103,9 +103,9 @@ $$\begin{aligned}
 
 \newpage
 
-## Bayesian parameter estimation
+## Bayesian parameter estimation {.unlisted .unnumbered}
 
-### General settings
+### General settings {.unlisted .unnumbered}
 To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
 Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
 
@@ -116,7 +116,7 @@ For the rest of our priors, we used normal distributions ($\text{Normal}$) for t
 
 \newpage
 
-### Probability of choosing the highest EV gamble
+### Probability of choosing the highest EV gamble {.unlisted .unnumbered}
 We assumed that the accurate responses (correct) follow a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the gamble with the highest EV (*p*). 
 We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group as predictor, with random slopes and intercepts for each participant. 
 
@@ -135,7 +135,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Feature fixation analyses
+### Feature fixation analysis {.unlisted .unnumbered}
 For all the fixation pattern analyses, we assume that the number of feature fixations came from a multinomial distribution, with four different possible outcomes, accounting for the two pieces of information of both gambles (i.e., F1, F2, F3, F4). 
 This multinomila model use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
 Using the softmax link, we will build hierarchical linear models to estimate the probability that the participants would fixate in each feature ($p^{F_i}$), with the decision strategy as predictor. 
@@ -160,7 +160,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Choice certainty
+### Choice certainty {.unlisted .unnumbered}
 For this model, we will use the area under the curve (AUC) of the mouse path as dependent variable.
 This metric we assume comes from a lognormal distribution ($\operatorname{Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$). 
 We will estimate $\mu$ using a hierarchical linear model with strategy group and difficulty level as predictors, allowing for random intercepts and slopes for each participant. 
@@ -184,7 +184,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Choice vigor
+### Choice vigor {.unlisted .unnumbered}
 For this model, we will use the peak speed during the trial as dependent variable.
 We will use the same approach as the choice certainty model, since we expect this metric to also have a zero bounded distribution with a long positive tail.
 $$\begin{aligned} 
@@ -205,7 +205,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Sequential sampling models
+### Sequential sampling models {.unlisted .unnumbered}
 For these models we will divide the mouse path such that after each fixation, we obtain a partial movement vector that aims to capture the effect of the piece of information that was sampled immediatly before.
 We will extract two metrics from these vectors: speed and angle deviation from the most direct path.
 We will model speed in this context using a lognormal distribution ($\operatorname{Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$). 

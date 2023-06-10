@@ -15,13 +15,13 @@ header-includes:
 \setcounter{equation}{0}
 \singlespacing
 
-# Appendix A
-## Logistic decision models for model comparisons
+# A. STATISTICAL MODELS FOR STUDY 1
+## Logistic decision models for model comparisons {.unlisted .unnumbered}
 
 We constructed a total of 21 decision models (Model 1-21 as listed below). 
 These models vary in terms of the number of features (i.e., F1, F2, F3, F4) considered (e.g., Single, Double, Triple, Full) and the ways these features are integrated (e.g., Tallying, Serial Search) in making a choice.   
 
-### Single feature models
+### Single feature models {.unlisted .unnumbered}
 $$\begin{aligned} 
     \text{Model 1:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} \\
@@ -33,7 +33,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{4} \\
 \end{aligned}$$
 
-### Double feature models
+### Double feature models {.unlisted .unnumbered}
 $$\begin{aligned} 
     \text{Model 5:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} \\
@@ -49,7 +49,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{3} + \beta_{2} \text{F}_{4} \\
 \end{aligned}$$
 
-### Triple feature models
+### Triple feature models {.unlisted .unnumbered}
 $$\begin{aligned} 
     \text{Model 11:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} \\
@@ -61,13 +61,13 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{2} + \beta_{2} \text{F}_{3} + \beta_{3} \text{F}_{4} \\
 \end{aligned}$$
 
-### Full model (Reference)
+### Full model (Reference) {.unlisted .unnumbered}
 $$\begin{aligned} 
     \text{Model 15:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4} 
 \end{aligned}$$
 
-### Tallying models
+### Tallying models {.unlisted .unnumbered}
 $$\begin{aligned} 
     \text{Model 16:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \sum_{i = 1}^{4}F_{i} \\
@@ -77,7 +77,7 @@ $$\begin{aligned}
     left{[i]} & \sim \beta_{0} + \beta_{1} \sum_{i = 1}^{2}F_{i} \\
 \end{aligned}$$
 
-### Serial search models
+### Serial search models {.unlisted .unnumbered}
 $$\begin{aligned} \text{Model 19:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4} \\
     \text{Model 20:}& \\
@@ -92,9 +92,9 @@ $$\begin{aligned} \text{Model 19:}& \\
 
 \newpage
 
-## Bayesian parameter estimation
+## Bayesian parameter estimation {.unlisted .unnumbered}
 
-### General settings
+### General settings {.unlisted .unnumbered}
 To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
 Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
 
@@ -105,7 +105,7 @@ For the rest of our priors, we used normal distributions ($\text{Normal}$) for t
 
 \newpage
 
-### Probability of choosing the correct cue
+### Probability of choosing the correct cue {.unlisted .unnumbered}
 We assumed that the correct responses (correct) follows a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the winning pilot (*p*). 
 We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group, and the phase (T1 and T2) as predictors, with random slopes and intercepts for each participant. 
 
@@ -124,7 +124,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Total score
+### Total score {.unlisted .unnumbered}
 For this model, we assumed the number points obtained during T1 comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
 We will estimate $\mu$ using a hierarchical linear model with strategy group as predictor, allowing random intercepts and slopes for each participant. 
 On the other hand, we estimate $phi$ using only strategy as a fixed effect.
@@ -146,7 +146,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Response time
+### Response time {.unlisted .unnumbered}
 For this model, we assumed the response time comes from a shifted lognormal distribution ($\operatorname{Shifted-Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$), and a shift parameter (the earliest possible response $\phi$). 
 We will estimate $\mu$ using a hierarchical linear model with strategy group as predictor, as well as random intercepts and slopes for each participant. 
 On the other hand, we will estimate $\tau$ and $\phi$ using strategy as fixed effect. 
@@ -170,7 +170,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Number of fixations per trial
+### Number of fixations per trial {.unlisted .unnumbered}
 For this model, we assumed the number of fixations per trial comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
 We estimated $\mu$ using a hierarchical linear model using the decision group as predictor, with random intercepts and slopes for each participant. 
 On the other hand, we estimated $\phi$ using a random intercept model, to allow each participant to have their own overdispersion parameter ($\gamma_{0_{j}}$), which in turn comes from a normal distribution that uses $\gamma_0$ and $\tau$ as mean and standard deviation, respectively.
@@ -191,7 +191,7 @@ $$\begin{aligned}
 
 \newpage
 
-#### Number of fixations per trial across decision scenarios
+#### Number of fixations per trial across decision scenarios {.unlisted .unnumbered}
 $$\begin{aligned} 
   \text{number of fixations} & \sim \operatorname{Negbinomial}(\mu, \phi) \\
   log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy + \beta_{2_{j}} \times scenario + \beta_{3_{j}} \times strategy:scenario  \\
@@ -208,7 +208,7 @@ $$\begin{aligned}
 
 \newpage
 
-### Feature fixation analyses
+### Feature fixation analyses {.unlisted .unnumbered}
 For all the fixation pattern analyses, we assume that the number of feature fixations during T1 came from a multinomial distribution, with four different possible outcomes, one per feature (i.e., F1, F2, F3, F4). 
 We focused on three analyses, creating a separate multinomial model for each: starting location, stopping location, and gaze distribution.
 For the starting and stopping point analyses, we use only the first and last feature fixation of each trial as the outcome variable, respectively.
@@ -236,7 +236,7 @@ $$\begin{aligned}
 
 \newpage
 
-#### Fixation patterns across decision scenarios 
+#### Fixation patterns across decision scenarios {.unlisted .unnumbered}
 $$\begin{aligned} 
   \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
   \text{where:}& \\

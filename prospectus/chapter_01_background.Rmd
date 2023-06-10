@@ -1,19 +1,17 @@
 ---
 title: ""
-output: pdf_document
-header-includes:
-  - \usepackage{float}
-  - \usepackage{sectsty}
 ---
 
-# Background and Significance
+# CHAPTER I {.unlisted .unnumbered}
+# BACKGROUND AND SIGNIFICANCE
+
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"In our reasonings concerning matter of fact, there are all imaginable degrees of assurance, from the highest certainty to the lowest species of moral evidence. A wise man, therefore, proportions his belief to the evidence."} 
 
 \begin{flushright}
-
-\hspace{\parindent}\emph{In our reasonings concerning matter of fact, there are all imaginable degrees of assurance, from the highest certainty to the lowest species of moral evidence. A wise man, therefore, proportions his belief to the evidence.} \\ 
---- David Hume,  An Enquiry Concerning Human Understanding (1748)
- 
+--- David Hume,  \emph{An Enquiry Concerning Human Understanding}
 \end{flushright}
+\end{adjustwidth}
 
 Most of us are familiar with the feeling of facing circumstances with unknown outcomes or ambiguous information. 
 These scenarios offer a particular challenge for us as decision agents.

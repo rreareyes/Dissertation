@@ -55,15 +55,17 @@ load(file.path(folder_keys, "discarded_performance_key.RData"))
 load(file.path(folder_keys, "collected_participants_key.RData"))
 ```
 
-# Study 1: Eye-Tracking Analysis of Heuristic-Driven Information Search in Uncertain Decision Environments
-## Introduction
+
+# CHAPTER II {.unlisted .unnumbered}
+# STUDY 1: EYE-TRACKING ANALYSIS OF HEURISTIC-DRIVEN INFORMATION SEARCH IN UNCERTAIN DECISION ENVIRONMENTS
+
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"Maturity, one discovers, has everything to do with the acceptance of not knowing."}
 
 \begin{flushright}
-
-\hspace{\parindent}\emph{Maturity, one discovers, has everything to do with the acceptance of not knowing.} \\ 
---- Mark Z. Danielewski, House of Leaves (2000)
- 
+--- Mark Z. Danielewski,  \emph{House of Leaves}
 \end{flushright}
+\end{adjustwidth}
 
 Choosing between two options (e.g., ice cream or cake for dessert, wearing a white or blue shirt to a job interview, getting a cat or a dog as a pet, etc.), is arguably one of the most common decision scenarios we face in our daily lives. 
 At first, decisions for such binary choices seem fairly easy. 
@@ -118,7 +120,7 @@ We will run two similar experiments (E1 and E2), where we will introduce changes
 We will compensate participants with a flat rate of class credit or \$12, as well as a monetary bonus of \$5 based on task performance. 
 
 ### Two-Alternative Multi-Attribute Probabilistic Classification Task
-An overview of the task is shown in Fig. \ref{ch2-task-setup}. 
+An overview of the task is shown in Fig. \ref{fig:ch2-task-setup}. 
 We will adapt the probabilistic classification paradigm used in \citet{oh_etal_2016_satisficing_splitsecond} for eye-tracking purposes. 
 This paradigm carries many common features of the widely used binary choice paradigms (e.g., \citealt{broder_2000_assessing_empirical, broder_2003_decision_making, dieckmann_rieskamp_2007_influence_information, lee_cummins_2004_evidence_accumulation, rieskamp_otto_2006_ssl_theory}). 
 On each trial, participants will choose between two alternatives, based on the information provided by four features that vary in terms of how well they predict the winning option. 
@@ -133,7 +135,7 @@ First, the two brand names for each equipment will only vary in terms of a vowel
 Secondly, we will surround the brand names with hashes to limit the possibility of using peripheral vision instead of fixating on them.   
 
 We will create a set of stimuli using all combinations of cue states (i.e., the brands), giving us a total of sixteen unique grids ($4^2 = 16$). 
-Additionally, we will assign complementary probabilistic weights to the two states of each item (see Fig. \ref{ch2-task-setup} for weights assigned). 
+Additionally, we will assign complementary probabilistic weights to the two states of each item (see Fig. \ref{fig:ch2-task-setup} for weights assigned). 
 These weights predict each pilot's probability of winning. 
 The absolute difference between the two complementary weights assigned to each equipment is an objective measure of its validity, i.e., how good a piece of equipment is at predicting the winning pilot. 
 The larger this difference, the higher their relative importance compared to the other items. 
@@ -152,7 +154,7 @@ $$P(R|C_L, C_R) = 1 - P(L|C_L,C_R)$$
 
 Where *i* represents the *i*th item inside each cue *c* ($C_L:$ left cue, $C_R:$ right cue). 
 
-Participants will have up to 15 seconds to choose by pressing the left and right arrow key on the keyboard, using their right hand (Fig. \ref{ch2-task-setup}B). 
+Participants will have up to 15 seconds to choose by pressing the left and right arrow key on the keyboard, using their right hand (Fig. \ref{fig:ch2-task-setup}B). 
 Upon making their choice or after the 15 seconds expire, the cues will disappear from the screen. 
 After this, we will display a feedback message for 500 ms, informing them about the outcome of their choice (i.e., "win" or "lose" indicating whether the chosen pilot won or lost) or a "miss" message in case of no response. 
 The "win" or "lose" outcomes were determined based on the probability of winning for each side. 
@@ -163,7 +165,7 @@ Under these circumstances, participants could receive a "lose" message, despite 
 As part of the feedback, participants will also receive reward points based on response time. 
 The purpose of these rewards is to incentivize heuristics use by encouraging participants to make faster responses. 
 We will impose an adaptive time pressure based on the moving average ($\mu$RT) reaction time up until the previous trial within each participant. 
-Winning trials with RT within the range of ±1SD from the ($\mu$RT) will grant 1 point, while faster (RT < $\mu$RT - 1$\sigma$RT) or slower (RT > $\mu$RT + 1$\sigma$RT) responses will accrue 2 points or 0 points respectively (Fig. \ref{ch2-task-setup}C). 
+Winning trials with RT within the range of ±1SD from the ($\mu$RT) will grant 1 point, while faster (RT < $\mu$RT - 1$\sigma$RT) or slower (RT > $\mu$RT + 1$\sigma$RT) responses will accrue 2 points or 0 points respectively (Fig. \ref{fig:ch2-task-setup}C). 
 We will assign an ITI of 1 second between the feedback screen and the presentation of the next trial during which participants fixate to a target on the center of the screen.
 
 Before the start of the experiment, we will present the task instructions as a slide show, after which we will ask participants to provide us with a brief explanation of the task. 
@@ -175,7 +177,7 @@ In both E1 and E2, participants will complete a total of 480 trials, organized i
 During P1 we participants will experience two full sets of unique cue pairs (240 trials in total) across 4 blocks, allowing them to develop a decision strategy. 
 During both T1 and T2, we will present 120 unique pairs divided into two blocks. 
 For T1, the contingencies of probabilistic weights to the cue states will remain the same as P1. 
-During T2 however, we will introduce changes to these contingencies, unbeknownst to the participants (see Fig. \ref{ch2-task-setup}A for the shift in probabilistic weights in T2). 
+During T2 however, we will introduce changes to these contingencies, unbeknownst to the participants (see Fig. \ref{fig:ch2-task-setup}A for the shift in probabilistic weights in T2). 
 For E1, we will set the complementary weights for the two states to 0.80/0.20 across all items. 
 For E2, we will invert the ranking of the features, making the most informative item (i.e., weights 0.95/0.05) become the least informative (i.e., weights 0.5001/0.4999) and so on.
 In both E1 and E2, we will keep the winning states from P1 and T1 the same in T2.
@@ -213,22 +215,22 @@ Similar to \citet{oh_etal_2016_satisficing_splitsecond}, we define an optimal mo
 
 $$choice_{i} \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4}$$
 
-This model represents the integration of the four features from the cue allowing each to have their own weight in the decision process (model 15 in Fig. \ref{ch2-model-selection}, which is equivalent to WADD). 
+This model represents the integration of the four features from the cue allowing each to have their own weight in the decision process (model 15 in Fig. \ref{fig:ch2-model-configuration}, which is equivalent to WADD). 
 We use this as the reference to contrast all the other decision models, considering that it is the most flexible model to fit. 
-We will also create 14 models that represent different integration of features: four single parameter models, which represent the use of a single feature to make a choice (Fig. \ref{ch2-model-selection}, models 1-4); six models that integrate two features (Fig. \ref{ch2-model-selection}, models 5-10) and four models that integrate three features (Fig. \ref{ch2-model-selection}, models 11-14).
+We will also create 14 models that represent different integration of features: four single parameter models, which represent the use of a single feature to make a choice (Fig. \ref{fig:ch2-model-configuration}, models 1-4); six models that integrate two features (Fig. \ref{fig:ch2-model-configuration}, models 5-10) and four models that integrate three features (Fig. \ref{fig:ch2-model-configuration}, models 11-14).
 
 Additionally, we consider the possibility that the participants could use a compensatory strategy like Tallying to solve this task. 
 This strategy merely counts the number of positive attributes present in each cue (i.e., winning states/brands in the context of this task), adds them up, and chooses the option with the larger number. 
-To represent this strategy, we will create a model with a single predictor that could take any integer from -4 to 4, where negative values indicate number of features favoring the right side, while positive values represent the number of features in favor of the left cue (Fig. \ref{ch2-model-selection}, model 16). 
+To represent this strategy, we will create a model with a single predictor that could take any integer from -4 to 4, where negative values indicate number of features favoring the right side, while positive values represent the number of features in favor of the left cue (Fig. \ref{fig:ch2-model-configuration}, model 16). 
 This way, the model uses information from all the features, but they are merged in a single predictor.
 
 Next, we want to represent the choice patterns expected from users of the TTB strategy. 
-To do this, we will create a model with 4 different predictors that compares the two states from the same feature in each cue, starting from the most important one, and going down in descending order of importance, until a choice is made when it identifies a difference in the two states (Fig. \ref{ch2-model-selection}, model 19). 
+To do this, we will create a model with 4 different predictors that compares the two states from the same feature in each cue, starting from the most important one, and going down in descending order of importance, until a choice is made when it identifies a difference in the two states (Fig. \ref{fig:ch2-model-configuration}, model 19). 
 A trial where the most important feature favors the left side would have $[1, 0, 0, 0]$ as the vector of predictors, whereas a trial where the discerning feature favoring the right cue is located in the third most important item would take the form $[0, 0, -1, 0]$. 
 This decision model would technically rely on a single feature in each trial to make a choice, but it would vary in how many features it would have to review before choosing, depending on the particular set of cues being compared. 
 
-Finally, to account for models implemented in an incomplete fashion, we will create the models representing partial Tallying (Fig. \ref{ch2-model-selection}, model 17-18) and incomplete TTB (Fig. \ref{ch2-model-selection}, model 20-21). 
-The specific formulas from each model listed in Fig. \ref{ch2-model-selection} are included in Appendix A.
+Finally, to account for models implemented in an incomplete fashion, we will create the models representing partial Tallying (Fig. \ref{fig:ch2-model-configuration}, model 17-18) and incomplete TTB (Fig. \ref{fig:ch2-model-configuration}, model 20-21). 
+The specific formulas from each model listed in Fig. \ref{fig:ch2-model-configuration} are included in Appendix A.
 
 To classify participant's choice patterns into one of the decision models, we calculate the Bayes factors ($BF_m$) of each individual model by comparing the probability that the choice data was generated by the decision model ($P(Data|Model_{m})$) in comparison to the reference model ($P(Data|Model_{ref})$):
 
@@ -263,7 +265,7 @@ Therefore, we will focus on three metrics: 1) the location of first fixation, 2)
 We will then contrast these metrics with the expected patterns from each strategy, outlined in Table \ref{tab:ch2-expectations}. 
 We selected these measures to capture the search rule representing the sampling sequence in the information space and the stopping rule that defines when the search stops \citep{gigerenzer_todd_1999_simple_heuristics}. 
 
-With regards to the TTB strategy, we will also consider the following four different decision scenarios (Fig. \ref{ch2-scenarios}), considering that TTB should show a dynamic stopping point depending on when the user finds a discriminating feature between cues:
+With regards to the TTB strategy, we will also consider the following four different decision scenarios (Fig. \ref{fig:ch2-scenarios}), considering that TTB should show a dynamic stopping point depending on when the user finds a discriminating feature between cues:
 
 * When the cue states in the most informative feature (F1) are different (A).
 * When cue states are the same in first feature, but different in the second (F2) (B).
@@ -321,29 +323,7 @@ Differences with no overlap will be interpreted as meaningful effects, overlaps 
 
 \newpage
 
-## Figures and Tables
-
-<!-- Basic information -->
-```{r ch2-task-setup, fig.cap = "\\label{ch2-task-setup}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."}
-knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png"))
-
-```
-
-\newpage
-
-<!-- Model Classification -->
-```{r ch2-model-selection, fig.cap = "\\label{ch2-model-selection}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."}
-knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png"))
-
-```
-
-\newpage
-
-<!-- Scenarios -->
-```{r ch2-scenarios, fig.cap = "\\label{ch2-scenarios}Decision scenarios according to the best discriminating feature between cues."}
-knitr::include_graphics(file.path(folder_figures, "Z2_scenarios.png"))
-
-```
+## Tables and Figures
 
 \begin{landscape}
 \thispagestyle{empty}
@@ -403,4 +383,55 @@ apa_table(comparison_table,
 #       align = c("m{2cm}", "m{2.5cm}", "m{2.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
 ```
 \end{landscape}
+
 \newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/study_01/Z1_merged_setup.png}
+    \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
+    \label{fig:ch2-task-setup}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/study_01/Z2_decision_models.png}
+    \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
+    \label{fig:ch2-model-configuration}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/study_01/Z2_scenarios.png}
+    \caption[Decision scenarios.]{These scenarios are created based on the dynamic search rule from TTB according to the best discriminating feature between cues. In scenario A, where the most predictive feature is different between the two cues (red and light red squares), participants using this strategy should only focus on this feature, ignoring the rest. In scenario B, the most predictive feature is the same between cues (gray squares) but the second most predictive is different, therefore, they should stop there and ignore the rest of the features. This patter will continue, until reaching scenario D, where all the features are the same, except for the fourth most predictive, in that case, the TTB users should scan all the cue and reach their choice until the very end.}
+    \label{fig:ch2-scenarios}
+\end{figure}
+
+\newpage
+
+<!-- ```{r fig:ch2-task-setup, fig.cap = "\\label{fig:ch2-task-setup}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->
+<!-- knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png")) -->
+
+<!-- ``` -->
+
+
+
+
+<!-- ```{r fig:ch2-model-configuration, fig.cap = "\\label{fig:ch2-model-configuration}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."} -->
+<!-- knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png")) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r ch2-scenarios, fig.cap = "\\label{ch2-scenarios}Decision scenarios according to the best discriminating feature between cues."} -->
+<!-- knitr::include_graphics(file.path(folder_figures, "Z2_scenarios.png")) -->
+
+<!-- ``` -->
+
+
+

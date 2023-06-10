@@ -31,18 +31,18 @@ folder_figures    <- file.path(folder_root, "figures")
 
 ```
 
-# Study 3: Disentangling information processing during motor decisions under risk
-## Introduction
+# CHAPTER IV {.unlisted .unnumbered}
+# STUDY 4: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK
+
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"In practical life we are compelled to follow what is most probable; in speculative thought we are compelled to follow truth."} 
 
 \begin{flushright}
-
-\hspace{\parindent}\emph{In practical life we are compelled to follow what is most probable; in speculative thought we are compelled to follow truth.} \\ 
---- Baruch Spinoza, Letter 56 to Hugo Boxel (1674)
- 
+--- Baruch Spinoza,  \emph{Letter 56 to Hugo Boxel}
 \end{flushright}
+\end{adjustwidth}
 
 Choices that depend on the subjective preference of the agent making the decision have been the center of the neuroeconomic research since its early stages \citep{tversky_kahneman_1974_judgment_uncertainty}.
-
 In this type of economic decisions, it is assumed that the brain has the ability to encode and evaluate the associated value with the different alternatives being considered \citep{kable_glimcher_2009_neurobiology_decision, levy_glimcher_2012_root_all, padoa-schioppa_2011_neurobiology_economic}.
 There is a myriad of studies that have pursued and demonstrated encoding of value in different brain regions \citep{fehr_camerer_2007_social_neuroeconomics, glimcher_rustichini_2004_neuroeconomics_consilience, juechems_summerfield_2019_where_does, levy_etal_2010_neural_representation, oreilly_2013_making_predictions}.
 We can broadly divide the study of value-based decisions in two major contexts: those that study preference influenced by external reinforcement based on experience, and those that explore preference changes without it. 

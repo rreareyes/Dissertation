@@ -22,6 +22,7 @@ header-includes:
   - \usepackage{grffile}
   - \usepackage{chngcntr}
   - \usepackage{sectsty}
+  - \usepackage{changepage}
 
 
 bibliography: 
@@ -35,7 +36,11 @@ link-citations: true
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-\allsectionsfont{\centering}
+\renewcommand*\contentsname{TABLE OF CONTENTS} 
+\renewcommand*\listfigurename{LIST OF FIGURES} 
+\renewcommand*\listtablename{LIST OF TABLES}
+
+\allsectionsfont{\centering\normalsize\fontsize{12pt}{12}}
 \subsectionfont{\raggedright}
 \subsubsectionfont{\raggedright}
 
@@ -71,15 +76,36 @@ knitr::opts_chunk$set(echo = TRUE)
 \raggedright
 \newpage
 \tableofcontents
-
-\allsectionsfont{\fontsize{11}{13.6}\selectfont}
+\addtocontents{toc}{~\hfill\text{Page}\par}
 
 \newpage
+
+\listoftables
+\addtocontents{lot}{Table\hfill\text{Page}\par}
+
+\newpage
+
+\listoffigures
+\addtocontents{lof}{Figure\hfill\text{Page}\par}
+
+\allsectionsfont{\fontsize{12}{12}\selectfont}
+
+\addtocontents{toc}{~\par}
+\addtocontents{toc}{CHAPTER\par}
+
+\newpage
+
+\pagenumbering{arabic}
+
+
+\allsectionsfont{\centering\normalsize\fontsize{12pt}{12}}
+\subsectionfont{\raggedright}
+\subsubsectionfont{\raggedright}
+
 
 ```{r background, child='chapter_01_background.Rmd'}
 
 ```
-\pagenumbering{arabic}
 
 \newpage
 ```{r heuristics-uncertainty, child='chapter_02_heuristics-under-uncertainty.Rmd'}
@@ -102,6 +128,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 \newpage
+
 ```{r appendix-a, child='supplementary_A_equations.Rmd'}
 
 ```

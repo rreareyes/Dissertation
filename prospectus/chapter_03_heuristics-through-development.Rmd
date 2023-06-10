@@ -31,16 +31,16 @@ folder_figures    <- file.path(folder_root, "figures")
 
 ```
 
+# CHAPTER III {.unlisted .unnumbered}
+# STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY
 
-# Study 2: Effects of development on heuristic strategies use under uncertainty
-## Introduction
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"She'll outgrow it, dear. It's just the age... the age where nothing fits."} 
 
 \begin{flushright}
-
-\hspace{\parindent}\emph{She'll outgrow it, dear. It's just the age... the age where nothing fits.} \\ 
---- Judy's Mother, Rebel Without a Cause (1955)
- 
+--- Judy's Mother,  \emph{Rebel Without a Cause}
 \end{flushright}
+\end{adjustwidth}
 
 Picture a large wooden ship that has been kept in a museum for centuries.
 The custodians of this ancient relic have worked tirelessly throughout the years, making sure of preserving its condition as much as possible.
