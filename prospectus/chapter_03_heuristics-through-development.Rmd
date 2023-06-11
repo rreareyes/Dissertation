@@ -106,7 +106,7 @@ As a summary, it consists on a forced-choice task, where the participants choose
 The options are presented as two 2-by-2 grids, with four features each, which vary in terms of how well they predict the winning option. 
 These features are binary, meaning they can have in a given cue, one of two different states, presented as brands of equipment.
 Participants first go over a full set of the possible combinations of features and cues (240 trials) which serves as a practice stage (P1).
-Then, they face 120 trials, where the feature validities remain unchanged (T1), followed for another set of 120 trials where we equalize the feature validities to 0.8/0.2 (T2). An overview of the task is shown in Fig. \ref{ch3-task-overview}. 
+Then, they face 120 trials, where the feature validities remain unchanged (T1), followed for another set of 120 trials where we equalize the feature validities to 0.8/0.2 (T2). An overview of the task is shown in Fig. \ref{fig:ch3-task-overview}. 
 
 ### Data Analysis
 The focus of this study will be to identify the decision strategies spontaneously implemented in an uncertain environment, focusing on the changes these strategies may express through development.
@@ -117,7 +117,7 @@ Finally, we will also entertain the possibility that age may have some influence
 
 #### Model Classification
 We will implement the same model classification approach described previously, using variational Bayesian inference \citep{drugowitsch_2019_variational_bayesian, oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
-We will use the same number and configuration of decision models from before (see Fig. \ref{ch3-decision-models}), as well as the decision criteria to classify participants into the different models (BF > 3), with the WADD model as reference (see Appendix A for the detailed list of decision models).
+We will use the same number and configuration of decision models from before (see Fig. \ref{fig:ch3-decision-models}), as well as the decision criteria to classify participants into the different models (BF > 3), with the WADD model as reference (see Appendix A for the detailed list of decision models).
 
 #### Statistical Models
 As with Study 1, we have similar expectations on the overall behavior from different strategies (see Table 1 in the previous chapter).
@@ -135,16 +135,36 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 \newpage
 
-## Figures and Tables
-```{r ch3-task-overview, fig.cap = "\\label{ch3-task-overview}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."}
-knitr::include_graphics(file.path(folder_figures, "Z1_task_setup.png"))
+## Tables and Figures
 
-```
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{study_02/figures/Z1_task_setup.png}
+    \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
+    \label{fig:ch3-task-overview}
+\end{figure}
 
 \newpage
 
-```{r ch3-decision-models, fig.cap = "\\label{ch3-decision-models}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."}
-knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png"))
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{study_02/figures/Z2_decision_models.png}
+    \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
+    \label{fig:ch3-decision-models}
+\end{figure}
 
-```
+\newpage
+
+
+<!-- ```{r fig:ch3-task-overview, fig.cap = "\\label{fig:ch3-task-overview}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->
+<!-- knitr::include_graphics(file.path(folder_figures, "Z1_task_setup.png")) -->
+
+<!-- ``` -->
+
+<!-- \newpage -->
+
+<!-- ```{r fig:ch3-decision-models, fig.cap = "\\label{fig:ch3-decision-models}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."} -->
+<!-- knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png")) -->
+
+<!-- ``` -->
 

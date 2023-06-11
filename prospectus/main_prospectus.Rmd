@@ -23,6 +23,8 @@ header-includes:
   - \usepackage{chngcntr}
   - \usepackage{sectsty}
   - \usepackage{changepage}
+  - \usepackage[normalem]{ulem}
+  - \useunder{\uline}{\ul}{}
 
 
 bibliography: 
@@ -128,6 +130,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 \newpage
+\addtocontents{toc}{APPENDIX\par}
 
 ```{r appendix-a, child='supplementary_A_equations.Rmd'}
 

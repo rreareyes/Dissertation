@@ -324,11 +324,12 @@ Differences with no overlap will be interpreted as meaningful effects, overlaps 
 \newpage
 
 ## Tables and Figures
+\renewcommand{\arraystretch}{1}
 
-\begin{landscape}
-\thispagestyle{empty}
+\singlespacing
+
 ```{r ch2-expectations}
-comparison_table <- tibble(
+comparison_table_A <- tibble(
   "Strategy" = c("First\nonly", "Second\nonly", "Serial\nSearch", "Tallying", "Partial\nTallying"),
   
   "E1" = c(
@@ -350,45 +351,74 @@ comparison_table <- tibble(
     "More fixations directed to F2 compared to other features", 
     "More fixations directed to F1 compared to other features",
     "No meaningful difference between fixations across features", 
-    "More fixations directed toward F1-F2, but no meaningful difference between them"),
+    "More fixations directed toward F1-F2, but no meaningful difference between them")
   
+  )
+
+
+# apa_table(comparison_table_A, 
+#           caption = "Expected performance and fixation patterns for each decision strategy.",
+#           align = c("m{3cm}", "m{4cm}", "m{4cm}", "m{4cm}"))
+
+kable(comparison_table_A, 
+      format = "latex", 
+      booktabs = T,
+      caption = "Decision strategies' expected behavior") |> 
+  kable_styling(latex_options = c("HOLD_position", "scale_down")) |> 
+  row_spec(row = 0, align = "c") |> 
+  kable_styling(full_width = TRUE) |> 
+  column_spec(1, width = "2cm")
+
+```
+
+\newpage
+
+```{r ch2-expectations-cont}
+comparison_table_B <- tibble(
+  "Strategy" = c("First\nonly", "Second\nonly", "Serial\nSearch", "Tallying", "Partial\nTallying"),
+
   "Gaze distribution" = c(
-    "More fixations directed to F1 compared to other features", 
-    "More fixations directed to F1 compared to other features", 
+    "More fixations directed to F1 compared to other features",
+    "More fixations directed to F1 compared to other features",
     "Linear trend in the allocation of fixations across features in descending order of importance",
-    "No meaningful difference between fixations across features", 
+    "No meaningful difference between fixations across features",
     "More fixations directed toward F1-F2, but no meaningful difference between them"),
-  
+
   "Stopping point" = c(
-    "More fixations directed to F1 compared to other features", 
-    "More fixations directed to F1 compared to other features", 
+    "More fixations directed to F1 compared to other features",
+    "More fixations directed to F1 compared to other features",
     "Linear trend in the allocation of fixations across features in descending order of importance",
-    "No meaningful difference between fixations across features", 
+    "No meaningful difference between fixations across features",
     "More fixations directed toward F1-F2, but no meaningful difference between them"),
-  
+
   "Decision scenarios" = c(
-    "-", 
     "-",
-    "A: more last fixations to F1 vs other features; B: more last fixations to F2 vs other features; C: more last fixations to F3 vs other features; D: more last fixations to F4 vs other features", 
+    "-",
+    "A: more last fixations to F1 vs other features; B: more last fixations to F2 vs other features; C: more last fixations to F3 vs other features; D: more last fixations to F4 vs other features",
     "-",
     "-")
   )
 
+# 
+# apa_table(comparison_table_B,
+#           caption = "(Cont.) Expected performance and fixation patterns for each decision strategy.",
+#           align = c("m{3cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
 
-apa_table(comparison_table, 
-          caption = "Expected performance and fixation patterns for each decision strategy.",
-          align = c("m{2cm}", "m{2.5cm}", "m{2.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
-# comparison_table |> 
-# kable("latex", booktabs = T, escape = F,
-#       align = c("m{2cm}", "m{2.5cm}", "m{2.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
+kable(comparison_table_B, 
+      format = "latex", 
+      booktabs = T,
+      caption = "(Cont.) Decision strategies' expected behavior") |> 
+  kable_styling(latex_options = c("HOLD_position", "scale_down")) |> 
+  row_spec(row = 0, align = "c") |> 
+  kable_styling(full_width = TRUE) |> 
+  column_spec(1, width = "2cm")
+
 ```
-\end{landscape}
 
-\newpage
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{figures/study_01/Z1_merged_setup.png}
+    \includegraphics[width=1\textwidth]{study_01/figures/Z1_merged_setup.png}
     \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
     \label{fig:ch2-task-setup}
 \end{figure}
@@ -397,7 +427,7 @@ apa_table(comparison_table,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{figures/study_01/Z2_decision_models.png}
+    \includegraphics[width=1\textwidth]{study_01/figures/Z2_decision_models.png}
     \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
     \label{fig:ch2-model-configuration}
 \end{figure}
@@ -406,7 +436,7 @@ apa_table(comparison_table,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{figures/study_01/Z2_scenarios.png}
+    \includegraphics[width=1\textwidth]{study_01/figures/Z2_scenarios.png}
     \caption[Decision scenarios.]{These scenarios are created based on the dynamic search rule from TTB according to the best discriminating feature between cues. In scenario A, where the most predictive feature is different between the two cues (red and light red squares), participants using this strategy should only focus on this feature, ignoring the rest. In scenario B, the most predictive feature is the same between cues (gray squares) but the second most predictive is different, therefore, they should stop there and ignore the rest of the features. This patter will continue, until reaching scenario D, where all the features are the same, except for the fourth most predictive, in that case, the TTB users should scan all the cue and reach their choice until the very end.}
     \label{fig:ch2-scenarios}
 \end{figure}
