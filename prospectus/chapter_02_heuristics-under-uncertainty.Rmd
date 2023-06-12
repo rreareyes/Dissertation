@@ -442,6 +442,8 @@ kable(comparison_table_B,
 \end{figure}
 
 \newpage
+\doublespacing
+
 
 <!-- ```{r fig:ch2-task-setup, fig.cap = "\\label{fig:ch2-task-setup}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->
 <!-- knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png")) -->

@@ -34,7 +34,7 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ### Relative difference {.unlisted .unnumbered}
-These models use the ration of gamble features as decision criterion.
+These models use the ratio between gamble features as decision criterion.
 Values lower than 1 would indicate support for the right feature, and values higher than 1 will indicate support for the left feature
 $$\begin{aligned} 
     \text{Model 4:}& \\
@@ -73,13 +73,11 @@ Under these models, the numeric values in each feature are ignored, and particip
 Model 16 represents a strategy that combines the tally of both probability and reward to determine support for a given gamble.
 $$\begin{aligned} 
     \text{Model 13:}& \\
-    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Probability Winner} + \beta_{2} \times  \text{Reward Winner} \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Feature Tally} \\
     \text{Model 14:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Probability Winner} \\
     \text{Model 15:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Reward Winner} \\
-    \text{Model 16:}& \\
-    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Feature Tally} \\
 \end{aligned}$$
 
 \newpage
@@ -93,11 +91,11 @@ The subjective value model ($\Delta$SV) uses a power function for the reward suc
 $$\Delta SV = \Bigl(p_{left} \times log(reward_{left}) \Bigl) - \Bigl(p_{right} \times log(reward_{right})\Bigl)$$.
 
 $$\begin{aligned} 
-    \text{Model 17:}& \\
+    \text{Model 16:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{EV} \\
-    \text{Model 18:}& \\
+    \text{Model 17:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio EV} \\
-    \text{Model 19:}& \\
+    \text{Model 18:}& \\
     left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{SV} \\
 \end{aligned}$$
 
@@ -136,8 +134,8 @@ $$\begin{aligned}
 \newpage
 
 ### Feature fixation analysis {.unlisted .unnumbered}
-For all the fixation pattern analyses, we assume that the number of feature fixations came from a multinomial distribution, with four different possible outcomes, accounting for the two pieces of information of both gambles (i.e., F1, F2, F3, F4). 
-This multinomila model use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
+For all the fixation pattern analyses, we assume that the number of feature fixations came from a multinomial distribution, with four possible outcomes, accounting for the two pieces of information of both gambles (i.e., F1, F2, F3, F4). 
+This multinomial model use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
 Using the softmax link, we will build hierarchical linear models to estimate the probability that the participants would fixate in each feature ($p^{F_i}$), with the decision strategy as predictor. 
 We will only estimate three models, since multinomial GLMs need only $K-3$ linear models for *K* types of events (in this case, fixation to the different features), using one of the events (fixations to F1) as a reference or pivot. 
 

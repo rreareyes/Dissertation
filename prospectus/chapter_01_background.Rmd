@@ -43,8 +43,7 @@ In classic decision theories, we would determine an optimal performance level ba
 These optimal models represent a perfect observer that integrates all the evidence in the environment and determines which option maximizes the reward obtained at a given moment. 
 As a result, their definition of rationality is based on the adherence of an agent's choices to normative models relying on analytic or statistical solutions \citep{hammond_1996_human_judgment}. 
 Given the amount of computational effort required for these models, combined with their limited cognitive resources, it is not surprising to find that agents deviate from this normative rationality definition, a fact extensively shown in the decision-making literature \citep{gilovich_etal_2002_heuristics_biases}. 
-Instead, agents use simpler strategies that dismiss some of the information presented, which are referred to as heuristics \citep{newell_simon_1972_human_problem, simon_1990_invariants_human, tversky_kahneman_1974_judgment_uncertainty}. 
- \citep{gigerenzer_todd_1999_simple_heuristics} that achieve faster, frugal, and/or more accurate decisions by ignoring certain parts of the information \citep{gigerenzer_gaissmaier_2011_heuristic_decision}.
+Instead, agents use simpler strategies that dismiss some of the information presented, which are referred to as heuristics \citep{newell_simon_1972_human_problem, simon_1990_invariants_human, tversky_kahneman_1974_judgment_uncertainty, gigerenzer_todd_1999_simple_heuristics} that achieve faster, frugal, and/or more accurate decisions by ignoring certain parts of the information \citep{gigerenzer_gaissmaier_2011_heuristic_decision}.
 
 ## Heuristics and ecological rationality
 While heuristics are often considered suboptimal shortcuts compared to their analytic counterparts, they can also be regarded as adaptive strategies.

@@ -52,7 +52,7 @@ knitr::opts_chunk$set(echo = TRUE)
     \begin{center}
       \mbox{}
       \vfill
-      Development of Decision Strategies under Risk and Uncertainty\\
+      {\MakeUppercase{Development of Decision Strategies under Risk and Uncertainty}}\\
       \vfill
       A Dissertation Proposal Presented\\
       by \\
@@ -69,6 +69,34 @@ knitr::opts_chunk$set(echo = TRUE)
       \vspace*{.2in}
     \end{center}
 \end{large}
+
+\newpage
+
+\begin{titlepage}
+  \begin{center}
+    {\MakeUppercase{Development of Decision Strategies under Risk and Uncertainty}}\\
+    Dissertation Proposal by \\
+    \MakeUppercase{Ramiro Eduardo Rea Reyes}\\
+    June 12, 2023
+  \end{center}
+  \begin{tabular}{l}
+    \\Approved as to style and content by:\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Youngbin Kwak, Chair}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Kirby Deater-Deckard, Member}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Jeffrey Starns, Member}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Elena Vazey, Member}\\
+  \end{tabular}\hfill
+    
+  \begin{tabular}[t]{@{}r@{}}
+    \makebox[2.5in]{\hrulefill}\\
+    \rightline{Luke Remage-Healey, Graduate Program Director}\\
+    Neuroscience and Behavior Program\\
+  \end{tabular}
+\end{titlepage}
 
 \newpage
 

@@ -58,7 +58,7 @@ Moreover, we can see that traditionally, adolescence is represented as a period 
 This conceptualization is supported by different behavioral studies that have shown that adolescents display a lack of risk aversion relative to adults \citep{harbaugh_etal_2002_risk_attitudes, defoe_etal_2019_heightened_adolescent, rosenbaum_etal_2018_influences_described, van_leijenhorst_etal_2008_developmental_study}, as well as increased reward sensitivity \citep{cauffman_etal_2010_age_differences, peeters_etal_2017_behavioral_control}, and enhanced impulsive decisions \citep{luna_etal_2004_maturation_cognitive, rosenbaum_hartley_2018_developmental_perspectives}.
 
 On the other hand, studies into brain development have revealed interesting patterns of maturation, which are not homogeneous across all brain regions.
-Mainly, there is a consistent trend of early maturation in regions in the reward system, while networks that are associated to inhibitory control and executive functions tend to lag behind (e.g., \citealt{brown_etal_2015_fmri_investigation, ernst_etal_2005_amygdala_nucleus, galvan_etal_2007_risktaking_adolescent, galvan_etal_2006_earlier_development, zimmermann_etal_2019_maturational_changes, burnett_etal_2011_social_brain, urosevic_etal_2012_longitudinal_changes, caballero_etal_2016_mechanisms_contributing, bloom_etal_2022_agerelated_change}; for a recent review see \citet{galvan_2021_adolescent_brain}).
+Mainly, there is a consistent trend of early maturation in regions in the reward system, while networks that are associated to inhibitory control and executive functions tend to lag behind (e.g., \citealt{brown_etal_2015_fmri_investigation, ernst_etal_2005_amygdala_nucleus, galvan_etal_2007_risktaking_adolescent, galvan_etal_2006_earlier_development, zimmermann_etal_2019_maturational_changes, burnett_etal_2011_social_brain, urosevic_etal_2012_longitudinal_changes, caballero_etal_2016_mechanisms_contributing, bloom_etal_2022_agerelated_change}; for a recent review see \citealt{galvan_2021_adolescent_brain}).
 
 From these results, there have emerged several dual-system frameworks that aim to explain the behavior observed in adolescents.
 For example, both \citet{steinberg_2008_social_neuroscience} and \citet{casey_etal_2008_adolescent_brain} proposed models that link the risk-seeking tendencies and reckless behavior to the delayed development of the brain networks controlling imprudent behavior, relative to the networks involved in reward appraisal.
@@ -137,6 +137,8 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 ## Tables and Figures
 
+\singlespacing
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{study_02/figures/Z1_task_setup.png}
@@ -154,6 +156,7 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 \end{figure}
 
 \newpage
+\doublespacing
 
 
 <!-- ```{r fig:ch3-task-overview, fig.cap = "\\label{fig:ch3-task-overview}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->

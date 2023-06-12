@@ -32,7 +32,7 @@ folder_figures    <- file.path(folder_root, "figures")
 ```
 
 # CHAPTER IV {.unlisted .unnumbered}
-# STUDY 4: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK
+# STUDY 3: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK
 
 \begin{adjustwidth}{2cm}{}
 \hspace{\parindent}\emph{"In practical life we are compelled to follow what is most probable; in speculative thought we are compelled to follow truth."} 
@@ -65,7 +65,7 @@ Using both the heuristic and utility-based frameworks authors have made detailed
 However, one problem with these designs is the fact that in several gambles, the models make overlapping predictions with alternative strategies, making them impossible to disentangle them.
 
 For this reason, other researchers have proposed approaches that consider the effects of information sampling and evaluation \citep{johnson_etal_2008_process_models, payne_etal_1988_adaptive_strategy, schulte-mecklenbeck_etal_2011_role_process}.
-Following this, there have been multiple studies implementing process tracing methods to characterize in detail the information processing displayed in these decision scenarios (e.g. \citealt{callaway_etal_2021_fixation_patterns, aimone_etal_2016_it_not, van_ravenzwaaij_etal_2014_hierarchical_bayesian, rieskamp_otto_2006_ssl_theory})
+Following this, there have been multiple studies implementing process tracing methods to characterize in detail the information processing displayed in these decision scenarios (e.g. \citealt{callaway_etal_2021_fixation_patterns, aimone_etal_2016_it_not, van_ravenzwaaij_etal_2014_hierarchical_bayesian, rieskamp_otto_2006_ssl_theory}).
 Furthermore, the field of perceptual decision making has successfully developed models for evidence accumulation models that describe sensory perception as stochastic processes \citep{brown_heathcote_2008_simplest_complete, ratcliff_2002_diffusion_model}.
 In these models, the valuation process is considered to occur through an evidence accumulation process between competing alternatives.
 Each alternative has an evidence threshold, which once it is reached triggers the choice in the direction of the corresponding stimuli.
@@ -168,6 +168,8 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 ## Tables and Figures
 
+\singlespacing
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{study_03/figures/Z1_merged_setup.png}
@@ -185,7 +187,7 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 \end{figure}
 
 \newpage
-
+\doublespacing
 
 
 <!-- ```{r fig:ch4-stimulus-organization, fig.cap = "\\label{fig:ch4-stimulus-organization}Task design. (A) Stimulus organization: We will present two gambles side by side in a grid. Each gamble will be made of a cell showing the probability and another showing the reward, shown in different colors. The position (top or bottom) and colors (blue or yellow) of this information will be randomized between participants. (B) Task sequence: Each trail will start with a reset stage, where participants click on a button to reset the mouse and pointer position. After a brief ITI, the trial will start, but the information from the gambles will only show up once the participants initiate a movement. Then, participants will move the cursor towards the corresponding response box from the side of the gamble they prefer. Once they reach the boundaries of any of the response boxes, the trial will end and after a short ITI, the sequence will repeat."} -->
