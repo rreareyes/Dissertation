@@ -16,23 +16,8 @@ library(english)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
 ```
 
-```{r ch3-base-paths}
-folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
-
-folder_root <- file.path(folder_studies, "MCP", "online")
-
-folder_references <- file.path(folder_root, "references")
-folder_documents  <- file.path(folder_root, "documents")
-folder_analysis   <- file.path(folder_root, "bin", "analysis")
-folder_fits       <- file.path(folder_root, "results", "fits")
-folder_summaries  <- file.path(folder_root, "results", "summaries")
-folder_keys       <- file.path(folder_root, "results", "keys")
-folder_figures    <- file.path(folder_root, "figures")
-
-```
-
 # CHAPTER III {.unlisted .unnumbered}
-# STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY
+# STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY {.unlisted .unnumbered}
 
 \begin{adjustwidth}{2cm}{}
 \hspace{\parindent}\emph{"She'll outgrow it, dear. It's just the age... the age where nothing fits."} 
@@ -141,7 +126,7 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_02/figures/Z1_task_setup.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch03_task_design.png}
     \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
     \label{fig:ch3-task-overview}
 \end{figure}
@@ -150,24 +135,10 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_02/figures/Z2_decision_models.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch03_decision_models.png}
     \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
     \label{fig:ch3-decision-models}
 \end{figure}
 
 \newpage
 \doublespacing
-
-
-<!-- ```{r fig:ch3-task-overview, fig.cap = "\\label{fig:ch3-task-overview}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z1_task_setup.png")) -->
-
-<!-- ``` -->
-
-<!-- \newpage -->
-
-<!-- ```{r fig:ch3-decision-models, fig.cap = "\\label{fig:ch3-decision-models}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png")) -->
-
-<!-- ``` -->
-

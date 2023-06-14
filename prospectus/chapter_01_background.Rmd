@@ -3,7 +3,7 @@ title: ""
 ---
 
 # CHAPTER I {.unlisted .unnumbered}
-# BACKGROUND AND SIGNIFICANCE
+# BACKGROUND AND SIGNIFICANCE {.unlisted .unnumbered}
 
 \begin{adjustwidth}{2cm}{}
 \hspace{\parindent}\emph{"In our reasonings concerning matter of fact, there are all imaginable degrees of assurance, from the highest certainty to the lowest species of moral evidence. A wise man, therefore, proportions his belief to the evidence."} 

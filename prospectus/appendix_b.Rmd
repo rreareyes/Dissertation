@@ -15,7 +15,8 @@ header-includes:
 \setcounter{equation}{0}
 \singlespacing
 
-# B. STATISTICAL MODELS FOR STUDY 2
+# APPENDIX B {.unlisted .unnumbered}
+# PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER III {.unlisted .unnumbered}
 
 ## Bayesian parameter estimation {.unlisted .unnumbered}
 

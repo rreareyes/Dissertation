@@ -15,7 +15,9 @@ header-includes:
 \setcounter{equation}{0}
 \singlespacing
 
-# A. STATISTICAL MODELS FOR STUDY 1
+# APPENDIX A {.unlisted .unnumbered}
+# PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER II {.unlisted .unnumbered}
+
 ## Logistic decision models for model comparisons {.unlisted .unnumbered}
 
 We constructed a total of 21 decision models (Model 1-21 as listed below). 

@@ -25,10 +25,10 @@ header-includes:
   - \usepackage{changepage}
   - \usepackage[normalem]{ulem}
   - \useunder{\uline}{\ul}{}
-
+  - \usepackage{tocloft}
 
 bibliography: 
-  - "bibliography.bib"
+  - "../../references/bibliography.bib"
 biblio-style: "apacite"
 link-citations: true
 
@@ -105,6 +105,10 @@ knitr::opts_chunk$set(echo = TRUE)
 \centering
 \raggedright
 \newpage
+
+\renewcommand\cftsecfont{\mdseries}
+\renewcommand\cftsecpagefont{\mdseries}
+
 \tableofcontents
 \addtocontents{toc}{~\hfill\text{Page}\par}
 
@@ -127,27 +131,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \pagenumbering{arabic}
 
-
 \allsectionsfont{\centering\normalsize\fontsize{12pt}{12}}
 \subsectionfont{\raggedright}
 \subsubsectionfont{\raggedright}
 
-
+\section{I. BACKGROUND AND SIGNIFICANCE}
 ```{r background, child='chapter_01_background.Rmd'}
 
 ```
 
 \newpage
+\section{II. STUDY 1: EYE-TRACKING ANALYSIS OF HEURISTIC-DRIVEN INFORMATION SEARCH IN UNCERTAIN DECISION ENVIRONMENTS}
 ```{r heuristics-uncertainty, child='chapter_02_heuristics-under-uncertainty.Rmd'}
 
 ```
 
 \newpage
+\section{III. STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY}
 ```{r heuristics-development, child='chapter_03_heuristics-through-development.Rmd'}
 
 ```
 
 \newpage
+\section{IV. STUDY 3: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK}
 ```{r heuristics-risk, child='chapter_04_heuristics-under-risk.Rmd'}
 
 ```
@@ -158,18 +164,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 \newpage
-\addtocontents{toc}{APPENDIX\par}
-
-```{r appendix-a, child='supplementary_A_equations.Rmd'}
-
-```
-
-\newpage
-```{r appendix-b, child='supplementary_B_equations.Rmd'}
+\addtocontents{toc}{APPENDICES\par}
+\section{A. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER II}
+```{r appendix-a, child='appendix_a.Rmd'}
 
 ```
 
 \newpage
-```{r appendix-c, child='supplementary_C_equations.Rmd'}
+\section{B. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER III}
+```{r appendix-b, child='appendix_b.Rmd'}
+
+```
+
+\newpage
+\section{C. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER IV}
+```{r appendix-c, child='appendix_c.Rmd'}
 
 ```

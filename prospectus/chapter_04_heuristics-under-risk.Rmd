@@ -16,23 +16,8 @@ library(english)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
 ```
 
-```{r ch4-base-paths}
-folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
-
-folder_root <- file.path(folder_studies, "GMC", "mouse-eyetracker")
-
-folder_references <- file.path(folder_root, "references")
-folder_documents  <- file.path(folder_root, "documents")
-folder_analysis   <- file.path(folder_root, "bin", "analysis")
-folder_fits       <- file.path(folder_root, "results", "fits")
-folder_summaries  <- file.path(folder_root, "results", "summaries")
-folder_keys       <- file.path(folder_root, "results", "keys")
-folder_figures    <- file.path(folder_root, "figures")
-
-```
-
 # CHAPTER IV {.unlisted .unnumbered}
-# STUDY 3: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK
+# STUDY 3: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK {.unlisted .unnumbered}
 
 \begin{adjustwidth}{2cm}{}
 \hspace{\parindent}\emph{"In practical life we are compelled to follow what is most probable; in speculative thought we are compelled to follow truth."} 
@@ -172,7 +157,7 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_03/figures/Z1_merged_setup.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch04_task_design.png}
     \caption[Reaching gambling task design]{(A) Stimulus organization: We will present two gambles side by side in a grid. Each gamble will be made of a cell showing the probability and another showing the reward, shown in different colors. The position (top or bottom) and colors (blue or yellow) of this information will be randomized between participants. (B) Task sequence: Each trail will start with a reset stage, where participants click on a button to reset the mouse and pointer position. After a brief ITI, the trial will start, but the information from the gambles will only show up once the participants initiate a movement. Then, participants will move the cursor towards the corresponding response box from the side of the gamble they prefer. Once they reach the boundaries of any of the response boxes, the trial will end and after a short ITI, the sequence will repeat.}
     \label{fig:ch4-stimulus-organization}
 \end{figure}
@@ -181,23 +166,10 @@ Differences with no overlap with this ROPE will be interpreted as meaningful eff
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_03/figures/Z2_mouse_metrics.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch04_mouse_metrics.png}
     \caption[Mapping process tracing data.]{(A) We will track the position of the cursor in the screen, obtaining a sample every 1/60th of a second. (B) With these we will obtain the overall trajectory followed by the participant in a given trial. (C) We will then map the fixation information into the sequence of samples from the mouse tracking, such that we divide the overal trajectory in discrete vectors that encompass the travel done from one fixation event to the next. (D) From these discrete paths, we will calculate the vigor (speed) and the angle deviation (angle from the most direct path, represented as dashed lines here).}
     \label{fig:ch4-mouse-metrics}
 \end{figure}
 
 \newpage
 \doublespacing
-
-
-<!-- ```{r fig:ch4-stimulus-organization, fig.cap = "\\label{fig:ch4-stimulus-organization}Task design. (A) Stimulus organization: We will present two gambles side by side in a grid. Each gamble will be made of a cell showing the probability and another showing the reward, shown in different colors. The position (top or bottom) and colors (blue or yellow) of this information will be randomized between participants. (B) Task sequence: Each trail will start with a reset stage, where participants click on a button to reset the mouse and pointer position. After a brief ITI, the trial will start, but the information from the gambles will only show up once the participants initiate a movement. Then, participants will move the cursor towards the corresponding response box from the side of the gamble they prefer. Once they reach the boundaries of any of the response boxes, the trial will end and after a short ITI, the sequence will repeat."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png")) -->
-
-<!-- ``` -->
-
-<!-- \newpage -->
-
-<!-- ```{r fig:ch4-mouse-metrics, fig.cap = "\\label{fig:ch4-mouse-metrics}Mapping process tracing data. (A) We will track the position of the cursor in the screen, obtaining a sample every 1/60th of a second. (B) With these we will obtain the overall trajectory followed by the participant in a given trial. (C) We will then map the fixation information into the sequence of samples from the mouse tracking, such that we divide the overal trajectory in discrete vectors that encompass the travel done from one fixation event to the next. (D) From these discrete paths, we will calculate the vigor (speed) and the angle deviation (angle from the most direct path, represented as dashed lines here)."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z2_mouse_metrics.png")) -->
-
-<!-- ``` -->

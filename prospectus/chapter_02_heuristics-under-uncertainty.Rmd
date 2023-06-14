@@ -16,48 +16,8 @@ library(english)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
 ```
 
-```{r ch2-base-paths}
-folder_studies <- dirname(dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path))))
-
-folder_root <- file.path(folder_studies, "MCP", "eyetracker")
-
-folder_references <- file.path(folder_root, "references")
-folder_documents  <- file.path(folder_root, "documents")
-folder_analysis   <- file.path(folder_root, "bin", "analysis")
-folder_fits       <- file.path(folder_root, "results", "fits")
-folder_summaries  <- file.path(folder_root, "results", "summaries")
-folder_keys       <- file.path(folder_root, "results", "keys")
-folder_figures    <- file.path(folder_root, "figures")
-
-#r_refs(file = file.path(folder_references, "software.bib"))
-
-# software_citations <- papaja::cite_r("software.bib",
-#                                      pkgs     = c("rstan", "brms"),
-#                                      withhold = F)
-# 
-# data_wrangling_citation <- papaja::cite_r("software.bib",
-#                                           pkgs     = c("tidyverse"),
-#                                           withhold = F)
-# 
-# data_wrangling_citation <- str_remove_all(data_wrangling_citation, "R \\[Version 4.2.0\\\\; @R-base] and the R-package ")
-
-## Load reporting functions
-source(file = file.path(folder_analysis, "helpers", "h11_report.R"))
-
-```
-
-```{r ch2-stats-and-summaries}
-load(file.path(folder_summaries, "summary_demographics.RData"))
-load(file.path(folder_summaries, "bayes_rope.RData"))
-load(file.path(folder_summaries, "reported_anovas.RData"))
-load(file.path(folder_keys, "accepted_performance_key.RData"))
-load(file.path(folder_keys, "discarded_performance_key.RData"))
-load(file.path(folder_keys, "collected_participants_key.RData"))
-```
-
-
 # CHAPTER II {.unlisted .unnumbered}
-# STUDY 1: EYE-TRACKING ANALYSIS OF HEURISTIC-DRIVEN INFORMATION SEARCH IN UNCERTAIN DECISION ENVIRONMENTS
+# STUDY 1: EYE-TRACKING ANALYSIS OF HEURISTIC-DRIVEN INFORMATION SEARCH IN UNCERTAIN DECISION ENVIRONMENTS {.unlisted .unnumbered}
 
 \begin{adjustwidth}{2cm}{}
 \hspace{\parindent}\emph{"Maturity, one discovers, has everything to do with the acceptance of not knowing."}
@@ -355,11 +315,6 @@ comparison_table_A <- tibble(
   
   )
 
-
-# apa_table(comparison_table_A, 
-#           caption = "Expected performance and fixation patterns for each decision strategy.",
-#           align = c("m{3cm}", "m{4cm}", "m{4cm}", "m{4cm}"))
-
 kable(comparison_table_A, 
       format = "latex", 
       booktabs = T,
@@ -399,11 +354,6 @@ comparison_table_B <- tibble(
     "-")
   )
 
-# 
-# apa_table(comparison_table_B,
-#           caption = "(Cont.) Expected performance and fixation patterns for each decision strategy.",
-#           align = c("m{3cm}", "m{3.5cm}", "m{3.5cm}", "m{3.5cm}"))
-
 kable(comparison_table_B, 
       format = "latex", 
       booktabs = T,
@@ -418,7 +368,7 @@ kable(comparison_table_B,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_01/figures/Z1_merged_setup.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch02_task_design.png}
     \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
     \label{fig:ch2-task-setup}
 \end{figure}
@@ -427,7 +377,7 @@ kable(comparison_table_B,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_01/figures/Z2_decision_models.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch02_decision_models.png}
     \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
     \label{fig:ch2-model-configuration}
 \end{figure}
@@ -436,34 +386,12 @@ kable(comparison_table_B,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{study_01/figures/Z2_scenarios.png}
+    \includegraphics[width=1\textwidth]{../../figures/ch02_decision_scenarios.png}
     \caption[Decision scenarios.]{These scenarios are created based on the dynamic search rule from TTB according to the best discriminating feature between cues. In scenario A, where the most predictive feature is different between the two cues (red and light red squares), participants using this strategy should only focus on this feature, ignoring the rest. In scenario B, the most predictive feature is the same between cues (gray squares) but the second most predictive is different, therefore, they should stop there and ignore the rest of the features. This patter will continue, until reaching scenario D, where all the features are the same, except for the fourth most predictive, in that case, the TTB users should scan all the cue and reach their choice until the very end.}
     \label{fig:ch2-scenarios}
 \end{figure}
 
 \newpage
 \doublespacing
-
-
-<!-- ```{r fig:ch2-task-setup, fig.cap = "\\label{fig:ch2-task-setup}Task design. (A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, but we will introduce changes for T2. During E1, we will assign all items with the same weights. For E2 we will switch the probabilistic weights across features, inverting their relative importance. (B) Task sequence: presentation timing of trial stages. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z1_merged_setup.png")) -->
-
-<!-- ``` -->
-
-
-
-
-<!-- ```{r fig:ch2-model-configuration, fig.cap = "\\label{fig:ch2-model-configuration}Model configurations. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z2_decision_models.png")) -->
-
-<!-- ``` -->
-
-
-
-<!-- ```{r ch2-scenarios, fig.cap = "\\label{ch2-scenarios}Decision scenarios according to the best discriminating feature between cues."} -->
-<!-- knitr::include_graphics(file.path(folder_figures, "Z2_scenarios.png")) -->
-
-<!-- ``` -->
-
 
 
