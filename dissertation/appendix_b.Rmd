@@ -1,0 +1,146 @@
+---
+title: " "
+output: pdf_document
+header-includes:
+  - \usepackage{float}
+  - \usepackage{sectsty}
+---
+
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\thefigure}{SI\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{SI\arabic{table}}
+\setcounter{table}{0}
+\renewcommand{\theequation}{SI\arabic{table}}
+\setcounter{equation}{0}
+\singlespacing
+
+# APPENDIX B {.unlisted .unnumbered}
+# PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER III {.unlisted .unnumbered}
+
+## Bayesian parameter estimation {.unlisted .unnumbered}
+
+### General settings {.unlisted .unnumbered}
+To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
+Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
+
+In all the models, we will use a multivariate normal ($\text{MVNormal}$) to estimate the correlation between the random effects, which uses the estimated betas and the covariance matrix of all the random effects ($\mathbf{S_{j}}$) as parameters. 
+From here, $\mathbf{S_{j}}$ is decomposed in the variance matrix and the correlation between variances ($\mathbf{R}$), which uses the Lewandowski-Kurowicka-Joe ($\text{LKJcorr}$) distribution as a prior.
+
+For the rest of our priors, we used normal distributions ($\text{Normal}$) for the main effects and normal distributions truncated at 0 to include only positive values ($\text{HalfNormal}$) for dispersion parameters.
+
+\newpage
+
+### Probability of choosing the correct cue {.unlisted .unnumbered}
+We assumed that the correct responses (correct) follows a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the winning pilot (*p*). 
+We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group, the phase (T1 and T2), and age as predictors, with random slopes and intercepts for each participant. 
+
+$$\begin{aligned} 
+  \text{correct} & \sim \operatorname{Binomial}(n, p) \\
+  logit(p) & = \beta_{0_{j}} + \beta_{1_{j}} \times str +  \beta_{2_{j}} \times ph + \beta_{3_{j}} \times age + \beta_{4_{j}} \times str:ph:age  \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \vdots \\ \beta_{4_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1_{j}} \\ \vdots \\ \beta_{4} \end{bmatrix}, \mathbf{S_{j}} \right)  \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 &	\cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_{\beta_{4}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 &	\cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \sigma_{\beta_{4}} \end{bmatrix} \\ 
+  \beta_{n} & \sim \operatorname{Normal}(0,2)  \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2)  \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy \\
+  ph & = phase
+\end{aligned}$$
+
+\newpage
+
+### Total score {.unlisted .unnumbered}
+For this model, we assumed the number points obtained during T1 comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
+We estimate $\mu$ using a hierarchical linear model with strategy group and age as predictors, allowing random intercepts and slopes for each participant. 
+On the other hand, we estimate $phi$ using only strategy as a fixed effect.
+
+$$\begin{aligned} 
+  \text{score} & \sim \operatorname{Negbinomial}(\mu, \phi)  \\
+  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times age + \beta_{3_{j}} \times str:age \\
+  \phi & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{0} & \sim \operatorname{Normal}(5,2) \\
+  \beta_{1}, \beta_{2}, \beta_{3} & \sim \operatorname{Normal}(0,2) \\
+  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy
+\end{aligned}$$
+
+\newpage
+
+### Response time {.unlisted .unnumbered}
+For this model, we assumed the response time comes from a shifted lognormal distribution ($\operatorname{Shifted-Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$), and a shift parameter (the earliest possible response $\phi$). 
+We will estimated $\mu$ using a hierarchical linear model with strategy group and age as predictors, as well as random intercepts and slopes for each participant. 
+On the other hand, we will estimate $\tau$ and $\phi$ using strategy as fixed effects. 
+
+$$\begin{aligned} 
+  \text{response time} & \sim \operatorname{Shifted-Lognormal}(\mu, \tau, \phi)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times age + \beta_{3_{j}} \times str:age \\
+  log(\tau) & = \gamma_0 + \gamma_1 \times strategy \\
+  log(\phi) & = \upsilon_0 + \upsilon_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0 & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{0} & \sim \operatorname{Normal}(0, 3) \\
+  \beta_{1}, \beta_{2}, \beta_{3} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \gamma_{n} & \sim \operatorname{Normal}(-2, 1) \\
+  \upsilon_{n} & \sim \operatorname{Normal}(0, 1) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy
+\end{aligned}$$
+
+\newpage
+
+
+### Strategies distribution {.unlisted .unnumbered}
+For this analysis, we review the overall distribution of decision strategies among participants. 
+This can be modeled using a softmax regression ($softmax$), which is a generalization of the logistic regression for more than two categorical outcomes.
+We will build this using participant's age as an ordinal predictor and the decision strategy as the categorical outcome.
+From this we will estimate the probability of participants at different age levels would use the different decision strategies.
+
+$$\begin{aligned} 
+  \text{decision strategy} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{where:}& \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \ldots, \theta^{F_{18}} \rangle \\
+  \theta^{F_i} & = \operatorname{Softmax}(p^{F_i}) \\
+  \text{where:}& \\
+  p^{F_i} & = (0, p^{F_2}, ..., p^{F_{18}}) \\
+  p^{F_i} & = \beta_{0}^{F_i} + \beta_{1}^{F_i} \times age  \\
+  \beta_{0}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+  \beta_{1}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+\end{aligned}$$
+
+\newpage
+
+Additionally, we will repeat this analysis but now grouping the decision strategies according to common features:
+
+* Single feature: strategies 1-4
+* Double feature: strategies 5-10
+* Triple feature: strategies 5-10
+* WADD
+* Tallying
+* Serial Search
+
+This will be don with the purpose of exploring if any set of strategies are more frequently used at a specific age.
+
+$$\begin{aligned} 
+  \text{strategy group} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{where:}& \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \ldots, \theta^{F_{6}} \rangle \\
+  \theta^{F_i} & = \operatorname{Softmax}(p^{F_i}) \\
+  \text{where:}& \\
+  p^{F_i} & = (0, p^{F_2}, ..., p^{F_{6}}) \\
+  p^{F_i} & = \beta_{0}^{F_i} + \beta_{1}^{F_i} \times age  \\
+  \beta_{0}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+  \beta_{1}^{F_i} & \sim \operatorname{HalfNormal}(0, 2) \\
+\end{aligned}$$
+
+\newpage

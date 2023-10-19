@@ -1,0 +1,252 @@
+---
+title: " "
+output: pdf_document
+header-includes:
+  - \usepackage{float}
+  - \usepackage{sectsty}
+---
+
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\thefigure}{SI\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{SI\arabic{table}}
+\setcounter{table}{0}
+\renewcommand{\theequation}{SI\arabic{table}}
+\setcounter{equation}{0}
+\singlespacing
+
+# APPENDIX C {.unlisted .unnumbered}
+# PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER IV {.unlisted .unnumbered}
+
+## Logistic decision models for model comparisons {.unlisted .unnumbered}
+
+We constructed a total of 19 decision models (Model 1-19 as listed below). 
+These models vary in terms of the number pieces of information used (i.e., reward and/or probability) and in the ways these features are integrated (e.g., difference, ratio, ratio levels, etc).   
+We include two special single predictor models based in the utility modeling tradition: difference in expected value, and difference in subjective value.
+
+### Feature difference {.unlisted .unnumbered}
+These models simply consider the actual numeric difference between gamble features (probability and reward).
+$$\begin{aligned} 
+    \text{Model 1:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Probability} + \beta_{2} \times  \Delta\text{Reward} \\
+    \text{Model 2:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Probability} \\
+    \text{Model 3:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Reward} \\
+\end{aligned}$$
+
+### Relative difference {.unlisted .unnumbered}
+These models use the ratio between gamble features as decision criterion.
+Values lower than 1 would indicate support for the right feature, and values higher than 1 will indicate support for the left feature
+$$\begin{aligned} 
+    \text{Model 4:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Probability} + \beta_{2} \times  \text{Ratio Reward} \\
+    \text{Model 5:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Probability} \\
+    \text{Model 6:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Reward} \\
+\end{aligned}$$
+
+### Discrete difference levels {.unlisted .unnumbered}
+The differences between features could be perceived as mere levels of distance between features, as such, we will bin differences in nine levels, from -5 (indicating the highest support for the right gamble) to 5 (indicating the highest support for the left gamble).
+$$\begin{aligned} 
+    \text{Model 7:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Probability Level} + \beta_{2} \times  \Delta\text{Reward Level} \\
+    \text{Model 8:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Probability Level} \\
+    \text{Model 9:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{Reward Level} \\
+\end{aligned}$$
+
+### Discrete ratio levels {.unlisted .unnumbered}
+Similarly, the relative differences between features could also be perceived as mere levels of distance between features.
+We will also bin these relative differences in nine levels, from -5 (indicating the highest support for the right gamble) to 5 (indicating the highest support for the left gamble).
+$$\begin{aligned} 
+    \text{Model 10:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Probability Level} + \beta_{2} \times  \text{Ratio Reward Level} \\
+    \text{Model 11:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Probability Level} \\
+    \text{Model 12:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio Reward Level} \\
+\end{aligned}$$
+
+### Tallying models {.unlisted .unnumbered}
+Under these models, the numeric values in each feature are ignored, and participants merely use the sign of the difference as criterion for making their choice.
+Model 16 represents a strategy that combines the tally of both probability and reward to determine support for a given gamble.
+$$\begin{aligned} 
+    \text{Model 13:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Feature Tally} \\
+    \text{Model 14:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Probability Winner} \\
+    \text{Model 15:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Reward Winner} \\
+\end{aligned}$$
+
+\newpage
+
+### Utility models {.unlisted .unnumbered}
+These models integrate the information of each gamble into a measure of utility.
+The $\Delta$EV model, uses the difference in the expected value between gambles as the criterion to make a choice.
+The Ratio EV model on the other hand, uses the relative difference in expected value as choice criterion.
+The subjective value model ($\Delta$SV) uses a power function for the reward such that the difference between gambles can be expressed as 
+
+$$\Delta SV = \Bigl(p_{left} \times log(reward_{left}) \Bigl) - \Bigl(p_{right} \times log(reward_{right})\Bigl)$$.
+
+$$\begin{aligned} 
+    \text{Model 16:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{EV} \\
+    \text{Model 17:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \text{Ratio EV} \\
+    \text{Model 18:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \times \Delta\text{SV} \\
+\end{aligned}$$
+
+\newpage
+
+## Bayesian parameter estimation {.unlisted .unnumbered}
+
+### General settings {.unlisted .unnumbered}
+To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
+Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
+
+In all the models, we will use a multivariate normal ($\text{MVNormal}$) to estimate the correlation between the random effects, which uses the estimated betas and the covariance matrix of all the random effects ($\mathbf{S_{j}}$) as parameters. 
+From here, $\mathbf{S_{j}}$ is decomposed in the variance matrix and the correlation between variances ($\mathbf{R}$), which uses the Lewandowski-Kurowicka-Joe ($\text{LKJcorr}$) distribution as a prior.
+
+For the rest of our priors, we used normal distributions ($\text{Normal}$) for the main effects and normal distributions truncated at 0 to include only positive values ($\text{HalfNormal}$) for dispersion parameters.
+
+\newpage
+
+### Probability of choosing the highest EV gamble {.unlisted .unnumbered}
+We assumed that the accurate responses (correct) follow a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the gamble with the highest EV (*p*). 
+We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group as predictor, with random slopes and intercepts for each participant. 
+
+$$\begin{aligned} 
+  \text{correct} & \sim \operatorname{Binomial}(n, p) \\
+  logit(p) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \end{bmatrix}, \mathbf{S_{j}} \right)  \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \\
+  \beta_{0}, \beta_{1} & \sim \operatorname{Normal}(0,2)  \\
+  \sigma_{\beta_{0}}, \sigma_{\beta_{1}} & \sim \operatorname{HalfNormal}(0,2)  \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+
+\newpage
+
+### Feature fixation analysis {.unlisted .unnumbered}
+For all the fixation pattern analyses, we assume that the number of feature fixations came from a multinomial distribution, with four possible outcomes, accounting for the two pieces of information of both gambles (i.e., F1, F2, F3, F4). 
+This multinomial model use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
+Using the softmax link, we will build hierarchical linear models to estimate the probability that the participants would fixate in each feature ($p^{F_i}$), with the decision strategy as predictor. 
+We will only estimate three models, since multinomial GLMs need only $K-3$ linear models for *K* types of events (in this case, fixation to the different features), using one of the events (fixations to F1) as a reference or pivot. 
+
+$$\begin{aligned} 
+  \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{where:}& \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \theta^{F_3}, \theta^{F_4} \rangle  \\
+  \theta^{F_i} & = \operatorname{Softmax}(p^{F_i})\\
+  \text{where:}& \\
+  p^{F_i} & = (0, p^{F_2}, p^{F_3}, p^{F_4}) \\
+  p^{F_i} & = \beta_{0_{j}}^{F_i} + \beta_{1_{j}}^{F_i} \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}}^{F_i} \\ \beta_{1_{j}}^{F_i}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}^{F_i} \\ \beta_{1}^{F_i} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}^{F_i}} & 0 \\ 0 & \sigma_{\beta_{1}^{F_i}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}^{F_i}} & 0 \\ 0 & \sigma_{\beta_{1}^{F_i}} \end{bmatrix} \\
+  \beta_{0}^{F_i}, \beta_{1}^{F_i} & \sim \operatorname{Normal}(0,2) \\
+  \sigma_{\beta^{F_i}_{0}}, \sigma_{\beta^{F_i}_{1}} & \sim \operatorname{HalfNormal}(0,2)\\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+### Choice certainty {.unlisted .unnumbered}
+For this model, we will use the area under the curve (AUC) of the mouse path as dependent variable.
+This metric we assume comes from a lognormal distribution ($\operatorname{Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$). 
+We will estimate $\mu$ using a hierarchical linear model with strategy group and difficulty level as predictors, allowing for random intercepts and slopes for each participant. 
+On the other hand, we will estimate $\tau$ using strategy as fixed effects. 
+
+$$\begin{aligned} 
+  \text{AUC} & \sim \operatorname{Lognormal}(\mu, \tau)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times dlt + \beta_{3_{j}} \times str:dlt  \\
+  log(\tau) & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3}\end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{n} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \gamma_{n} & \sim \operatorname{Normal}(0, 1) \\
+  \text{where:}& \\
+  j & = \text{participant}  \\
+  str & = strategy \\
+  dlt & = difficulty
+\end{aligned}$$
+
+\newpage
+
+### Choice vigor {.unlisted .unnumbered}
+For this model, we will use the peak speed during the trial as dependent variable.
+We will use the same approach as the choice certainty model, since we expect this metric to also have a zero bounded distribution with a long positive tail.
+$$\begin{aligned} 
+  \text{peak speed} & \sim \operatorname{Lognormal}(\mu, \tau)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times dlt + \beta_{3_{j}} \times str:dlt  \\
+  log(\tau) & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3}\end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{n} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \gamma_{n} & \sim \operatorname{Normal}(0, 1) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy \\
+  dlt & = difficulty
+\end{aligned}$$
+
+\newpage
+
+### Sequential sampling models {.unlisted .unnumbered}
+For these models we will divide the mouse path such that after each fixation, we obtain a partial movement vector that aims to capture the effect of the piece of information that was sampled immediatly before.
+We will extract two metrics from these vectors: speed and angle deviation from the most direct path.
+We will model speed in this context using a lognormal distribution ($\operatorname{Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$). 
+We will estimate $\mu$ using a hierarchical linear model with strategy, feature type, feature value, and fixation order as predictors, allowing for random intercepts and slopes for each participant. 
+On the other hand, we will estimate $\tau$ using strategy as fixed effect. 
+
+$$\begin{aligned} 
+  \text{speed} & \sim \operatorname{Lognormal}(\mu, \tau)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times tp + \beta_{3_{j}} \times vl + \beta_{4_{j}} \times or + \beta_{5_{j}} \times str:tp:vl:or \\
+  log(\tau) & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}}\\ \beta_{1_{j}} \\ \vdots \\ \beta_{5_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \vdots \\ \beta_{5} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{5}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{5}} \end{bmatrix} \\
+  \beta_{n} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \gamma_{n} & \sim \operatorname{Normal}(0, 1) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy \\
+  tp & = type  \\
+  vl & = value \\
+  or & = order 
+\end{aligned}$$
+
+\newpage
+
+To model the angle deviation ($\Delta$ angle), we will use Gaussian model.
+We will estimate $\mu$ using a hierarchical linear model with strategy, feature type, feature value, and fixation order as predictors, allowing for random intercepts and slopes for each participant. 
+
+$$\begin{aligned} 
+  \Delta\text{ angle} & \sim \operatorname{Normal}(\mu, \sigma)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times str + \beta_{2_{j}} \times tp + \beta_{3_{j}} \times vl + \beta_{4_{j}} \times or + \beta_{5_{j}} \times str:tp:vl:or \\
+  \begin{bmatrix} \beta_{0_{j}}\\ \beta_{1_{j}} \\ \vdots \\ \beta_{5_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \vdots \\ \beta_{5} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{5}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & \cdots & 0 \\ 0 & \sigma_{\beta_{1}} & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \sigma_{\beta_{5}} \end{bmatrix} \\
+  \beta_{n} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+  str & = strategy \\
+  tp & = type  \\
+  vl & = value \\
+  or & = order 
+\end{aligned}$$

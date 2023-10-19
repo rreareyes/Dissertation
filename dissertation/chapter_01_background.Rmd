@@ -1,0 +1,64 @@
+---
+title: ""
+---
+
+# CHAPTER I {.unlisted .unnumbered}
+# BACKGROUND AND SIGNIFICANCE {.unlisted .unnumbered}
+
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"In our reasonings concerning matter of fact, there are all imaginable degrees of assurance, from the highest certainty to the lowest species of moral evidence. A wise man, therefore, proportions his belief to the evidence."} 
+
+\begin{flushright}
+--- David Hume,  \emph{An Enquiry Concerning Human Understanding}
+\end{flushright}
+\end{adjustwidth}
+
+Most of us are familiar with the feeling of facing circumstances with unknown outcomes or ambiguous information. 
+These scenarios offer a particular challenge for us as decision agents.
+For starters, we can argue that we would want to make choices that provide the most favorable (or in some instances the least unfavorable) result.
+However, in order to evaluate how sound these decisions are before committing to them, we need to assess the quality of the information in favor of each alternative.
+We can reduce almost any decision to ultimately evaluation two central pieces of information from the options available: their payoff and the probability of obtaining it.
+However, most of the decisions we make in our daily life lack explicit information in one or both of these domains. 
+For example, we do not know how likely it is we would observe a whooping crane during a bird watching session, or the probability of the Korean national team reaching the semifinals of the next World Cup.
+In the same way it is hard to objectively know the payoff a new graduate student will provide to the lab, of moving from New Zealand to the US to pursue an academic career, or the entertainment value of watching Les Blank's Burden of Dreams instead of simply restart How I Met Your Mother for the eleventh time.
+
+Of course, we can rely to some extent in the degree of expertise we have in particular domains to inform these judgements, but this implies that our criteria can only be as good as the amount of experience we have, together with the ability to extract regularities from this empirical evidence.
+There are certainly decision scenarios where we have easy access to both payouts and probabilities for different alternatives, but these are the exception more than the rule.
+Regardless of the decision scenario, the complete evaluation of all the features from the alternatives at play lays a heavy burden in our cognitive capacity.
+Considering that all these impediments do not leave us frozen in place without the ability to make a choice (at least most of the time), some mechanisms must be at play that allow us to function and execute decisions with limited resources and/or incomplete information.
+This work explores precisely the decision strategies implemented in different decision scenarios, their underlying information processing patterns, and the changes experienced in their implementation during development.
+
+## Distinction between risk and uncertainty
+According to \citet{luce_raiffa_1989_games_decisions}, these decision environments can be categorized based on how much information an agent has before making a choice:
+1) certainty, where the agent has all the information needed and the choice invariably leads to a known outcome;
+2) risk, where the agent has information about a set of possible outcomes, each having a known probability of occurring; 
+and 3) uncertainty, where the agent has limited information, such that each choice leads to one of a set of possible outcomes, but the probabilities of each outcome are not known. 
+Similarly, \citet{savage_1972_foundations_statistics} introduced the distinction between small and large worlds. 
+Small worlds represent decision scenarios where the agent has complete knowledge of the possible outcomes and its probabilities of occurrence (e.g., decisions under risk in the Luce-Raiffa framework). 
+In large worlds on the other hand, some of the information (e.g., possible outcomes and/or its probabilities of occurring) is hidden, and the agent can only generate subjective estimates of the underlying probabilities at most (e.g., decisions under uncertainty in the Luce-Raiffa framework).
+
+## Bounded rationality
+Since agents have finite cognitive resources to invest, when facing any of the decision environments described above, a key problem arises: how much information should be gathered before committing to one of the options? 
+In classic decision theories, we would determine an optimal performance level based on an analytic utility function or a probabilistic approximation of it  \citep{marschak_etal_1972_decision_organization}. 
+These optimal models represent a perfect observer that integrates all the evidence in the environment and determines which option maximizes the reward obtained at a given moment. 
+As a result, their definition of rationality is based on the adherence of an agent's choices to normative models relying on analytic or statistical solutions \citep{hammond_1996_human_judgment}. 
+Given the amount of computational effort required for these models, combined with their limited cognitive resources, it is not surprising to find that agents deviate from this normative rationality definition, a fact extensively shown in the decision-making literature \citep{gilovich_etal_2002_heuristics_biases}. 
+Instead, agents use simpler strategies that dismiss some of the information presented, which are referred to as heuristics \citep{newell_simon_1972_human_problem, simon_1990_invariants_human, tversky_kahneman_1974_judgment_uncertainty, gigerenzer_todd_1999_simple_heuristics} that achieve faster, frugal, and/or more accurate decisions by ignoring certain parts of the information \citep{gigerenzer_gaissmaier_2011_heuristic_decision}.
+
+## Heuristics and ecological rationality
+While heuristics are often considered suboptimal shortcuts compared to their analytic counterparts, they can also be regarded as adaptive strategies.
+\citet{gigerenzer_gaissmaier_2011_heuristic_decision} define heuristics as "Strategies that ignore part of the information, with the goal of making decisions more quickly, frugally, and/or accurately than more
+complex methods".
+In this context, heuristics may not lead to optimal choices in the normative sense, but instead they produce good-enough selections, a process known as satisficing \citep{simon_1955_behavioral_model}.
+As such, the deployment of these simple strategies depends on a dialectic process between the environment and the decision agent, which is known in the field as ecological rationality.
+\citet{simon_1990_invariants_human} summarized this by stating that rational behavior is a process shaped by the task environment and the cognitive capacity of the agent, both components acting like the blades of a pair of scissors.
+One of the main claims of this school of thought is that more information and more cognitive effort do not necessarily lead to better inferences, a principle known as "less-is-more" \citep{hertwig_todd_2003_more_not}.
+This implies that especially in scenarios with high uncertainty, ignoring information can lead to better performance \citep{gigerenzer_todd_1999_simple_heuristics}.
+The simplification process of these decision strategies is implemented by reducing the subset of information consulted in certain scenarios or altogether consistently ignoring features deemed to be not of interest.
+This simplification process in the end determines the heuristic deployed in a given decision scenario. \citep{kozyreva_hertwig_2021_interpretation_uncertainty}. 
+
+This dissertation focuses on analyzing the role of decision heuristics in scenarios of risk and uncertainty. 
+The studies discussed in this work highlight the importance of considering decision strategies as an important source of variability, and an unavoidable step to study decision making in general.
+These strategies not only determine a priori rules for when to stop acquiring information, but they also act as a scaffold for the information search mechanisms. 
+These search patterns not only determine the search order and spread during the decision process, but they also can lead to differential valuation of alternatives.
+Furthermore, we directly explored the mechanism of information integration by combining data from two different process tracing methods.

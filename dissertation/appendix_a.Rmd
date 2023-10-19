@@ -1,0 +1,258 @@
+---
+title: " "
+output: pdf_document
+header-includes:
+  - \usepackage{float}
+  - \usepackage{sectsty}
+---
+
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\thefigure}{SI\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{SI\arabic{table}}
+\setcounter{table}{0}
+\renewcommand{\theequation}{SI\arabic{table}}
+\setcounter{equation}{0}
+\singlespacing
+
+# APPENDIX A {.unlisted .unnumbered}
+# PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER II {.unlisted .unnumbered}
+
+## Logistic decision models for model comparisons {.unlisted .unnumbered}
+
+We constructed a total of 21 decision models (Model 1-21 as listed below). 
+These models vary in terms of the number of features (i.e., F1, F2, F3, F4) considered (e.g., Single, Double, Triple, Full) and the ways these features are integrated (e.g., Tallying, Serial Search) in making a choice.   
+
+### Single feature models {.unlisted .unnumbered}
+$$\begin{aligned} 
+    \text{Model 1:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} \\
+    \text{Model 2:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{2} \\
+    \text{Model 3:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{3} \\
+    \text{Model 4:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{4} \\
+\end{aligned}$$
+
+### Double feature models {.unlisted .unnumbered}
+$$\begin{aligned} 
+    \text{Model 5:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} \\
+    \text{Model 6:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{3} \\
+    \text{Model 7:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{4} \\
+    \text{Model 8:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{2} + \beta_{2} \text{F}_{3} \\
+    \text{Model 9:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{2} + \beta_{2} \text{F}_{4} \\
+    \text{Model 10:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{3} + \beta_{2} \text{F}_{4} \\
+\end{aligned}$$
+
+### Triple feature models {.unlisted .unnumbered}
+$$\begin{aligned} 
+    \text{Model 11:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} \\
+    \text{Model 12:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{4} \\
+    \text{Model 13:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{3} + \beta_{3} \text{F}_{4} \\
+    \text{Model 14:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{2} + \beta_{2} \text{F}_{3} + \beta_{3} \text{F}_{4} \\
+\end{aligned}$$
+
+### Full model (Reference) {.unlisted .unnumbered}
+$$\begin{aligned} 
+    \text{Model 15:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4} 
+\end{aligned}$$
+
+### Tallying models {.unlisted .unnumbered}
+$$\begin{aligned} 
+    \text{Model 16:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \sum_{i = 1}^{4}F_{i} \\
+    \text{Model 17:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \sum_{i = 1}^{3}F_{i} \\
+    \text{Model 18:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \sum_{i = 1}^{2}F_{i} \\
+\end{aligned}$$
+
+### Serial search models {.unlisted .unnumbered}
+$$\begin{aligned} \text{Model 19:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4} \\
+    \text{Model 20:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} \\
+    \text{Model 21:}& \\
+    left{[i]} & \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} \\
+    \text{where:}& \\
+    F_{1L} \neq  F_{1R} & \Rightarrow \beta_{2}, \beta_{3}, \beta_{4} = 0 \\
+    F_{1L} = F_{1R} \land F_{2L} \neq  F_{2R} & \Rightarrow \beta_{1}, \beta_{3}, \beta_{4} = 0 \\
+    F_{1L} = F_{1R} \land F_{2L} = F_{2R} \land F_{3L} \neq  F_{3R} & \Rightarrow \beta_{1}, \beta_{2}, \beta_{4} = 0 \\
+    F_{1L} = F_{1R} \land F_{2L} = F_{2R} \land F_{3L} = F_{3R} \land F_{4L} \neq  F_{4R} & \Rightarrow \beta_{1}, \beta_{2}, \beta_{3} = 0 \end{aligned}$$
+
+\newpage
+
+## Bayesian parameter estimation {.unlisted .unnumbered}
+
+### General settings {.unlisted .unnumbered}
+To achieve reliable estimates for the standard deviation of the group parameters, we will run four chains for 10000 iterations with 5000 as warmup. 
+Given the complexity of the models, we will assign a small step size for the MCMC algorithm (0.95) to get rid of divergences while exploring the parameter space.
+
+In all the models, we will use a multivariate normal ($\text{MVNormal}$) to estimate the correlation between the random effects, which uses the estimated betas and the covariance matrix of all the random effects ($\mathbf{S_{j}}$) as parameters. 
+From here, $\mathbf{S_{j}}$ is decomposed in the variance matrix and the correlation between variances ($\mathbf{R}$), which uses the Lewandowski-Kurowicka-Joe ($\text{LKJcorr}$) distribution as a prior.
+
+For the rest of our priors, we used normal distributions ($\text{Normal}$) for the main effects and normal distributions truncated at 0 to include only positive values ($\text{HalfNormal}$) for dispersion parameters.
+
+\newpage
+
+### Probability of choosing the correct cue {.unlisted .unnumbered}
+We assumed that the correct responses (correct) follows a binomial distribution that uses the total number of trials (*n*) and the probability of choosing the winning pilot (*p*). 
+We will use a logit link to estimate *p* using a hierarchical linear model where we considered the strategy group, and the phase (T1 and T2) as predictors, with random slopes and intercepts for each participant. 
+
+
+$$\begin{aligned} 
+  \text{correct} & \sim \operatorname{Binomial}(n, p) \\
+  logit(p) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy +  \beta_{2_{j}} \times phase + \beta_{3_{j}} \times strategy:phase \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3} \end{bmatrix}, \mathbf{S_{j}} \right)  \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{0}, \beta_{1}, \beta_{2}, \beta_{3} & \sim \operatorname{Normal}(0,2)  \\
+  \sigma_{\beta_{0}}, \sigma_{\beta_{1}}, \sigma_{\beta_{2}}, \sigma_{\beta_{3}} & \sim \operatorname{HalfNormal}(0,2)  \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+### Total score {.unlisted .unnumbered}
+For this model, we assumed the number points obtained during T1 comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
+We will estimate $\mu$ using a hierarchical linear model with strategy group as predictor, allowing random intercepts and slopes for each participant. 
+On the other hand, we estimate $phi$ using only strategy as a fixed effect.
+
+$$\begin{aligned} 
+  \text{score} & \sim \operatorname{Negbinomial}(\mu, \phi)  \\
+  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy \\
+  \phi & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \\
+  \beta_{0} & \sim \operatorname{Normal}(5,2) \\
+  \beta_{1} & \sim \operatorname{Normal}(0,2) \\
+  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+### Response time {.unlisted .unnumbered}
+For this model, we assumed the response time comes from a shifted lognormal distribution ($\operatorname{Shifted-Lognormal}$), which uses a location parameter (the mean, $\mu$), a dispersion parameter (the sd, $\tau$), and a shift parameter (the earliest possible response $\phi$). 
+We will estimate $\mu$ using a hierarchical linear model with strategy group as predictor, as well as random intercepts and slopes for each participant. 
+On the other hand, we will estimate $\tau$ and $\phi$ using strategy as fixed effect. 
+
+$$\begin{aligned} 
+  \text{response time} & \sim \operatorname{Shifted-Lognormal}(\mu, \tau, \phi)  \\
+  \mu & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy \\
+  log(\tau) & = \gamma_0 + \gamma_1 \times strategy \\
+  log(\phi) & = \upsilon_0 + \upsilon_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}   \\ \beta_{1} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \\
+  \beta_{0} & \sim \operatorname{Normal}(0, 3) \\
+  \beta_{1} & \sim \operatorname{Normal}(0, 2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{0}}, \sigma_{\beta_{1}} & \sim \operatorname{HalfNormal}(0, 0.5) \\
+  \gamma_{n} & \sim \operatorname{Normal}(-2, 1) \\
+  \upsilon_{n} & \sim \operatorname{Normal}(0, 1) \\
+  \text{where:}& \\
+  j & = \text{participant} \\
+\end{aligned}$$
+
+\newpage
+
+### Number of fixations per trial {.unlisted .unnumbered}
+For this model, we assumed the number of fixations per trial comes from a negative binomial distribution ($Negbinomial$), which uses a location parameter (the mean, $\mu$) and a parameter to control for the overdispersion ($\phi$). 
+We estimated $\mu$ using a hierarchical linear model using the decision group as predictor, with random intercepts and slopes for each participant. 
+On the other hand, we estimated $\phi$ using a random intercept model, to allow each participant to have their own overdispersion parameter ($\gamma_{0_{j}}$), which in turn comes from a normal distribution that uses $\gamma_0$ and $\tau$ as mean and standard deviation, respectively.
+
+$$\begin{aligned} 
+  \text{number of fixations} & \sim \operatorname{Negbinomial}(\mu, \phi)  \\
+  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy \\
+  \phi & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}   \\ \beta_{1} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 \\ 0 & \sigma_{\beta_{1}} \end{bmatrix} \\
+  \beta_{0}, \beta_{1} & \sim \operatorname{Normal}(0,2) \\
+  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{0}}, \sigma_{\beta_{1}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+#### Number of fixations per trial across decision scenarios {.unlisted .unnumbered}
+$$\begin{aligned} 
+  \text{number of fixations} & \sim \operatorname{Negbinomial}(\mu, \phi) \\
+  log(\mu) & = \beta_{0_{j}} + \beta_{1_{j}} \times strategy + \beta_{2_{j}} \times scenario + \beta_{3_{j}} \times strategy:scenario  \\
+  \phi & = \gamma_0 + \gamma_1 \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}} \\ \beta_{1_{j}} \\ \beta_{2_{j}} \\ \beta_{3_{j}} \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0} \\ \beta_{1} \\ \beta_{2} \\ \beta_{3}\end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{n} & \sim \operatorname{Normal}(0,2) \\
+  \gamma_{0}, \gamma_{1} & \sim \operatorname{Normal}(0,2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \sigma_{\beta_{n}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+### Feature fixation analyses {.unlisted .unnumbered}
+For all the fixation pattern analyses, we assume that the number of feature fixations during T1 came from a multinomial distribution, with four different possible outcomes, one per feature (i.e., F1, F2, F3, F4). 
+We focused on three analyses, creating a separate multinomial model for each: starting location, stopping location, and gaze distribution.
+For the starting and stopping point analyses, we use only the first and last feature fixation of each trial as the outcome variable, respectively.
+On the other hand, to analyze the gaze distribution, we consider all feature fixations performed during each trial as the target outcome.
+All these multinomial models use the total number of feature fixations fixations (*n*) and a vector of event probabilities, i.e., the probabilities of fixating on a given feature (${\theta}^{F_i}$). 
+Using the softmax link, we will build hierarchical linear models to estimate the probability that the participants would fixate in each feature ($p^{F_i}$), with the decision strategy as predictor. 
+We will only estimate three models, since multinomial GLMs need only $K-3$ linear models for *K* types of events (in this case, fixation to the different features), using one of the events (fixations to F1) as a reference or pivot. 
+
+$$\begin{aligned} 
+  \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{where:}& \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \theta^{F_3}, \theta^{F_4} \rangle  \\
+  \theta^{F_i} & = \operatorname{Softmax}(p^{F_i})\\
+  \text{where:}& \\
+  p^{F_i} & = (0, p^{F_2}, p^{F_3}, p^{F_4}) \\
+  p^{F_i} & = \beta_{0_{j}}^{F_i} + \beta_{1_{j}}^{F_i} \times strategy \\
+  \begin{bmatrix} \beta_{0_{j}}^{F_i} \\ \beta_{1_{j}}^{F_i}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}^{F_i} \\ \beta_{1}^{F_i} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}^{F_i}} & 0 \\ 0 & \sigma_{\beta_{1}^{F_i}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}^{F_i}} & 0 \\ 0 & \sigma_{\beta_{1}^{F_i}} \end{bmatrix} \\
+  \beta_{0}^{F_i}, \beta_{1}^{F_i} & \sim \operatorname{Normal}(0,2) \\
+  \sigma_{\beta^{F_i}_{0}}, \sigma_{\beta^{F_i}_{1}} & \sim \operatorname{HalfNormal}(0,2)\\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+
+\newpage
+
+#### Fixation patterns across decision scenarios {.unlisted .unnumbered}
+$$\begin{aligned} 
+  \text{feature fixations} & \sim \operatorname{Multinomial}(n, \theta^{F_i}) \\
+  \text{where:}& \\
+  \theta^{F_i} & = \langle \theta^{F_1}, \theta^{F_2}, \theta^{F_3}, \theta^{F_4} \rangle \\
+  \theta^{F_i} & = \operatorname{Softmax}(p^{F_i}) \\
+  \text{where:}& \\
+  p^{F_i} & = (0, p^{F_2}, p^{F_3}, p^{F_4}) \\
+  p^{F_i} & = \beta_{0_{j}}^{b} + \beta_{1_{j}}^{b} \times strategy + \beta_{2_{j}}^{b} \times scenario + \beta_{3_{j}}^{b} \times strategy:scenario \\
+  \begin{bmatrix} \beta_{0_{j}}^{b} \\ \beta_{1_{j}}^{b} \\ \beta_{2_{j}}^{b} \\ \beta_{3_{j}}^{b}  \end{bmatrix} & \sim \text{MVNormal} \left (\begin{bmatrix} \beta_{0}^{b} \\ \beta_{1}^{b} \\ \beta_{2}^{b} \\ \beta_{3}^{b} \end{bmatrix}, \mathbf{S_{j}} \right) \\
+  \mathbf{S_{j}} & = \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_{\beta_{0}} & 0 & 0 & 0 \\ 0 & \sigma_{\beta_{1}} & 0 & 0 \\ 0 & 0   & \sigma_{\beta_{2}} & 0 \\ 0 & 0 & 0 & \sigma_{\beta_{3}} \end{bmatrix} \\
+  \beta_{0}, \beta_{1}, \beta_{2}, \beta_{3} & \sim \operatorname{Normal}(0,2) \\
+  \sigma_{\beta_{0}}, \sigma_{\beta_{1}}, \sigma_{\beta_{2}}, \sigma_{\beta_{3}} & \sim \operatorname{HalfNormal}(0,2) \\
+  \mathbf{R} & \sim \operatorname{LKJcorr}(2) \\
+  \text{where:}& \\
+  j & = \text{participant}
+\end{aligned}$$
+

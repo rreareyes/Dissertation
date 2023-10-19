@@ -1,0 +1,352 @@
+---
+title : ""
+  
+---
+
+```{r, include = FALSE}
+library(papaja)
+library(kableExtra)
+library(tidyverse)
+library(gt)
+library(english)
+library(bayestestR)
+library(scales)
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
+```
+
+```{r, include=F}
+folder_root <- dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
+
+folder_helpers   <- file.path(folder_root, "bin", "helpers")
+folder_fits      <- file.path(folder_root, "results", "fits")
+folder_summaries <- file.path(folder_root, "results", "summaries")
+folder_keys      <- file.path(folder_root, "results", "keys")
+folder_figures   <- file.path(folder_root, "figures")
+
+# Load reporting functions
+source(file = file.path(folder_helpers, "h02_report_polynomials.R"))
+source(file = file.path(folder_helpers, "h01_report.R"))
+source(file = file.path(folder_helpers, "h_compare_categories.R"))
+```
+
+```{r, include = F}
+load(file.path(folder_summaries, "ch03_polynomial_contrasts.RData"))
+load(file.path(folder_summaries, "ch03_bayes_rope.RData"))
+load(file.path(folder_summaries, "ch03_rope_noa_comparisons.RData"))
+load(file.path(folder_summaries, "ch03_polynomial_contrasts.RData"))
+load(file.path(folder_summaries, "ch03_single_polynomial_contrasts.RData"))
+load(file.path(folder_summaries, "ch03_tidy_posterior_samples.RData"))
+```
+
+```{r, include = F}
+rope_comparison = samples_prevalence |> 
+  filter(model == 1) |> 
+  filter(age %in% c(20, 21)) |> 
+  select(draw, model, age, standard) |> 
+  pivot_wider(id_cols = c(draw, model), names_from = age, values_from = standard) |> 
+  compare_categories(cols = c("20", "21")) |> 
+  select(-c("20", "21")) |> 
+  rename("difference" = "20_minus_21") |> 
+  group_by(model) |> 
+  summarise("median_dif"   = round(median(difference),3),
+            "rawHDI"       = round(rope(difference, ci = 0.89, range = c(-0.1, 0.1))[4], 3),
+            "rawdirection" = round(pd(difference[difference > hdi(difference, ci=0.89)[[2]] & 
+                                                   difference < hdi(difference, ci=0.89)[[3]]])[1], 3)) |>  
+    
+    ungroup() |> 
+    mutate("p_HDI"       = percent(rawHDI$ROPE_Percentage), 
+           "p_direction" = case_when(rawdirection > 0.999 ~ "> 0.999",
+                                     TRUE ~ paste("=", rawdirection)))
+
+comp_pd = rope_comparison$p_direction[rope_comparison$model == "1"]
+  
+comp_hdi = rope_comparison$p_HDI[rope_comparison$model == "1"]
+    
+comp_md = rope_comparison$median_dif[rope_comparison$model == "1"]
+
+md_text = paste("MD =", comp_md, sep = " ")
+  
+pd_text = paste("PD", comp_pd, sep = " ")
+    
+phdi_text = paste(comp_hdi, "in ROPE", sep = " ")
+  
+report_text = paste(md_text, pd_text, phdi_text, sep = ", ") 
+
+
+
+
+```
+
+
+# CHAPTER III {.unlisted .unnumbered}
+# STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY {.unlisted .unnumbered}
+
+\begin{adjustwidth}{2cm}{}
+\hspace{\parindent}\emph{"She'll outgrow it, dear. It's just the age... the age where nothing fits."} 
+
+\begin{flushright}
+--- Judy's Mother,  \emph{Rebel Without a Cause}
+\end{flushright}
+\end{adjustwidth}
+
+Picture a large wooden ship that has been kept in a museum for centuries.
+The custodians of this ancient relic have worked tirelessly throughout the years, making sure of preserving its condition as much as possible.
+As time passes by, some parts of the ship inevitably start to decay, and they are quickly restored or replaced with new pieces to maintain its integrity.
+Eventually however, this constant upkeep will lead to a point where none of the original pieces from the ship remain.
+Then the question arises, can we say it is the same ship or that we are now in front of a completely different one?
+This is merely a retelling of a famous thought experiment known as the Ship of Theseus or Theseus' Paradox, and it has been reinvented in multiple other stories in popular culture.
+Besides dealing with the continuity of identity, these stories prompt us to think about the difficulties and nuances when trying to study and understand the continuous change between states.
+
+As the bridging period between childhood and adulthood, adolescence is a stage where humans and other animals experience a myriad of physiological changes before reaching maturity.
+This developmental stage cannot be strictly defined based on the persons' age, considering the multiple biological and cultural milestones that can be used to define its onset and finished state.
+However, it has been mostly studied based on the start as early as age 10 and go as far as 24 years old \citep{sawyer_etal_2018_age_adolescence}.
+These changes, the same as the constant replacement in Theseus' paradox, lead to a gradual transformation of the individual's appearance and behavior.
+Moreover, we can see that traditionally, adolescence is represented as a period of reckless behavior and continuous challenge of the status quo, which has permeated into the scientific literature \citep{crone_dahl_2012_understanding_adolescence, steinberg_etal_2008_age_differences}.
+This conceptualization is supported by different behavioral studies that have shown that adolescents display a lack of risk aversion relative to adults \citep{harbaugh_etal_2002_risk_attitudes, defoe_etal_2019_heightened_adolescent, rosenbaum_etal_2018_influences_described, van_leijenhorst_etal_2008_developmental_study}, as well as increased reward sensitivity \citep{cauffman_etal_2010_age_differences, peeters_etal_2017_behavioral_control}, and enhanced impulsive decisions \citep{luna_etal_2004_maturation_cognitive, rosenbaum_hartley_2018_developmental_perspectives}.
+
+On the other hand, studies into brain development have revealed interesting patterns of maturation, which are not homogeneous across all brain regions.
+Mainly, there is a consistent trend of early maturation in regions in the reward system, while networks that are associated to inhibitory control and executive functions tend to lag behind (e.g., \citealt{brown_etal_2015_fmri_investigation, ernst_etal_2005_amygdala_nucleus, galvan_etal_2007_risktaking_adolescent, galvan_etal_2006_earlier_development, zimmermann_etal_2019_maturational_changes, burnett_etal_2011_social_brain, urosevic_etal_2012_longitudinal_changes, caballero_etal_2016_mechanisms_contributing, bloom_etal_2022_agerelated_change}; for a recent review see \citealt{galvan_2021_adolescent_brain}).
+
+From these results, there have emerged several dual-system frameworks that aim to explain the behavior observed in adolescents.
+For example, both \citet{steinberg_2008_social_neuroscience} and \citet{casey_etal_2008_adolescent_brain} proposed models that link the risk-seeking tendencies and reckless behavior to the delayed development of the brain networks controlling imprudent behavior, relative to the networks involved in reward appraisal.
+Therefore, these models attribute the behavioral patterns displayed during adolescence to a slowly development of the cognitive control system.
+However, \citet{steinberg_2008_social_neuroscience} model propose a reward response that displays an inverted-U shape, with a peak during adolescence, whereas \citet{casey_etal_2008_adolescent_brain} model predicts a slowly increasing sensitivity to rewards that peaks mid-adolescence, reaching a plateau into adulthood.
+We can boil down the differences between these (and other dual-system models) into those arguing that adolescent behavior can be explained by heightened reward sensitivity or by immature cognitive control processes.
+Regardless, this subset of models argue that this imbalance leads adolescents to underestimate the consequences and frequency of bad outcomes when engaging in risky behaviors, due to an enhanced sensitivity to rewards.
+
+However, all these results are far from consistent, and these dual system models still struggle to explain certain risk behaviors (or absence of them) in adolescents under different contexts \citep{ackerman_etal_2015_risksensitive_decisionmaking, rosenbaum_hartley_2018_developmental_perspectives, sherman_etal_2018_connecting_brain}.
+\citet{reyna_2004_how_people} proposes a slightly different dual-process model called Fuzzy-trace theory, to account for these differences in behavior. 
+This model incorporates the concept of parallel encoding of stimulus in two different levels: verbatim and gist.
+Verbatim representations contain great detail and precision, whereas gist representations are qualitative in nature, capturing the overall meaning of the decision information \citep{broniatowski_reyna_2018_formal_model}.
+It predicts an increment in the occurrence of gist-based decisions during adolescence, in detriment of those using exact details from the scenario.
+Therefore, the prevalence of biases and heuristic decisions is expected to increase rather than decrease with age.
+As such, reaching a stage where decisions are made intuitively rather than based on analytical processes is considered the apex of development under this theory.
+This transition from analytic strategies, which put heavy demands on working memory to a more rule-based approach, which generalizes across decision problems, until reaching an automatic stage, where the application of such rules is done in a habitual way was outlined earlier by \citet{yates_patalano_1999_decision_making}, without accounting for the dual systems.
+Some studies have shown favorable results supporting this model, displaying differences in the prevalence of framing effects between adolescents and adults \citep{reyna_etal_2014_developmental_reversals}, use of compensatory strategies and enhanced information sampling \citep{kwak_etal_2015_rational_adolescent}, and development of categorical thinking in theory of mind tasks \citep{kogut_slovic_2016_development_scope}.
+
+However, most of these studies, as a large portion of the neuroeconomic research, have focused on risky scenarios, where participants have full access to the explicit payouts and validities of the alternatives, or can easily be calculated from the information displayed to them.
+These scenarios do not match most of the problems and decisions we need to make in our daily life, which involve uncertainty or ambiguity about the validities of the stimuli used to make a choice.
+This is a crucial aspect that needs to be studied, since there is evidence that shows that uncertainty and risk are understood differently in adolescents and adults \citep{blankenstein_etal_2021_resolving_ambiguity, blankenstein_etal_2016_dealing_uncertainty, van_den_bos_hertwig_2017_adolescents_display}.
+
+Furthermore, as shown in adult studies, there are multiple strategies that participants can deploy under uncertain environments (e.g., \citealt{oh_etal_2016_satisficing_splitsecond, binz_etal_2022_heuristics_bounded, broder_2002_take_best}).
+To this date, there are no studies looking into what strategies adolescents may use under uncertain conditions, and if there are differences in their prevalence or their implementation compared to adults.
+
+Therefore, it is important that we take a step back and we first define the baseline strategies and behavioral responses implemented under these conditions before making claims about the differences in behavior between adolescents and adults.
+This study provides some insight into the decision-making strategies used by participants in different developmental stages under conditions of uncertainty. 
+To do this, we focused on three main questions: What are the strategies implemented in adolescents to solve complex uncertain decision-making scenarios? Are there strategies more prevalent in certain time of development into adulthood? Are there any age-related patterns in the implementation of these strategies that lead to differences in performance?
+
+## Methods
+### Participants
+Since the focus of this study was to capture developmental effects on strategy use, we collected participants between the ages 10-28. 
+Given the diverse age range required for this study, we used different methods to recruit participants.
+For underage participants, we recruited families from the local community and through the Lookit platform, compensating them with $12 as base pay for their participation.
+We gathered young adults from the student population at the University of Massachusetts, Amherst, offering either class credit or a $12 payment.
+For the upper end of the age range, we recruited participants via the Prolific platform, targeting adults between 25-30 years old and offering $12 as base compensation.
+To promote accurate responses, we offered a $3 bonus based on task performance to all participants, regardless of the recruitment platform.
+We conducted all data collection online during scheduled sessions with a researcher.
+A researcher monitored each session to ensure that participants understood the task, observed if participants were in a distraction-free environment, and verified a stable internet connection.
+We collected a total of 193 participants, we discarded 24 participants that failed the attention check measures, and 11 participants that had technical failures (connectivity problems, hardware limitations, or power outage), leaving us with 158 participants.
+
+### Two-Alternative Multi-Attribute Probabilistic Classification Task
+We used the same experimental paradigm as described in Study 1, focusing solely on the setup from E1.
+To summarize, this paradigm involves a forced-choice task where participants choose between two alternatives.
+The options appeared as two 2-by-2 grids, each containing four features that differ in how well they predict the winning option.
+These features are binary and can appear in one of two states, depicted as equipment brands.
+Participants initially went through a full set of possible combinations of features and cues (240 trials), which served as a practice stage (P1).
+Afterward, they encountered 120 trials with unchanged feature validities (T1), followed by another 120 trials where we standardized the feature validities to 0.8/0.2 (T2). An overview of the task can be found in Fig. \ref{fig:ch3-task-overview}. 
+
+### Data Analysis
+The focus of this study was to identify the decision strategies spontaneously implemented in an uncertain environment, focusing on the changes these strategies may express through development.
+Similar to study 1, we used the participant's choices to classify them as users of different decision strategies, implementing the same method of model classification described before. 
+We took a more detailed look at the strategies with the best expected performance (1st Only, 2nd Only, Tallying, and Lexicographic strategies), focusing on three performance metrics: accuracy in choosing the best cue, response time, and score. 
+This time, we included age in our analysis to determine if it influenced both the prevalence of these strategies and their performance.
+
+#### Model Classification
+We implemented the same model classification approach previously described, using variational Bayesian inference \citep{drugowitsch_2019_variational_bayesian, oh-descher_etal_2017_probabilistic_inference, oh_etal_2016_satisficing_splitsecond}. 
+We used the same number and configuration of decision models as before (see Fig. \ref{fig:ch3-model-classification}), as well as the decision criteria to classify participants into the different models (BF > 3), with the WADD model as a reference (see Appendix A for the detailed list of decision models).
+
+#### Statistical Models
+As with Study 1, we had similar expectations regarding the overall behavior from different strategies (see Table 1 in the previous chapter).
+We utilized the same set of hierarchical models described in Study 1 for the accuracy, response time, and score analysis, incorporating age as a predictor.
+To explore potential developmental effects on the prevalence of specific decision strategies, we implemented a multinomial model, using age as the sole predictor, to estimate the likelihood of employing a particular strategy based on the participant's age.
+Additionally, we considered the possibility that we may see a implementation of broad decision strategies, therefore, we grouped strategies according to similarities in their information sampling/integration processes.
+This left us with four distinct clusters of interest in our data: 1st Only (model 1), Other Single Feature (models 2-4), Tallying (models 16-18), and Lexicographic (models 20 and 21)
+In all these models, we treated age as an ordinal predictor.
+The reason for this is that while age in years can be viewed as a continuous variable in terms of time measurement, for this study's purposes, it represents a proxy for the developmental stage of the participants.
+Given that we cannot assume that development occurs at evenly spaced intervals, we are modeling age as a monotonic effect instead.
+Moreover, since multiple adolescent studies have found particular developmental patterns for different cognitive abilities and behaviors, we will test if the posterior predictions from each performance metric show age effects that follow a linear, quadratic or cubic trend.
+Full details about these models are available in Appendix B.
+
+#### Developmental trends evaluation
+To evaluate the general developmental trends we will use the 89\% HDIs from the posterior distributions \citep{mcelreath_2020_statistical_rethinking} to make inferences about any possible age related effects. 
+Then we will use polynomial contrast across age (linear, quadratic, and cubic), to test if the model predictions are better described by any of this trends.
+We will use a PD above 0.9 as our threshold to highlight effects of interest. 
+
+## Results
+### Model Classification
+Similar to Study 1, the results of model classifications (Figure \ref{fig:ch3-model-classification}) show a great variety of strategies implemented by participants. 
+We see a predominance in the usage of the single cue strategy 1st Only, which relies solely on the information from the most informative feature (model 1 in Fig. \ref{fig:ch3-model-classification}) as well as Tallying strategies, which integrate different number of features, assigning equal weights to all of them (models 16-17 in Fig. \ref{fig:ch3-model-classification}). 
+We can also notice that those strategies using the lexicographic search from TTB, although well suited for the decision environment, are not commonly used by participants (models 20 and 21 in Fig. \ref{fig:ch3-model-classification}).
+
+### Strategy performance
+We can first look at the overall performance of the different decision strategies without considering any age effects.
+The results we obtained for their accuracy (Figure \ref{fig:ch3-accuracy}), score (Figure \ref{fig:ch3-score}), and response time (Figure \ref{fig:ch3-response-time}) indicate that strategies perform similar to what we found in study 1, and the differences between them are consistent too.
+
+Lexicographic strategies tend to be the most accurate, score more points, while showing similar response time as more frugal strategies. However, they are also more affected by the change in contingencies, and are not as prevalent as other strategies.
+
+On the other hand, 1st Only users display lower accuracy, but tend to score points on par with more complicated strategies, due to the faster response times allowed by this heuristic.
+
+Tallying strategies show resiliency to changes in the decision environment, while maintaining high accuracy, but they do this at the cost of significantly slower response times, which have as a consequence lower scores. 
+
+However, using this approach it is impossible to account for the possibility of developmental changes in each strategy implementation.
+Moreover, considering that several studies have found non linear developmental patterns in other tasks, we cannot simply add age as a covariate in our analysis to control for any possible effects.
+
+### Developmental patterns
+We can now do the opposite and look at the task performance, exclusively as a function of development, without considering the strategies used (Figure \ref{fig:ch3-nomodel}).
+Doing this we do not find any age effect in the accuracy or the total points scored. 
+On the other hand, we can see a positive linear age effect in the response time (PD = 97.82%, MD = 24.38), indicating slower response times in the upper age range, compared to younger participants.
+However, given the results of the strategy analysis, we know that not all participants are approaching the task in the same way.
+Therefore, to appropriately assess developmental patterns in decision making behaviors, we need to examine participants as users of different decision strategies, and then look for any developmental effects in their prevalence and implementation.
+
+### Strategy Specific Developmental Trends
+#### Single feature
+Overall, there is evidence of a negative quadratic age effect in the prevalence of the 1st Only strategy (`r report_poly(poly_prevalence_cluster, strategy = "1st Only", poly = "quadratic")`).
+This effect seems to peak around the age 20, and we do not see any difference between the prevalence between 20-23 and 24-28 (`r report_text`).
+This suggest that the prevalence of this strategy plateaus around the lower 20s.
+Additionally, we found a negative linear trend among other strategies relying in a single feature (`r report_poly(poly_prevalence_cluster, strategy = "Other Single Feature", poly = "linear")`).
+This trend suggests that participants are less likely to rely in an incorrect piece of information as they develop.
+
+Among 1st and 2nd Only users, we did not find any of the age related polynomial effects in their overall accuracy.
+However, we did find a negative linear age effect in the accuracy change between T1 and T2 (`r report_poly(poly_accuracy_change, strategy = 1, poly = "linear")`).
+This suggests that older participants tend to stick more time with the strategy after the contingency change, hence being affected more heavily by the new environment.
+
+Looking at the total points scored during T1, we found a positive linear age effect (`r report_poly(poly_score, strategy = 1, poly = "linear")`).
+This result indicates that older 1st Only users tend to score more points in the task during T1, suggesting a more effective implementation of the strategy.
+
+On the other hand, we did not find any polynomial age effect over the response time in T1 among these strategies.
+
+In summary, our results suggest that with development, users of the 1st Only strategy tend to use the strategy more consistently, which reflects in the linear increase of points scored. 
+Since younger participants showed faster response times, together with the fact that older participants are more affected by the changes in contingencies, we can interpret this performance difference to a more reliable implementation of the strategy with development.
+
+#### Tallying
+We found a negative quadratic age trend among the prevalence of Tallying strategies (`r report_poly(poly_prevalence_cluster, strategy = "Tallying", poly = "quadratic")`).
+Similar to 1st Only, we see this trend plateau around the lower 20s.
+
+Looking individually at the strategies within this cluster, we can see that this trend repeats among the Tally 4, Tally 3, and Tally 2. 
+All three of them display negative quadratic effects of age, but looking closely, only Tally 2 shows similarities with the general trend observed before (reaching a peak around the low 20s and sustaining it). 
+Tally 3 on the other hand seems to follow more descending trend, while the small number of Tally 4 users does not allow us to be certain of this effect existence.
+
+In terms of the performance in this task, we observed a positive linear age trend among users of Tally 4 (`r report_poly(poly_accuracy, strategy = 16, poly = "linear")`) suggesting improvement on the implementation of the strategy.
+Additionally, users of Tally 2, show a quadratic age trend (`r report_poly(poly_accuracy, strategy = 18, poly = "quadratic")`).
+However, this trend follows a positive quadratic shape, reaching a low point around the 19 year old mark, and improving in the upper age range.
+On the other hand, we only found a negative linear effect of age over the accuracy change between phases among Tally 3 users (`r report_poly(poly_accuracy_change, strategy = 17, poly = "linear")`).
+These strategies display remarkable resilience to variations in feature validities. Notably, the discernible negative linear trend demonstrates that individuals in the higher age bracket not only maintain but actually enhance their performance during T2. This outcome aligns with expectations, as the contingencies among features in T2 closely align with the subjective representations of this strategy
+Overall, similar to the results obtained for the 1st Only users, indicating that as individuals develop, they adopt tallying strategies more readily and exhibit greater consistency in their implementation.
+
+#### Lexicographic
+We did not find any of the predicted polynomial age effects among Lexicographic strategies.
+Similar to study 1, these strategies were not commonly implemented, and although we see negative quadratic age trends among them (Lex 3 `r report_poly(poly_prevalence, strategy = 20, poly = "quadratic")`; Lex 2 `r report_poly(poly_prevalence, strategy = 21, poly = "quadratic")`), the low number of participants within them make us cautious to interpret them as indicators of developmental trends.
+
+
+## Discussion
+
+\newpage
+
+## Tables and Figures
+
+\singlespacing
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_task_design.png}
+    \caption[Probabilistic classification task general setup.]{(A) Stimulus organization: We will present two grids on the left and right side of the screen. Each grid contains four pieces of equipment (features), with different brands overlayed on top of them. All the equipment and brands will maintain their position across participants, but we will assign the allocation of weights semi randomly. P1 and T1 use the same contingencies, while T2 equalizes all the features with the same weights. (C) Feedback: We can see a display of all the possible feedback messages that participants will see, as well as the criteria that triggers them.}
+    \label{fig:ch3-task-overview}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_model_selection_panel.png}
+    \caption[Model classification results.]{The bars represent the number of participants classified into each of the different decision strategies. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a lexicographic search. On the bottom we show the final list of decision models we used for the rest of the analysis.}
+    \label{fig:ch3-model-classification}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_noage_accuracy.png}
+    \caption[Choice accuracy across the task.]{We defined accurate responses as those where the participants were able to choose the cue with higher chances of winning. (A) Posterior estimates of the probability of choosing the best cue in T1 and T2 among decision strategies. (B) Difference between phases obtained by comparing the posterior distributions from T2 against T1 (T2-T1). (C) Paired comparisons between strategies' posterior distributions in T1. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B and C. Error bars in all panels represent 89\% HDIs. The ROPEs for the comparisons are shown as shaded areas in B and C.}
+    \label{fig:ch3-accuracy}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_noage_score.png}
+    \caption[Total score in T1.]{Participants could score one point when they accurately chose the grid with higher winning probability. If their answers were fast enough to be below their dynamic threshold (1 SD below their mean RT), they could earn 2 points. (A) Posterior estimates of the T1 score across different strategies. (B) Paired comparisons between strategies' score posterior distributions. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch3-score}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_noage_response_time.png}
+    \caption[Response time during T1.]{Participants had up to 15 seconds to choose an option which started counting immediatly after the cue grids appeared in the screen. (A) Posterior estimates of the T1 response time across different strategies. (B) Paired comparisons between strategies' response time posterior distributions. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch3-response-time}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_nomodel_panel.png}
+    \caption[Overall developmental patterns across performance metrics.]{The top panel displays the developmental trends for accuracy, centerl panel displays the age effect in the T1 score, whereas the bottom panel shows the response time across development. The lines and shaded areas represent the median and 89\% HDI from the posterior predictions.}
+    \label{fig:ch3-nomodel}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_single_feature_panel.png}
+    \caption[Developmental trends for single feature strategies.]{On the left we can see the predicted developmental patterns from 1st Only users, and on the right the trends for 2nd Only users across the performance metrics reviewed in this study. In descending order, the rows represent the accuracy during T1, the accuracy change between phases (T2-T1), the number of points scored during T1, and the response time during T1. The lines and shaded areas represent the median and 89\% HDI from the posterior predictions.}
+    \label{fig:ch3-single-feature}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_tallying_panel.png}
+    \caption[Developmental trends for tallying strategies.]{On the left we can see the predicted developmental patterns from Tally 4 users, on the center those belonging to Tallying 3 users, and on the right the trends for Tallying 2 users across the performance metrics reviewed in this study. In descending order, the rows represent the accuracy during T1, the accuracy change between phases (T2-T1), the number of points scored during T1, and the response time during T1. The lines and shaded areas represent the median and 89\% HDI from the posterior predictions.}
+    \label{fig:ch3-tallying}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch03_lexicographic_panel.png}
+    \caption[Developmental trends for lexicographic strategies.]{On the left we can see the predicted developmental patterns from Lexicographic 3 users, and on the right the trends for Lexicographic 2 users across the performance metrics reviewed in this study. In descending order, the rows represent the accuracy during T1, the accuracy change between phases (T2-T1), the number of points scored during T1, and the response time during T1. The lines and shaded areas represent the median and 89\% HDI from the posterior predictions.}
+    \label{fig:ch3-lexicographic}
+\end{figure}
+
+\newpage
+
+
+\doublespacing

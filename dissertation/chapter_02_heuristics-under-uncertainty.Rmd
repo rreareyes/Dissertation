@@ -3,7 +3,7 @@ title : ""
 
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(papaja)
 library(kableExtra)
 library(tidyverse)
@@ -12,12 +12,12 @@ library(english)
 
 ```
 
-```{r}
+```{r, include = FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo=FALSE) 
 ```
 
-```{r base-paths}
-folder_root <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
+```{r base-paths, include = FALSE}
+folder_root <- dirname(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)))
 
 folder_helpers   <- file.path(folder_root, "bin", "helpers")
 folder_fits      <- file.path(folder_root, "results", "fits")
@@ -30,7 +30,7 @@ source(file = file.path(folder_helpers, "h01_report.R"))
 
 ```
 
-```{r stats-and-summaries}
+```{r stats-and-summaries, include = FALSE}
 load(file.path(folder_summaries, "ch02_summary_demographics.RData"))
 load(file.path(folder_summaries, "ch02_bayes_rope.RData"))
 load(file.path(folder_summaries, "ch02_reported_anovas.RData"))
@@ -199,22 +199,22 @@ Similar to \citet{oh_etal_2016_satisficing_splitsecond}, we first defined an opt
 
 $$choice_{i} \sim \beta_{0} + \beta_{1} \text{F}_{1} + \beta_{2} \text{F}_{2} + \beta_{3} \text{F}_{3} + \beta_{4} \text{F}_{4}$$
 
-This model represents the integration of the four features from the cue allowing each to have their own weight in the decision process (model 15 in Fig. \ref{fig:ch2-model-configuration}, which is equivalent to WADD). 
+This model represents the integration of the four features from the cue allowing each to have their own weight in the decision process (model 15 in Fig. \ref{fig:ch2-model-selection}, which is equivalent to WADD). 
 We used this as the reference to contrast all the other decision models, considering that it is the most flexible model to fit. 
-We also created 14 models that represent different integration of features: four single parameter models, which represent the use of a single feature to make a  choice (Fig. \ref{fig:ch2-model-configuration}, models 1-4); six models that integrate two features (Fig. \ref{fig:ch2-model-configuration}, models 5-10) and four models that integrate three features (Fig. \ref{fig:ch2-model-configuration}, models 11-14).
+We also created 14 models that represent different integration of features: four single parameter models, which represent the use of a single feature to make a  choice (Fig. \ref{fig:ch2-model-selection}, models 1-4); six models that integrate two features (Fig. \ref{fig:ch2-model-selection}, models 5-10) and four models that integrate three features (Fig. \ref{fig:ch2-model-selection}, models 11-14).
 
 Additionally, we considered the possibility that the participants would use a compensatory strategy like Tallying to solve this task. 
 This strategy merely counts the number of positive attributes present in each cue (i.e., winning states/brands in the context of this task), adds them up, and chooses the option with the larger number. 
-To represent this strategy, we created a model with a single predictor that could take any integer from -4 to 4, where negative values indicate number of features favoring the right side, while positive values represent the number of features in favor of the left cue (Fig. \ref{fig:ch2-model-configuration}, model 16). 
+To represent this strategy, we created a model with a single predictor that could take any integer from -4 to 4, where negative values indicate number of features favoring the right side, while positive values represent the number of features in favor of the left cue (Fig. \ref{fig:ch2-model-selection}, model 16). 
 This way, the model uses information from all the features, but they are merged in a single predictor.
 
 Next, we wanted to represent the choice patterns expected from users of the TTB strategy. 
-To do this, we created a model with 4 different predictors that compares the two states from the same feature in each cue, starting from the most important one, and going down in descending order of importance, until a choice is made when it identifies a difference in the two states (Fig. \ref{fig:ch2-model-configuration}, model 19). 
+To do this, we created a model with 4 different predictors that compares the two states from the same feature in each cue, starting from the most important one, and going down in descending order of importance, until a choice is made when it identifies a difference in the two states (Fig. \ref{fig:ch2-model-selection}, model 19). 
 A trial where the most important feature was favoring the left side would have $[1, 0, 0, 0]$ as the vector of predictors, whereas a trial where the discerning feature favoring the right cue was located in the third most important item would take the form $[0, 0, -1, 0]$. 
 This decision model would technically be relying on a single feature in each trial to make a choice, but it would vary in how many features it would have to review before choosing, depending on the particular set of cues being compared.
 
-Finally, to account for models implemented in an incomplete fashion, we created the models representing partial Tallying (Fig. \ref{fig:ch2-model-configuration}, model 17-18) and incomplete TTB (Fig. \ref{fig:ch2-model-configuration}, model 20-21). 
-The specific formulas from each model listed in Fig. \ref{fig:ch2-model-configuration} are included in Appendix A.
+Finally, to account for models implemented in an incomplete fashion, we created the models representing partial Tallying (Fig. \ref{fig:ch2-model-selection}, model 17-18) and incomplete TTB (Fig. \ref{fig:ch2-model-selection}, model 20-21). 
+The specific formulas from each model listed in Fig. \ref{fig:ch2-model-selection} are included in Appendix A.
 
 To classify participant's choice patterns into one of the decision models, we calculated the Bayes factors ($BF_m$) of each individual by comparing the probability that the choice data was generated by the decision model ($P(Data|Model_{m})$) in comparison to the reference model ($P(Data|Model_{ref})$):
 
@@ -228,7 +228,7 @@ Based on these results, we grouped participants according to the decision strate
 The main performance metric we focused was choice accuracy. 
 We considered a choice as correct when the participant selected the cue ($C_L$ or $C_R$) with higher probability of winning (i.e., the higher sum of probabilistic weights), regardless of whether they received a "win" or "lose" feedback. 
 We compared choice accuracy across T1 and T2, to determine the performance change when cue contingencies changed from T1 to T2. 
-More specifically, we expected to find different patterns of T1-T2 performance change based on the underlying assumptions for each decision strategies as shown in Table \ref(tab:expectations). 
+More specifically, we expected to find different patterns of T1-T2 performance change based on the underlying assumptions for each decision strategies as shown in Table \ref{tab:ch2-expectations}. 
 We also compared choice accuracy across decision strategies using only the data from T1, considering that the particular decision strategy used would be stabilized by T1. 
 Additionally, we analyzed the total scored reward points and reaction time in T1 and compared them across decision strategies.
 
@@ -294,7 +294,7 @@ We used the posterior samples from the models to perform the comparisons between
 $${\theta_1} - {\theta_2} \neq 0$$
 where $\theta_1$ and $\theta_2$ are the parameters of interest. 
 For example, in the case of comparison across decision groups, we took the standardized posterior distributions from one group of interest and subtracted it from another, giving us a distribution of differences between the two groups. 
-Then, we took the 89% highest density intervals (HDIs) from this distribution of differences \citep{mcelreath_2020_statistical_rethinking} to make inferences about any possible effects.
+Then, we took the 89\% highest density intervals (HDIs) from this distribution of differences \citep{mcelreath_2020_statistical_rethinking} to make inferences about any possible effects.
 To do this, we used the probability of direction (PD, i.e., the proportion of the HDI that matches the sign of the median difference (MD)) \citep{makowski_etal_2019_indices_effect} as a benchmark to determine the presence of an effect. 
 We interpreted any PD higher than 90% as an effect of interest. 
 Finally, to assess whether the identified effects of interest are large enough to be meaningful, we defined a region of practical equivalence (ROPE) to a negligible effect size (Cohen's $\delta$ of 0.1).
@@ -302,23 +302,23 @@ This ROPE represents the threshold that the differences must surpass in either d
 Therefore, we measure the proportion of overlap between the HDI from our differences and the ROPE \citep{kruschke_2018_rejecting_accepting} to determine the significance of the effect. 
 Differences with no overlap were interpreted as meaningful effects, overlaps below 25% as trends and overlaps beyond 25% as not meaningful.
 
-# Results
-## Model Classification
-The results of model classifications are shown in Figure \ref(fig:ch2-model-selection), which reflect a great heterogeneity in the strategies used by the participants. 
-Two of them seem to be predominant in both E1 and E2: 1st Only, which relies solely on the information from the most informative feature (model 1 in Fig. \ref(fig:ch2-model-selection)) and Partial Tallying, which shows partial integration of equal weights to the features (model 18 in Fig. \ref(fig:ch2-model-selection)). 
+## Results
+### Model Classification
+The results of model classifications are shown in Figure \ref{fig:ch2-model-selection}, which reflect a great heterogeneity in the strategies used by the participants. 
+Two of them seem to be predominant in both E1 and E2: 1st Only, which relies solely on the information from the most informative feature (model 1 in Fig. \ref{fig:ch2-model-selection}) and Partial Tallying, which shows partial integration of equal weights to the features (model 18 in Fig. \ref{fig:ch2-model-selection}). 
 Partial Tallying only differs from its more compensatory parent (i.e., Tallying) in the number of features added up to determine the cue with more positive attributes. 
 Participants classified in this group only integrate the first and second most informative features, both sharing the same level in the hierarchy, making both equally important to determine their choice. 
 At the same time, the two most important features (F1 and F2) are explicitly identified as superior sources of information compared to the other two features. 
 
 Besides these two strategies, we focused on several other decision schemes that would lead to successful performance in this task. 
 The first candidate was the  TTB strategy, for which there is widespread knowledge of its efficiency in non-compensatory binary decision paradigms like this \citep{gigerenzer_gaissmaier_2011_heuristic_decision}. 
-We additionally included the incomplete versions of TTB (models 19-21 in Fig. \ref(fig:ch2-model-selection)), and we grouped them all as the "Serial Search" group. 
-Next, we chose the full implementation of Tallying (model 16 in Fig. \ref(fig:ch2-model-selection)) as a point of comparison with its partial version. 
-Finally, we decided to also include participants whose choices showed a strong reliance in the second most informative feature (2nd Only, model 2 in Fig. \ref(fig:ch2-model-selection)), since this strategy should still yield reasonable performance on T1. 
-The bottom bars in Fig. \ref(fig:ch2-model-selection) display the final set of decision strategies we chose to characterize in more detail and their frequency across E1 and E2 combined.
+We additionally included the incomplete versions of TTB (models 19-21 in Fig. \ref{fig:ch2-model-selection}), and we grouped them all as the "Serial Search" group. 
+Next, we chose the full implementation of Tallying (model 16 in Fig. \ref{fig:ch2-model-selection}) as a point of comparison with its partial version. 
+Finally, we decided to also include participants whose choices showed a strong reliance in the second most informative feature (2nd Only, model 2 in Fig. \ref{fig:ch2-model-selection}), since this strategy should still yield reasonable performance on T1. 
+The bottom bars in Fig. \ref{fig:ch2-model-selection} display the final set of decision strategies we chose to characterize in more detail and their frequency across E1 and E2 combined.
 
-## Task Performance 
-Task performance was analyzed in terms of the model estimates of the probability of choosing the best cue. We made comparisons across T1 and T2 within each decision strategy (Fig. \ref(fig:ch2-performance)A and B). 
+### Task Performance 
+Task performance was analyzed in terms of the model estimates of the probability of choosing the best cue. We made comparisons across T1 and T2 within each decision strategy (Fig. \ref{fig:ch2-performance}A and B). 
 In E1, we expected to see a decline in performance during T2 for any strategy that considers the ranking of the different features, and no change in strategies that do not use the ranking. 
 In line with these predictions, we found a declining trend in performance from T1 to T2 for Serial Search (`r filter(rope_performance_change, experiment == "0") %>% report(strategy = "Serial Search")`) and Partial Tallying  (`r filter(rope_performance_change, experiment == "0") %>% report(strategy = "Partial Tallying")`). 
 These users tend to rely on the feature rankings, so the drop in accuracy when the feature ranking disappears (i.e., T2) is consistent with the expectations for these strategies. 
@@ -332,98 +332,97 @@ This confirms that these strategies rely on raking the different pieces of infor
 We also found a declining trend in 2nd Only (`r filter(rope_performance_change, experiment == "1") %>% report(strategy = "2nd Only")`). 
 On the other hand, participants classified as Tallying users showed no meaningful difference (`r filter(rope_performance_change, experiment == "1") %>% report(strategy = "Tallying")`), confirming that they integrate all pieces of information with equal weight. 
 
-After looking at the performance in each strategy separately, we also compared the T1 accuracy between strategies (Fig. \ref(fig:ch2-performance)C). 
+After looking at the performance in each strategy separately, we also compared the T1 accuracy between strategies (Fig. \ref{fig:ch2-performance}C). 
 We found that Serial Search users outperformed more frugal strategies (1st Only vs Serial Search: `r report(rope_performance_T1, comparison = "first_serial")`; 2nd Only vs Serial Search: `r report(rope_performance_T1, comparison = "second_serial")`).
 Additionally, this strategy also outperformed more compensatory strategies (Serial Search vs Tallying `r report(rope_performance_T1, comparison = "serial_tally")`; Serial Search vs Partial Tallying `r report(rope_performance_T1, comparison = "serial_lazy")`). 
 
-Analysis of the total score during T1 (Fig. \ref(fig:ch2-score)) showed a similar pattern. Serial Search outperforms Partial Tallying (`r report(rope_group_score, comparison = "serial_lazy")`) and 2nd Only (`r report(rope_group_score, comparison = "second_serial")`), and had a favorable trend against Tallying users (`r report(rope_group_score, comparison = "serial_tally")`). 
+Analysis of the total score during T1 (Fig. \ref{fig:ch2-score}) showed a similar pattern. Serial Search outperforms Partial Tallying (`r report(rope_group_score, comparison = "serial_lazy")`) and 2nd Only (`r report(rope_group_score, comparison = "second_serial")`), and had a favorable trend against Tallying users (`r report(rope_group_score, comparison = "serial_tally")`). 
 No meaningful difference was found when Serial Search was compared with 1st Only (`r report(rope_group_score, comparison = "first_serial")`).
 Additionally, 1st Only showed an advantage against 2nd Only (`r report(rope_group_score, comparison = "first_second")`). 
 
-We also compared response time across decision strategies (Fig. \ref(fig:ch2-time)). 
+We also compared response time across decision strategies (Fig. \ref{fig:ch2-time}). 
 We found significantly faster responses for 1st Only compared to Tallying (`r report(rope_group_time, comparison = "first_tally")`), 2nd Only (`r report(rope_group_time, comparison = "first_second")`) and Partial Tallying (`r report(rope_group_time, comparison = "first_lazy")`. 
 Additionally, there was a trend of faster response times when compared against Serial Search (`r report(rope_group_time, comparison = "first_serial")`). 
 On the other hand, Serial Search only showed a trend of faster responses compared to Partial Tallying (`r report(rope_group_time, comparison = "serial_lazy")`). 
 
-# Fixation patterns
-## Total number of fixations
+### Total number of fixations
 In an effort to examine the amount of information searched by the participants prior to making a choice, we first examined the total number of fixations per trial. 
 We predicted that strategies relying on a smaller number of features (e.g., 1st Only and 2nd Only), would need fewer number of fixations to complete their information search. 
-As shown in Figure \ref(fig:ch2-fixcount), 1st Only users made significantly less fixations than the compensatory strategies (1st Only vs Tallying: `r report(rope_group_fixcount, comparison = "first_tally")`; 1st Only vs Partial Tallying: `r report(rope_group_fixcount, comparison = "first_lazy")`). 
+As shown in Figure \ref{fig:ch2-fixcount}, 1st Only users made significantly less fixations than the compensatory strategies (1st Only vs Tallying: `r report(rope_group_fixcount, comparison = "first_tally")`; 1st Only vs Partial Tallying: `r report(rope_group_fixcount, comparison = "first_lazy")`). 
 Similarly, 2nd Only displayed trends of making less fixations than compensatory strategies (2nd Only vs Tallying: `r report(rope_group_fixcount, comparison = "second_lazy")`; 2nd Only vs Partial Tallying: `r report(rope_group_fixcount, comparison = "second_tally")`).
 2nd Only users also showed a trend suggesting that they make more fixations than 1st Only users (`r report(rope_group_fixcount, comparison = "first_second")`), even though both strategies rely on a single feature.
 Serial Search displayed trends of making less fixations than Tallying (`r report(rope_group_fixcount, comparison = "serial_tally")`) and Partial Tallying (`r report(rope_group_fixcount, comparison = "serial_lazy")`). 
 Interestingly, we found no meaningful difference between Serial Search and the single feature strategies (1st Only vs Serial Search: `r report(rope_group_fixcount, comparison = "first_serial")`; 2nd Only vs Serial Search: `r report(rope_group_fixcount, comparison = "second_serial")`), which highlights the sampling frugality of this lexicographic strategy, even when compared with strategies relying on a single piece of information.
 
 For serial search users, we additionally compared the total number of fixations across the four decision scenarios.
-As we can see in Figure \ref(fig:ch2-fixcount-scenario) this strategy progressively sampled more as the differentiating feature was located further down in the ranking of importance (scenario A vs B: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "A_B")`; scenario B vs C: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "B_C")`; with no meaningful difference between scenario C vs D: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "C_D")`). 
+As we can see in Figure \ref{fig:ch2-fixcount-scenario} this strategy progressively sampled more as the differentiating feature was located further down in the ranking of importance (scenario A vs B: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "A_B")`; scenario B vs C: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "B_C")`; with no meaningful difference between scenario C vs D: `r report(rope_fixcount_scenario_comparison, strategy = "Serial Search", comparison = "C_D")`). 
 This behavior is for the most part in line with the expectations from the TTB strategy.
 
-## Strategy specific patterns
-After surveying the overall amount of information search across decision strategies, we looked into the strategy-specific search patterns and tested for the underlying assumption as listed in Table \ref(tab:ch2-expectations). 
+### Strategy specific fixation patterns
+After surveying the overall amount of information search across decision strategies, we looked into the strategy-specific search patterns and tested for the underlying assumption as listed in Table \ref{tab:ch2-expectations}. 
 To refer to the starting location, stopping location and gaze distribution, we will use the terms first fixation, last fixation, and allocation of fixations in the description of fixation patterns.
 Below we discuss the results from each strategy separately.
 
-### 1st Only
+#### 1st Only
 This decision strategy assumes that participants would only rely on the most informative feature (F1) to make their choices.
 Therefore, we expected a consistent preference toward the most informative feature in terms of the location of both first and last fixation, as well as the allocation of fixations. 
 
-In line with our expectations, we found that these participants were more likely to direct their first fixation (F1 vs all: `r report(rope_first_domain, strategy = "1st Only")`) and last fixation (F1 vs all: `r report(rope_last_domain, strategy = "1st Only")`) towards the most important feature, relative to the others (Fig. \ref(fig:ch2-fixation-patterns)A). 
+In line with our expectations, we found that these participants were more likely to direct their first fixation (F1 vs all: `r report(rope_first_domain, strategy = "1st Only")`) and last fixation (F1 vs all: `r report(rope_last_domain, strategy = "1st Only")`) towards the most important feature, relative to the others (Fig. \ref{fig:ch2-fixation-patterns}A). 
 The pattern repeats when we take a look at the allocation of fixations across the four features (F1 vs all: `r report(rope_proportion_domain, strategy = "1st Only")`). 
 Overall, these results suggest a strong focus toward the most important piece of information in these participants, which matches with our predictions on this strategy.
 
-### 2nd Only
+#### 2nd Only
 This strategy also considers a single feature to make a choice, but in this case, it relies on the second most informative feature (F2).
-We observed a trend of directing first fixations toward the second most important feature more often than to other features (F2 vs all: `r report(rope_first_domain, strategy = "2nd Only")`) (Fig. \ref(fig:ch2-fixation-patterns)B). 
+We observed a trend of directing first fixations toward the second most important feature more often than to other features (F2 vs all: `r report(rope_first_domain, strategy = "2nd Only")`) (Fig. \ref{fig:ch2-fixation-patterns}B). 
 We identified a similar pattern in the last fixations (F2 vs all: `r report(rope_last_domain, strategy = "2nd Only")`) and allocation of fixations (F2 vs all: `r report(rope_proportion_domain, strategy = "2nd Only")`).
 These results demonstrate a reliance on the second most informative feature, in line with the choice model, although we see a greater heterogeneity in fixation patterns compared to the 1st Only strategy.
 
-### Serial Search
+#### Serial Search
 The two strategies described above use static fixation patterns, always preferring a single feature over the others. 
 For users of strategies that rely on conditional sampling, such as in the case of Serial Search, the preferred piece of information changes depending on the feature states presented in a given trial. 
 In particular, Serial Search should start the information search at the most important feature, comparing it between cues and only continue sampling if this feature does not discriminate between the two cues. 
 Therefore, we expect an overall preference for the most important feature as the search starting point. 
 In terms of the overall gaze distribution, we predicted differences reflecting the feature rankings, since the information search from this group should follow the features' importance in descending order.
 
-In line with our expectations, we found that they were more likely to direct their first fixation toward the most important feature relative to the others (F1 vs all: `r report(rope_first_domain, strategy = "Serial Search")`) (Fig. \ref(fig:ch2-fixation-patterns)C). 
+In line with our expectations, we found that they were more likely to direct their first fixation toward the most important feature relative to the others (F1 vs all: `r report(rope_first_domain, strategy = "Serial Search")`) (Fig. \ref{fig:ch2-fixation-patterns}C). 
 Looking at the allocation of fixations, the differences between features reflected their rankings, except for the least important features (F1 vs F2: `r report(rope_proportion_domain, strategy = "Serial Search", comparison = "d1_2")`; F2 vs F3: `r report(rope_proportion_domain, strategy = "Serial Search", comparison = "d2_3")`; F3 vs F4: `r report(rope_proportion_domain, strategy = "Serial Search", comparison = "d3_4")`). 
 
-For their last fixations, we had different expectations across decision scenarios (Fig. \ref(fig:ch2-scenarios), reflecting the dynamic stopping rule for this strategy. 
+For their last fixations, we had different expectations across decision scenarios (Fig. \ref{fig:ch2-scenarios}, reflecting the dynamic stopping rule for this strategy. 
 Information search should end at the most important feature in scenario A, while it should end at the second, third, and fourth ranked features for scenarios B, C, D, respectively. 
-Most of these predictions matched the results of the last fixations analysis, except for scenario D, where we only found a trend favoring the least important feature (scenario A, F1 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "0", comparison = "d1_all")`; scenario B, F2 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "1", comparison = "d2_all")`; scenario C, F3 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "2", comparison = "d3_all")`; scenario D, F4 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "3", comparison = "d4_all")`; Fig. \ref(fig:ch2-serial-last)).
+Most of these predictions matched the results of the last fixations analysis, except for scenario D, where we only found a trend favoring the least important feature (scenario A, F1 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "0", comparison = "d1_all")`; scenario B, F2 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "1", comparison = "d2_all")`; scenario C, F3 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "2", comparison = "d3_all")`; scenario D, F4 vs all: `r report(rope_last_scenario_comparison, strategy = "Serial Search", scenario = "3", comparison = "d4_all")`; Fig. \ref{fig:ch2-serial-last}).
 
 To determine the specificity of these fixation patterns reflecting the dynamic stopping point in Serial Search, we tested for the presence of this pattern in other decision strategies. 
-When the above-described contrasts were applied to last fixations in all other strategy groups, we found no strong evidence suggesting the presence of such patterns (Fig. \ref(fig:ch2-serial-last-comparison)).
+When the above-described contrasts were applied to last fixations in all other strategy groups, we found no strong evidence suggesting the presence of such patterns (Fig. \ref{fig:ch2-serial-last-comparison}).
 Only Partial Tallying showed last fixation patterns that resembles Serial Search in scenarios B(F2 vs all: `r report(rope_last_scenario_comparison, strategy = "Partial Tallying", scenario = "1", comparison = "d2_all")`), C(F3 vs all: `r report(rope_last_scenario_comparison, strategy = "Partial Tallying", scenario = "2", comparison = "d3_all")`), and D(scenario D, F4 vs all: `r report(rope_last_scenario_comparison, strategy = "Partial Tallying", scenario = "3", comparison = "d4_all")`) and a trend in scenario A(scenario A, F1 vs all: `r report(rope_last_scenario_comparison, strategy = "Partial Tallying", scenario = "0", comparison = "d1_all")`).
 
-### Tallying
+#### Tallying
 This strategy uses all cue features; however, it assigns them equal importance and counts the number of features favoring each cue. 
 The option with a higher number of positive attributes becomes selected. 
 Considering this, we should see no difference in allocation of fixations across the different features, reflecting an equal consideration of all of them.
 
 In line with our expectations, users of this strategy showed a fairly uniform distribution of where the first fixation is made. 
-However, there were trends favoring the most important feature (F1 vs F2: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_2")`; F1 vs F3: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_3")`; F1 vs F4: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_4")`) (Fig. \ref(fig:ch2-fixation-patterns)D). 
+However, there were trends favoring the most important feature (F1 vs F2: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_2")`; F1 vs F3: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_3")`; F1 vs F4: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_4")`) (Fig. \ref{fig:ch2-fixation-patterns}D). 
 We found similar trends in their last fixations (F1 vs F2: `r report(rope_last_domain, strategy = "Tallying", comparison = "d1_2")`; F1 vs F3: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_3")`; F1 vs F4: `r report(rope_first_domain, strategy = "Tallying", comparison = "d1_4")`), as well as in allocation of fixations (F1 vs F2: `r report(rope_proportion_domain, strategy = "Tallying", comparison = "d1_2")`; F1 vs F3: `r report(rope_proportion_domain, strategy = "Tallying", comparison = "d1_3")`; F1 vs F4: `r report(rope_proportion_domain, strategy = "Tallying", comparison = "d1_4")`).
 Overall, these participants seem to be aware of the ranking among features and use it to guide their information search to some extent, despite the fact that they are integrating all the features from the cues. 
 
-### Partial Tallying
+#### Partial Tallying
 This decision strategy integrates the first and second most informative features (F1 and F2) with equal weights, which are considered as superior sources of information than the other two features (F3 and F4).
 Reflecting this, we should see no difference between the first and second feature, given its equal subjective importance and we should find a difference between the two most and two least important features.
 
 Our results on the first fixation did not support our predictions. 
-There was a trend showing difference between the first and second most informative features (`r report(rope_first_domain, strategy = "Partial Tallying", comparison = "d1_2")`) (Fig. \ref(fig:ch2-fixation-patterns)E). 
-Additionally, the difference between the two most important features, compared to the two least informative features was not meaningful (F1 and F2 vs F2 and F4: `r report(rope_first_domain, strategy = "Partial Tallying", comparison = "d12_34")`). 
+There was a trend showing difference between the first and second most informative features (`r report(rope_first_domain, strategy = "Partial Tallying", comparison = "d1_2")`) (Fig. \ref{fig:ch2-fixation-patterns}E). 
+Additionaly, the difference between the two most important features, compared to the two least informative features was not meaningful (F1 and F2 vs F2 and F4: `r report(rope_first_domain, strategy = "Partial Tallying", comparison = "d12_34")`). 
 We found results more in line with our expectations in the last fixations. 
 There was no meaningful difference between the top two features (F1 vs F2: `r report(rope_last_domain, strategy = "Partial Tallying", comparison = "d1_2")`) or the two least important features (F3 vs F4: `r report(rope_last_domain, strategy = "Partial Tallying", comparison = "d3_4")`), and a trend favoring the two most important features compared to the least important ones (F1 and F2 vs F3 and F4: `r report(rope_last_domain, strategy = "Partial Tallying", comparison = "d12_34")`). 
 The allocation of fixations revealed similar patterns, showing no meaningful difference between the two most important features (F1 vs F2: `r report(rope_proportion_domain, strategy = "Partial Tallying", comparison = "d1_2")`), no difference between the least important ones (F3 vs F4: `r report(rope_proportion_domain, strategy = "Partial Tallying", comparison = "d3_4")`), and a trend favoring the former pair (F1 and F2 vs F3 and F4: `r report(rope_proportion_domain, strategy = "Partial Tallying", comparison = "d12_34")`). 
 Overall, this incomplete implementation of the Tallying strategy shows heterogeneity in the starting and stopping points of its information search, demonstrating that they consult with more feature than expected.
 
-## Comparisons across strategies 
+### Comparisons across strategies 
 Finally, to evaluate the uniqueness of the fixation patterns in Serial Search users, we compared their allocation of fixations among the four features against the gaze distribution from the other strategies.
 To this end, we conducted a series of 2 (strategy: Serial Search vs. other) x 4 (feature: F1 vs. F2 vs. F3 vs. F4) ANOVAs to compare the Serial Search group to other strategies. 
-We found a significant strategy by feature interaction in the comparisons with 2nd Only (`r apa_proportion_ss_2nd$statistic$strategy_rank`), Tallying (`r apa_proportion_ss_tl$statistic$strategy_rank`), and Partial Tallying (`r apa_proportion_ss_ptl$statistic$strategy_rank`), indicating dissociable allocation of sampling efforts across features (Fig. \ref(fig:ch2-interactions)).
+We found a significant strategy by feature interaction in the comparisons with 2nd Only (`r apa_proportion_ss_2nd$statistic$strategy_rank`), Tallying (`r apa_proportion_ss_tl$statistic$strategy_rank`), and Partial Tallying (`r apa_proportion_ss_ptl$statistic$strategy_rank`), indicating dissociable allocation of sampling efforts across features (Fig. \ref{fig:ch2-interactions}).
 
-# Discussion
+## Discussion
 
 Real-world decision making under uncertainty is constrained by incompleteness of the available information and the computational limits of the agent \citep{simon_1955_behavioral_model, simon_1986_theories_bounded}. 
 Acknowledging these constraints, \citet{simon_1955_behavioral_model} suggested that our decisions are made under "bounded rationality". 
@@ -603,9 +602,9 @@ kable(comparison_table_B,
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{../../figures/ch02_decision_models.png}
-    \caption[Models representing decision strategies.]{The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
-    \label{fig:ch2-model-configuration}
+    \includegraphics[width=1\textwidth]{../../figures/ch02_model_selection.png}
+    \caption[Model classification.]{The bars represent the number of participants classified into each of the different decision strategies. The circles represent the features consulted by each model. In models 1-15, filled circles indicate the feature(s) used by each strategy. For models 16-18 we created a model that integrated the features in a single piece of information (i.e., Tallying). Models 19-21 consider a Serial Search for information. On the bottom we show the final list of decision models we used for the rest of the analysis.}
+    \label{fig:ch2-model-selection}
 \end{figure}
 
 \newpage
@@ -613,11 +612,95 @@ kable(comparison_table_B,
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{../../figures/ch02_decision_scenarios.png}
-    \caption[Decision scenarios.]{These scenarios are created based on the dynamic search rule from TTB according to the best discriminating feature between cues. In scenario A, where the most predictive feature is different between the two cues (red and light red squares), participants using this strategy should only focus on this feature, ignoring the rest. In scenario B, the most predictive feature is the same between cues (gray squares) but the second most predictive is different, therefore, they should stop there and ignore the rest of the features. This patter will continue, until reaching scenario D, where all the features are the same, except for the fourth most predictive, in that case, the TTB users should scan all the cue and reach their choice until the very end.}
+    \caption[Decision scenarios.]{These scenarios created based on the dynamic search rule from TTB according to the best discriminating feature between cues. In scenario A, where the most predictive feature is different between the two cues (red and light red squares), participants using this strategy should only focus on this feature, ignoring the rest. In scenario B, the most predictive feature is the same between cues (gray squares) but the second most predictive is different, therefore, they should stop there and ignore the rest of the features. This patter will continue, until reaching scenario D, where all the features are the same, except for the fourth most predictive, in that case, the TTB users should scan all the cue and reach their choice until the very end.}
     \label{fig:ch2-scenarios}
 \end{figure}
 
+
 \newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_performance_panel.png}
+    \caption[Choice accuracy.]{We defined accurate responses as those where the participants were able to choose the cue with higher chances of winning. (A) Posterior estimates of the probability of choosing the best cue in T1 and T2 among decision strategies. (B) Difference between phases obtained by comparing the posterior distributions from T2 against T1 (T2-T1). (C) Paired comparisons between strategies' posterior distributions in T1. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B and C. Error bars in all panels represent 89\% HDIs. The ROPEs for the comparisons are shown as shaded areas in B and C.}
+    \label{fig:ch2-performance}
+\end{figure}
+
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_score_panel.png}
+    \caption[Total score in T1.]{Participants could score one point when they accurately chose the grid with higher winning probability. If their answers were fast enough to be below their dynamic threshold (1 SD below their mean RT), they could earn 2 points. (A) Posterior estimates of the T1 score across different strategies. (B) Paired comparisons between strategies' score posterior distributions. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch2-score}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_rt_panel.png}
+    \caption[Response time during T1.]{Participants had up to 15 seconds to choose an option which started counting immediatly after the cue grids appeared in the screen. (A) Posterior estimates of the T1 response time across different strategies. (B) Paired comparisons between strategies' response time posterior distributions. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch2-time}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_fixcount_panel.png}
+    \caption[Visual information sampling.]{We considered the total number of fixations directed to any of the cue features as a measure of the amount of sampling done in each trial. (A) Posterior estimates of the number of fixations per trial during T1 across different strategies. (B) Paired comparisons between strategies' posterior distributions of fixation counts. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch2-fixcount}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_fixcount_scenario_panel.png}
+    \caption[Visual information sampling in Serial Search users across scenarios.]{In this case, we grouped trials depending on the decision scenarios illustrated earlier, using the total number of fixations directed to any of the four features in each trial by Serial Search users. (A) Posterior estimates of the number of fixations per trial during T1 across different decision scenarios. (B) Paired comparisons between scenarios' posterior distributions of fixation counts. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch2-fixcount-scenario}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_fixation_patterns.png}
+    \caption[Fixation patterns of each decision strategy.]{Left and center column show probability estimates of directing the first/last fixation towards any of the four features (F1-F4). Rightmost column displays overall allocation of fixations across features. Gray dots represent individual estimates, central points with error bars represent posterior medians with 89\% HDIs.}
+    \label{fig:ch2-fixation-patterns}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_serial_last.png}
+    \caption[Stopping point across scenarios for Serial Search.]{These users implement a dynamic stopping rule depending on the location of the discriminationg feature. To evaluate this, we estimated the probability of directing the last fixation in a trial towards the different features (F1-F4), across decision scenarios. (A) Posterior estimates of the last fixation probabilities for each feature across decision scenarios. (B) Feature contrasts applied to the posterior distributions for each scenario. Gray dots represent individual estimates. Central dots represent posterior medians in A and median differences in B. Error bars in all panels represent 89\% HDIs. The ROPE for the comparisons is shown as a shaded area in B.}
+    \label{fig:ch2-serial-last}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_serial_last_comparison.png}
+    \caption[Serial Search stopping point contrast across strategies.]{We applied the same feature contrasts used to test the Serial Search stopping point assumptions to all other strategies. Central dots represent median contrast value and intervals 89\% HDIs. The ROPE for the contrasts is shown as a shaded area.}
+    \label{fig:ch2-serial-last-comparison}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../../figures/ch02_interactions.png}
+    \caption[Comparison of fixation patterns across strategies.]{Each line represents the overall gaze distribution across features for each of the five strategies reviewed in this study. The diamonds represent mean probability for each feature within a specific strategy.}
+    \label{fig:ch2-interactions}
+\end{figure}
+
+\newpage
+
 \doublespacing
 
 

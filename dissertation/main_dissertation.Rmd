@@ -1,0 +1,193 @@
+---
+title: " "
+output:
+  pdf_document
+geometry: "left = 1.5in, right = 1in, top = 1in, bottom = 1in"
+fontsize: 12pt
+linestretch: 2
+header-includes:
+  - \usepackage{float}
+  - \usepackage{sectsty}
+  - \usepackage{paralist}
+  - \usepackage{setspace}\spacing{2}
+  - \usepackage{fancyhdr}
+  - \usepackage{lastpage}
+  - \usepackage{dcolumn}
+  - \usepackage{natbib}
+  - \bibliographystyle{agsm}
+  - \usepackage[nottoc, numbib]{tocbibind}
+  - \usepackage{pdflscape}
+  - \usepackage{longtable}
+  - \usepackage{subcaption}
+  - \usepackage{grffile}
+  - \usepackage{chngcntr}
+  - \usepackage{sectsty}
+  - \usepackage{changepage}
+  - \usepackage[normalem]{ulem}
+  - \useunder{\uline}{\ul}{}
+  - \usepackage{tocloft}
+
+bibliography: 
+  - "../../references/bibliography.bib"
+biblio-style: "apacite"
+link-citations: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\renewcommand*\contentsname{TABLE OF CONTENTS} 
+\renewcommand*\listfigurename{LIST OF FIGURES} 
+\renewcommand*\listtablename{LIST OF TABLES}
+
+\renewcommand{\cfttoctitlefont}{\centering\small\bf\fontsize{12pt}{12}} 
+\renewcommand{\cftloftitlefont}{\centering\small\bf\fontsize{12pt}{12}}
+\renewcommand{\cftlottitlefont}{\centering\small\bf\fontsize{12pt}{12}}
+
+\allsectionsfont{\centering\bf\small\fontsize{12pt}{12}}
+\subsectionfont{\bf\raggedright}
+\subsubsectionfont{\bf\raggedright}
+
+\pagenumbering{gobble}
+
+\begin{large}
+    \begin{center}
+      \mbox{}
+      \vfill
+      {\MakeUppercase{Development of Decision Strategies under Risk and Uncertainty}}\\
+      \vfill
+      A Dissertation Presented\\
+      by \\
+      \MakeUppercase{Ramiro Eduardo Rea Reyes}\\
+      \vfill
+      Submitted to the Graduate School of the\\
+      University of Massachusetts Amherst in partial fulfillment\\
+      of the requirements for the degree of\\
+      \vfill
+      \MakeUppercase{Doctor of Philosophy}\\
+      December 2023\\
+      Neuroscience and Behavior Program\\
+    	\vfill
+      \vspace*{.2in}
+    \end{center}
+\end{large}
+
+\newpage
+
+\begin{large}
+    \begin{center}
+      \mbox{}
+      \vfill
+      \copyright Copyright by Ramiro Eduardo Rea Reyes 2023\\
+      All Rights Reserved\\
+    	\vfill
+    \end{center}
+\end{large}
+
+\newpage
+
+\begin{titlepage}
+  \begin{center}
+    {\MakeUppercase{Development of Decision Strategies under Risk and Uncertainty}}\\
+    A Dissertation Presented\\
+    by \\
+    \MakeUppercase{Ramiro Eduardo Rea Reyes}
+  \end{center}
+  \begin{tabular}{l}
+    \\Approved as to style and content by:\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Youngbin Kwak, Chair}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Kirby Deater-Deckard, Member}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Jeffrey Starns, Member}\\
+    \makebox[2.5in]{\hrulefill}\\
+    {Elena Vazey, Member}\\
+  \end{tabular}\hfill
+    
+  \begin{tabular}[t]{@{}r@{}}
+    \makebox[2.5in]{\hrulefill}\\
+    \rightline{Heather Richardson, Graduate Program Director}\\
+    Neuroscience and Behavior Program\\
+    \makebox[2.5in]{\hrulefill}\\
+    \rightline{Samuel Hazen, Director}\\
+    Interdisciplinary Graduate Programs\\
+  \end{tabular}
+\end{titlepage}
+
+\newpage
+
+\pagenumbering{roman}
+
+\tableofcontents
+\addtocontents{toc}{~\hfill\text{Page}\par}
+
+\newpage
+
+\listoftables
+\addtocontents{lot}{Table\hfill\text{Page}\par}
+
+\newpage
+
+\listoffigures
+\addtocontents{lof}{Figure\hfill\text{Page}\par}
+
+\addtocontents{toc}{~\par}
+\addtocontents{toc}{CHAPTER\par}
+
+\allsectionsfont{\centering\bf\small\fontsize{12pt}{12}}
+\subsectionfont{\bf\raggedright}
+\subsubsectionfont{\bf\raggedright}
+
+\newpage
+
+\pagenumbering{arabic}
+
+\addcontentsline{toc}{section}{I. BACKGROUND AND SIGNIFICANCE}
+```{r background, child='chapter_01_background.Rmd'}
+
+```
+
+\newpage
+\addcontentsline{toc}{section}{II. STUDY 1: EYE-TRACKING ANALYSIS OF HEURISTIC-DRIVEN INFORMATION SEARCH IN UNCERTAIN DECISION ENVIRONMENTS}
+```{r heuristics-uncertainty, child='chapter_02_heuristics-under-uncertainty.Rmd'}
+
+```
+
+\newpage
+\addcontentsline{toc}{section}{III. STUDY 2: EFFECTS OF DEVELOPMENT ON HEURISTIC STRATEGIES USE UNDER UNCERTAINTY}
+```{r heuristics-development, child='chapter_03_heuristics-through-development.Rmd'}
+
+```
+
+\newpage
+\addcontentsline{toc}{section}{IV. STUDY 3: DISENTANGLING INFORMATION PROCESSING DURING MOTOR DECISIONS UNDER RISK}
+```{r heuristics-risk, child='chapter_04_heuristics-under-risk.Rmd'}
+
+```
+
+\clearpage
+
+```{r biblio, child = 'bibliography.Rmd'}
+```
+
+\newpage
+\addtocontents{toc}{APPENDICES\par}
+\addcontentsline{toc}{section}{A. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER II}
+```{r appendix-a, child='appendix_a.Rmd'}
+
+```
+
+\newpage
+\addcontentsline{toc}{section}{B. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER III}
+```{r appendix-b, child='appendix_b.Rmd'}
+
+```
+
+\newpage
+\addcontentsline{toc}{section}{C. PARAMETERS AND EQUATIONS FOR ANALYSIS REPORTED IN CHAPTER IV}
+```{r appendix-c, child='appendix_c.Rmd'}
+
+```
